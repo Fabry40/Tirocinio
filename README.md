@@ -35,11 +35,11 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
 
 ## 🛠️ Configurazione
 
-- Nel file `index.js`, modifica le seguenti costanti (riga 10–12) per selezionare i file da confrontare:
+- Nel file `index.js`, modifica le seguenti costanti (riga 10–12) per selezionare i file da confrontare e indicare il file Log:
   ```js
-  const PDF_FILE = 'esempio.pdf';
-  const XMI_FILE = 'esempio.xmi';
-  const NAME_FILE = 'esempio';
+  const PDF_FILE = 'esempio.pdf'; //Nome del file PDF da analizzare
+  const XMI_FILE = 'esempio.xmi'; //Nome del file XMI atteso
+  const NAME_FILE = 'esempio'; // Nome del file di log
   ```
 
 - Scegli l’IA da utilizzare (riga 24–26), mantenendo attiva solo una delle seguenti righe e commentando le altre:
