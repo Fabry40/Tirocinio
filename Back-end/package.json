@@ -32,6 +32,7 @@
     "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "fast-xml-parser": "^5.2.3",
+    "luxon": "^3.6.1",
     "natural": "^8.1.0",
     "pdfreader": "^3.0.7"
   }

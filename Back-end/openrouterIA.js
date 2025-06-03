@@ -61,7 +61,7 @@ export class OpenRouterIA {
 
     static async runDeepSeek(traccia) {
       const prompt = OpenRouterIA.generateUMLPrompt(traccia);
-      // DeepSeek V3 (0324)
+      // DeepSeek: R1 0528
       return await OpenRouterIA.callOpenRouterModel('deepseek/deepseek-chat-v3-0324:free', prompt);
     }
 

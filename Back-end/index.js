@@ -1,29 +1,29 @@
 import { readdir } from 'fs';
-import { MnipolatoreXmi } from './MnipolatoreXmi.js';
-import { GeminiAPI } from './gamini.js';
-import {OpenRouterIA} from './openrouterIA.js';
-import {UMLComparator} from './umlComparator.js';
+import { MnipolatoreXmi } from './UmlAtteso.js';
+import { GeminiAPI } from './Gamini.js';
+import {OpenRouterIA} from './OpenrouterIA.js';
+import {UMLComparator} from './UmlComparator.js';
 import { PlantUMLParser } from './PalantumlParser.js';
-import { MnipolatorePdf } from './MnipolatorePdf.js';
-import { Logger } from './logger.js';
+import { MnipolatorePdf } from './Traccia.js';
+import { Logger } from './Logger.js';
 
-  const PDF_FILE = 'Hackathon.pdf';//
-  const XMI_FILE = 'Hackathon.xmi';
-  const NAME_FILE = 'Hackathon';
+  const PDF_FILE = 'ToDo.pdf';//Nome del file PDF da analizzare
+  const XMI_FILE = 'ToDo.xmi';//Nome del file XMI atteso
+  const NAME_FILE = 'ToDoGemini';// Nome del file di log
 
 async function main() {
   Logger.setLogFileName(`${NAME_FILE}.txt`);
   Logger.logToFile("\n---------------------- Inizio del processo ----------------------\n");
   
   const contenuto = await MnipolatorePdf.PrintTxtPdf(PDF_FILE);
-  const jsonObj = MnipolatoreXmi.parseXmiFile(`./Risultato/${XMI_FILE}`);
+  const jsonObj = MnipolatoreXmi.parseXmiFile(`./UmlAtteso/${XMI_FILE}`);
   Logger.logToFile("\n----------------------primo step stampo il Contenuto del PDF----------------------  \n" + contenuto);
   const modelA = MnipolatoreXmi.estraiModelCompatto(jsonObj);
   Logger.logToFile("\n---------------------- secondo step stampo il Model JSON dell'XMI----------------------  \n" + JSON.stringify(modelA, null, 2));
 
   //let risultato = await OpenRouterIA.runMeta(contenuto);
-  let risultato = await OpenRouterIA.runDeepSeek(contenuto);
-  //let  risultato = await GeminiAPI.getGeminiResponse(contenuto);
+  //let risultato = await OpenRouterIA.runDeepSeek(contenuto);
+  let  risultato = await GeminiAPI.getGeminiResponse(contenuto);
   Logger.logToFile("\n---------------------- terzo step stampo il risultato della IA----------------------  \n" + risultato);
 
 
