@@ -5,7 +5,7 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
 ## 🚀 Requisiti
 
 - [Node.js](https://nodejs.org/) (versione 16 o superiore)
-- [npm](https://www.npmjs.com/)
+- npm
 
 ## ⚙️ Installazione
 
