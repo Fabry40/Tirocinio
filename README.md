@@ -9,24 +9,18 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
 
 ## ⚙️ Installazione
 
-1. **Clona il repository:**
-   ```bash
-   git clone https://github.com/tuo-utente/uml-comparator.git
-   cd uml-comparator/Back-end
-   ```
-
-2. **Installa le dipendenze:**
+1. **Installa le dipendenze:**
    ```bash
    npm install
    ```
 
-3. **Crea il file `.env`** nella cartella `Back-end` con il seguente contenuto (sostituisci le chiavi con quelle reali):
+2. **Crea il file `.env`** nella cartella `Back-end` con il seguente contenuto (sostituisci le chiavi con quelle reali):
    ```
    GEMINI_API_KEY="la_tua_chiave_gemini"
    openrouter_API_KEY="la_tua_chiave_openrouter"
    ```
 
-4. **Crea le seguenti cartelle** nella cartella `Back-end`:
+3. **Crea le seguenti cartelle** nella cartella `Back-end`:
    ```
    Back-end/
    ├── Traccia/      # Contiene i file PDF delle tracce
