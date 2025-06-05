@@ -55,5 +55,5 @@ npm start
 
 Il file di log con i risultati verrà salvato nella cartella `Back-end`. Il nome del file sarà del tipo:
 ```
-esempio_<data>.txt
+esempio<data>.txt
 ```
