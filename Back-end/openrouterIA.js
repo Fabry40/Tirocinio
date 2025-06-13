@@ -39,6 +39,12 @@ export class OpenRouterIA {
  return `Sei uno studente universitario che deve modellare un sistema software a partire da una traccia.  
 Genera SOLO un oggetto JSON che descriva il modello UML delle classi, SENZA alcuna spiegazione, testo aggiuntivo o PlantUML.  
 
+
+IMPORTANTE: 
+- Restituisci SOLO JSON valido, senza testo aggiuntivo
+- Assicurati che il JSON sia COMPLETO e sintatticamente corretto
+- Non interrompere mai il JSON a metà
+- Chiudi sempre tutte le parentesi e virgolette
 Il JSON deve avere questa struttura:
 
 {
@@ -56,7 +62,7 @@ Il JSON deve avere questa struttura:
       "from": "ClasseA",
       "to": "ClasseB",
       "type": "association|composition|inheritance|associationClass",
-      "name": "nomeRuoloOpzionale", 
+      "name": "nomeRuoloOpzionale",
       "multiplicity": "molteplicità",
       "attributes": [ "nomeAttributoAssociationClass" ]
     }
@@ -69,25 +75,15 @@ Il JSON deve avere questa struttura:
   ]
 }
 
-REGOLE FONDAMENTALI:
+REGOLE:
 - Usa ESATTAMENTE i nomi dalla traccia (non rinominare mai).
-- Identifica le gerarchie: se vengono descritti ruoli o sottotipi, sono sottoclassi di una classe generale.
-- Per ogni classe, elenca TUTTI gli attributi e metodi menzionati nella traccia.
-
-REGOLE PER LE RELAZIONI (PRIORITÀ MASSIMA):
-- LEGGI ATTENTAMENTE ogni frase per identificare TUTTE le relazioni tra entità
-- Per ogni relazione, specifica SEMPRE tutti i campi obbligatori:
-  * "type": "association" (collegamento generico), "composition" (parte di un tutto), "inheritance" (gerarchia), "associationClass" (relazione con attributi)
-  * "name": il nome/ruolo della relazione se presente nel testo
-  * "multiplicity": la molteplicità esatta dalla traccia ("1 - 1", "1 - *", "* - *", "1..* - 1", etc.)
-- Usa "associationClass" quando la relazione ha attributi propri
-- NON omettere relazioni: ogni verbo di azione/collegamento indica una potenziale relazione
-- Analizza frasi come "X gestisce Y", "X contiene Y", "X partecipa a Y", "X assegna a Y"
-
-REGOLE AGGIUNTIVE:
-- Mantieni le molteplicità esatte dalla traccia
-- Se ci sono enum/stati, aggiungile in "enumerations"
-- Non aggiungere elementi non esplicitamente menzionati nella traccia
+- Identifica le gerarchie: se vengono descritti ruoli (organizzatore, giudice, partecipante), sono sottoclassi di una classe generale (es: UtenteRegistrato).
+- Per ogni classe, elenca TUTTI gli attributi e metodi menzionati nella traccia (anche se vuoti).
+- Per ogni relazione, specifica tipo, molteplicità esatta, nome ruolo se presente.
+- Usa associationClass quando una relazione ha attributi propri (es: Voto tra Giudice e Team).
+- Mantieni le molteplicità esatte: "* - *", "1 - *", "1..* - 1", etc.
+- Se ci sono enum, aggiungile in "enumerations".
+- Non aggiungere elementi non esplicitamente menzionati nella traccia.
 
 TRACCIA:
 "${traccia}"`;
