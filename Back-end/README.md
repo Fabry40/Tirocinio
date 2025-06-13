@@ -5,28 +5,22 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
 ## 🚀 Requisiti
 
 - [Node.js](https://nodejs.org/) (versione 16 o superiore)
-- [npm](https://www.npmjs.com/)
+- npm
 
 ## ⚙️ Installazione
 
-1. **Clona il repository:**
-   ```bash
-   git clone https://github.com/tuo-utente/uml-comparator.git
-   cd uml-comparator/Back-end
-   ```
-
-2. **Installa le dipendenze:**
+1. **Installa le dipendenze:**
    ```bash
    npm install
    ```
 
-3. **Crea il file `.env`** nella cartella `Back-end` con il seguente contenuto (sostituisci le chiavi con quelle reali):
+2. **Crea il file `.env`** nella cartella `Back-end` con il seguente contenuto (sostituisci le chiavi con quelle reali):
    ```
    GEMINI_API_KEY="la_tua_chiave_gemini"
    openrouter_API_KEY="la_tua_chiave_openrouter"
    ```
 
-4. **Crea le seguenti cartelle** nella cartella `Back-end`:
+3. **Crea le seguenti cartelle** nella cartella `Back-end`:
    ```
    Back-end/
    ├── Traccia/      # Contiene i file PDF delle tracce
@@ -61,5 +55,5 @@ npm start
 
 Il file di log con i risultati verrà salvato nella cartella `Back-end`. Il nome del file sarà del tipo:
 ```
-esempio_<data>.txt
+esempio<data>.txt
 ```
