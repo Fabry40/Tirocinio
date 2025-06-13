@@ -7,9 +7,9 @@ import { PlantUMLParser } from './PalantumlParser.js';
 import { MnipolatorePdf } from './Traccia.js';
 import { Logger } from './Logger.js';
 
-  const PDF_FILE = 'ToDo.pdf';//Nome del file PDF da analizzare
-  const XMI_FILE = 'ToDo.xmi';//Nome del file XMI atteso
-  const NAME_FILE = 'ToDoGemini';// Nome del file di log
+  const PDF_FILE = 'Hackathon.pdf';//Nome del file PDF da analizzare
+  const XMI_FILE = 'Hackathon.xmi';//Nome del file XMI atteso
+  const NAME_FILE = 'Hackathon';// Nome del file di log
 
 async function main() {
   Logger.setLogFileName(`${NAME_FILE}.txt`);
@@ -22,15 +22,35 @@ async function main() {
   Logger.logToFile("\n---------------------- secondo step stampo il Model JSON dell'XMI----------------------  \n" + JSON.stringify(modelA, null, 2));
 
   //let risultato = await OpenRouterIA.runMeta(contenuto);
-  //let risultato = await OpenRouterIA.runDeepSeek(contenuto);
-  let  risultato = await GeminiAPI.getGeminiResponse(contenuto);
+  let risultato = await OpenRouterIA.runDeepSeek(contenuto);
+  //let  risultato = await GeminiAPI.getGeminiResponse(contenuto);
   Logger.logToFile("\n---------------------- terzo step stampo il risultato della IA----------------------  \n" + risultato);
-
-
-
-
-  const modelB = PlantUMLParser.parse(risultato);
+  let modelB = null;
+// Fai il parsing del JSON se modelB è una stringa
+if (typeof risultato === "string") {
+  try {
+    // Rimuovi eventuali delimitatori di code block
+    let clean = risultato.trim();
+    if (clean.startsWith("```json")) {
+      clean = clean.slice(7);
+    }
+    if (clean.startsWith("```")) {
+      clean = clean.slice(3);
+    }
+    if (clean.endsWith("```")) {
+      clean = clean.slice(0, -3);
+    }
+    modelB = JSON.parse(clean);
+  } catch (e) {
+    Logger.logToFile("ERRORE nel parsing del JSON della IA: " + e.message);
+    return;
+  }
+}
   Logger.logToFile("\n---------------------- quarto step stampo il Model JSON della IA---------------------- \n" + JSON.stringify(modelB, null, 2));
+
+
+  /*const modelB = PlantUMLParser.parse(risultato);
+  Logger.logToFile("\n---------------------- quarto step stampo il Model JSON della IA---------------------- \n" + JSON.stringify(modelB, null, 2));*/
 
 
 

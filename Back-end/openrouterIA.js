@@ -35,22 +35,64 @@ export class OpenRouterIA {
   }
 
   static generateUMLPrompt(traccia) {
-  return `Sei uno studente che deve creare un diagramma UML delle classi a partire da una traccia fornita da un docente. L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro, senza ottimizzazioni avanzate o scelte architetturali personali. Usa PlantUML e rappresenta:
+  
+ return `Sei uno studente universitario che deve modellare un sistema software a partire da una traccia.  
+Genera SOLO un oggetto JSON che descriva il modello UML delle classi, SENZA alcuna spiegazione, testo aggiuntivo o PlantUML.  
 
-    - tutte le classi e i loro attributi principali, con tipo e chiavi primarie se deducibili,
-    - eventuali enumerazioni,
-    - tutte le relazioni tra le classi (associazioni, composizioni, ereditarietà) indicando chiaramente:
-      - la molteplicità,
-      - la direzionalità,
-      - eventuali nomi dei ruoli.
+Il JSON deve avere questa struttura:
 
-    Evita modelli avanzati, come classi astratte, controller, state machine o normalizzazioni eccessive. Interpreta ciò che è scritto nella traccia in modo il più possibile diretto e scolastico.
+{
+  "classes": [
+    {
+      "name": "NomeClasse",
+      "attributes": [
+        { "name": "nomeAttributo", "type": null }
+      ],
+      "methods": [ "nomeMetodo" ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "ClasseA",
+      "to": "ClasseB",
+      "type": "association|composition|inheritance|associationClass",
+      "name": "nomeRuoloOpzionale", 
+      "multiplicity": "molteplicità",
+      "attributes": [ "nomeAttributoAssociationClass" ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "NomeEnum",
+      "values": [ "VALORE1", "VALORE2" ]
+    }
+  ]
+}
 
-    La traccia è la seguente:
+REGOLE FONDAMENTALI:
+- Usa ESATTAMENTE i nomi dalla traccia (non rinominare mai).
+- Identifica le gerarchie: se vengono descritti ruoli o sottotipi, sono sottoclassi di una classe generale.
+- Per ogni classe, elenca TUTTI gli attributi e metodi menzionati nella traccia.
 
-    "${traccia}"
+REGOLE PER LE RELAZIONI (PRIORITÀ MASSIMA):
+- LEGGI ATTENTAMENTE ogni frase per identificare TUTTE le relazioni tra entità
+- Per ogni relazione, specifica SEMPRE tutti i campi obbligatori:
+  * "type": "association" (collegamento generico), "composition" (parte di un tutto), "inheritance" (gerarchia), "associationClass" (relazione con attributi)
+  * "name": il nome/ruolo della relazione se presente nel testo
+  * "multiplicity": la molteplicità esatta dalla traccia ("1 - 1", "1 - *", "* - *", "1..* - 1", etc.)
+- Usa "associationClass" quando la relazione ha attributi propri
+- NON omettere relazioni: ogni verbo di azione/collegamento indica una potenziale relazione
+- Analizza frasi come "X gestisce Y", "X contiene Y", "X partecipa a Y", "X assegna a Y"
 
-    Genera solo un diagramma UML delle classi in sintassi PlantUML, aderente al significato esplicito della traccia. Fornisci esclusivamente il diagramma in sintassi PlantUML, racchiuso tra @startuml e @enduml.`;
+REGOLE AGGIUNTIVE:
+- Mantieni le molteplicità esatte dalla traccia
+- Se ci sono enum/stati, aggiungile in "enumerations"
+- Non aggiungere elementi non esplicitamente menzionati nella traccia
+
+TRACCIA:
+"${traccia}"`;
+
+
     }
 
     static async runMeta(traccia) {
