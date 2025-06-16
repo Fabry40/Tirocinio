@@ -36,35 +36,43 @@ export class OpenRouterIA {
 
   static generateUMLPrompt(traccia) {
   
- return `Sei uno studente universitario che deve modellare un sistema software a partire da una traccia.  
-Genera SOLO un oggetto JSON che descriva il modello UML delle classi, SENZA alcuna spiegazione o testo aggiuntivo .  
+      return `Sei uno studente che deve creare un modello UML delle classi a partire da una traccia fornita da un docente.
+L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro, senza ottimizzazioni avanzate o scelte architetturali personali.
 
+Rappresenta:
+- tutte le classi e i loro attributi principali, con tipo e chiavi primarie se deducibili;
+- eventuali enumerazioni;
+- tutte le relazioni tra le classi (associazioni, composizioni, ereditarietà, associationClass), indicando chiaramente:
+  - la molteplicità,
+  - la direzionalità,
+  - eventuali nomi dei ruoli.
 
-IMPORTANTE: 
-- Restituisci SOLO JSON valido, senza testo aggiuntivo
-- Assicurati che il JSON sia COMPLETO e sintatticamente corretto
-- Non interrompere mai il JSON a metà
-- Chiudi sempre tutte le parentesi e virgolette
-Il JSON deve avere questa struttura:
+Evita modelli avanzati, come classi astratte, controller, state machine o normalizzazioni eccessive.
+Interpreta ciò che è scritto nella traccia in modo il più possibile diretto e scolastico.
+
+La traccia è la seguente:
+"${traccia}"
+
+GENERA SOLO questo JSON (senza testo aggiuntivo):
 
 {
   "classes": [
     {
-      "name": "NomeClasse",
+      "name": "NomeEsatto",
       "attributes": [
-        { "name": "nomeAttributo", "type": null }
+        { "name": "nomeEsatto", "type": null }
       ],
-      "methods": [ "nomeMetodo" ]
+      "methods": [ "nomeMetodoEsatto" ]
     }
   ],
   "relations": [
     {
-      "from": "ClasseA",
-      "to": "ClasseB",
+      "from": "ClasseOrigine",
+      "to": "ClasseDestinazione",
       "type": "association|composition|inheritance|associationClass",
-      "name": "nomeRuoloOpzionale",
-      "multiplicity": "molteplicità",
-      "attributes": [ "nomeAttributoAssociationClass" ]
+      "name": "nomeRelazione",
+      "multiplicity": "molteplicità_esatta",
+      "attributes": [ "attributiAssociationClass" ]
     }
   ],
   "enumerations": [
@@ -75,19 +83,7 @@ Il JSON deve avere questa struttura:
   ]
 }
 
-REGOLE:
-- Usa ESATTAMENTE i nomi dalla traccia (non rinominare mai).
-- Identifica le gerarchie di ereditarietà e usa "inheritance" per le relazioni padre-figlio.
-- Per ogni classe, elenca TUTTI gli attributi e metodi menzionati nella traccia (anche se vuoti).
-- Per ogni relazione, specifica tipo, molteplicità esatta, nome ruolo se presente.
-- Usa associationClass quando una relazione ha attributi propri 
-- Mantieni le molteplicità esatte: "* - *", "1 - *", "1..* - 1", etc.
-- Se ci sono enum, aggiungile in "enumerations".
-- Non aggiungere elementi non esplicitamente menzionati nella traccia.
-
-TRACCIA:
-"${traccia}"`;
-
+`;
 
     }
 

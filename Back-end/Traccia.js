@@ -18,7 +18,7 @@ export class MnipolatorePdf {
              // console.log(`\n--- Contenuto di: ${file} ---`);
             }
             const pageContent = pageTexts.join(' ');
-            console.log(pageContent);
+            //console.log(pageContent);
             resultTexts.push(pageContent);
             pageTexts = [];
           }
@@ -30,7 +30,7 @@ export class MnipolatorePdf {
               printedFileName = true;
             }
             const pageContent = pageTexts.join(' ');
-            console.log(pageContent);
+            //console.log(pageContent);
             resultTexts.push(pageContent);
             pageTexts = [];
           }
