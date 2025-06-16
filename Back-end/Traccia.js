@@ -15,7 +15,7 @@ export class MnipolatorePdf {
         } else if (!item) {
           if (pageTexts.length > 0) {
             if (!printedFileName) {
-              console.log(`\n--- Contenuto di: ${file} ---`);
+             // console.log(`\n--- Contenuto di: ${file} ---`);
             }
             const pageContent = pageTexts.join(' ');
             console.log(pageContent);
@@ -26,7 +26,7 @@ export class MnipolatorePdf {
         } else if (item.page) {
           if (pageTexts.length > 0) {
             if (!printedFileName) {
-              console.log(`\n--- Contenuto di: ${file} ---`);
+             // console.log(`\n--- Contenuto di: ${file} ---`);
               printedFileName = true;
             }
             const pageContent = pageTexts.join(' ');
@@ -41,7 +41,7 @@ export class MnipolatorePdf {
           }
           if (item.y !== minY) {
             if (!printedFileName) {
-              console.log(`\n--- Contenuto di: ${file} ---`);
+              //console.log(`\n--- Contenuto di: ${file} ---`);
               printedFileName = true;
             }
             pageTexts.push(item.text);

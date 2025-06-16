@@ -26,10 +26,10 @@ export class OpenRouterIA {
         }
       );
 
-      console.log(`💬 Risposta da ${modelName}:\n`, response.data.choices[0].message.content);
+      //console.log(`💬 Risposta da ${modelName}:\n`, response.data.choices[0].message.content);
       return response.data.choices[0].message.content;
     } catch (error) {
-      console.error(`❌ Errore con ${modelName}:`, error.response?.data || error.message);
+      //console.error(`❌ Errore con ${modelName}:`, error.response?.data || error.message);
       return null;
     }
   }
@@ -37,7 +37,7 @@ export class OpenRouterIA {
   static generateUMLPrompt(traccia) {
   
  return `Sei uno studente universitario che deve modellare un sistema software a partire da una traccia.  
-Genera SOLO un oggetto JSON che descriva il modello UML delle classi, SENZA alcuna spiegazione, testo aggiuntivo o PlantUML.  
+Genera SOLO un oggetto JSON che descriva il modello UML delle classi, SENZA alcuna spiegazione o testo aggiuntivo .  
 
 
 IMPORTANTE: 
@@ -77,10 +77,10 @@ Il JSON deve avere questa struttura:
 
 REGOLE:
 - Usa ESATTAMENTE i nomi dalla traccia (non rinominare mai).
-- Identifica le gerarchie: se vengono descritti ruoli (organizzatore, giudice, partecipante), sono sottoclassi di una classe generale (es: UtenteRegistrato).
+- Identifica le gerarchie di ereditarietà e usa "inheritance" per le relazioni padre-figlio.
 - Per ogni classe, elenca TUTTI gli attributi e metodi menzionati nella traccia (anche se vuoti).
 - Per ogni relazione, specifica tipo, molteplicità esatta, nome ruolo se presente.
-- Usa associationClass quando una relazione ha attributi propri (es: Voto tra Giudice e Team).
+- Usa associationClass quando una relazione ha attributi propri 
 - Mantieni le molteplicità esatte: "* - *", "1 - *", "1..* - 1", etc.
 - Se ci sono enum, aggiungile in "enumerations".
 - Non aggiungere elementi non esplicitamente menzionati nella traccia.
