@@ -37,7 +37,7 @@ export class OpenRouterIA {
   static generateUMLPrompt(traccia) {
   
       return `Sei uno studente che deve creare un modello UML delle classi a partire da una traccia fornita da un docente.
-L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro, senza ottimizzazioni avanzate o scelte architetturali personali.
+L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro.
 
 Rappresenta:
 - tutte le classi e i loro attributi principali, con tipo e chiavi primarie se deducibili;

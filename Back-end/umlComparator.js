@@ -1,5 +1,4 @@
 import natural from 'natural';
-
 export class UMLComparator {
 
   static normalizeName(name) {
@@ -59,16 +58,13 @@ export class UMLComparator {
     return isEquivalent(normA, normB);
   }
 
-  // Modificato per essere meno severo e usare matchedClasses e direzionalità inversa
   static matchRelation(rel, relationsB, classesA, classesB, matchedClasses = [], debug = false) {
     const fromA = UMLComparator.normalizeName(rel.from);
     const toA = UMLComparator.normalizeName(rel.to);
     const typeA = rel.type ? rel.type.toLowerCase() : '';
 
-    // Soglia più bassa per sinonimi e nomi simili
     const THRESHOLD = 0.3;
 
-    // Funzione di supporto per trovare match tra classi abbinate
     function isMatchedClass(nameA, nameB) {
       return (
         UMLComparator.nameSimilarity(nameA, nameB) >= THRESHOLD ||
@@ -87,24 +83,11 @@ export class UMLComparator {
       const toB = UMLComparator.normalizeName(relB.to);
       const typeB = relB.type ? relB.type.toLowerCase() : '';
 
-      // Normale
       const fromMatch = isMatchedClass(fromA, fromB);
       const toMatch = isMatchedClass(toA, toB);
+      const typeMatch = typeA === typeB;
 
-      // Inversa
-      const fromMatchInv = isMatchedClass(fromA, toB);
-      const toMatchInv = isMatchedClass(toA, fromB);
-
-      // Confronta anche la molteplicità
-      const multA = rel.multiplicity || '';
-      const multB = relB.multiplicity || '';
-      const multMatch = UMLComparator.equivalentMultiplicity(multA, multB);
-
-      // Confronta anche il tipo di relazione (association, aggregation, composition, inheritance)
-      const typeMatch = typeA === typeB || !typeA || !typeB;
-
-      if ((fromMatch && toMatch && multMatch && typeMatch) ||
-          (fromMatchInv && toMatchInv && multMatch && typeMatch)) {
+      if (fromMatch && toMatch && typeMatch) {
         return true;
       }
     }
@@ -112,16 +95,16 @@ export class UMLComparator {
     return false;
   }
 
-  static compareUMLModels(modelA, modelB, weights = { class: 0.4, attr: 0.2, method: 0.2, relation: 0.2 }) {
+  static compareUMLModels(modelA, modelB, weights = { class: 0.5, attr: 0.2, method: 0.2, relation: 0.1 }) {
     let totalScore = 0;
     let totalWeight = 0;
     const matchedClasses = [];
 
     // Match tra classi
     modelA.classes.forEach(classA => {
-      const { match: classB, score: nameSimilarity } = UMLComparator.findClosestMatch(classA, modelB.classes);
-      if (classB && nameSimilarity > 0.7) {
-        matchedClasses.push({ classA, classB, nameSimilarity });
+      const { match, score } = UMLComparator.findClosestMatch(classA, modelB.classes);
+      if (match) {
+        matchedClasses.push({ classA, classB: match, nameSimilarity: score });
       }
     });
 
@@ -140,20 +123,21 @@ export class UMLComparator {
     matchedClasses.forEach(({ classA, classB }) => {
       const attrA = (classA.attributes || []).map(a => UMLComparator.normalizeName(a.name || a));
       const attrB = (classB.attributes || []).map(a => UMLComparator.normalizeName(a.name || a));
-      attrScore += natural.JaroWinklerDistance(attrA.join(' '), attrB.join(' '));
-
       const methA = (classA.methods || []).map(m => UMLComparator.normalizeName(m.name || m));
       const methB = (classB.methods || []).map(m => UMLComparator.normalizeName(m.name || m));
-      methodScore += natural.JaroWinklerDistance(methA.join(' '), methB.join(' '));
+
+      const attrSim = natural.JaroWinklerDistance(attrA.join(' '), attrB.join(' '));
+      const methSim = natural.JaroWinklerDistance(methA.join(' '), methB.join(' '));
+
+      attrScore += attrSim;
+      methodScore += methSim;
     });
 
-    // Media normalizzata solo se ci sono match
     if (matchedClasses.length > 0) {
       attrScore /= matchedClasses.length;
       methodScore /= matchedClasses.length;
     }
 
-    // Aggiungi ai punteggi pesati
     totalScore += attrScore * weights.attr;
     totalWeight += weights.attr;
 
