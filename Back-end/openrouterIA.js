@@ -44,6 +44,21 @@ Rappresenta:
 - eventuali enumerazioni;
 - tutte le relazioni tra le classi, prestando particolare attenzione alle associazioni:
 
+REGOLE PER GLI ATTRIBUTI:
+1. Estrai OGNI attributo menzionato nella traccia per ogni classe
+2. SCOMPONI gli attributi composti in attributi semplici (es: "indirizzo" diventa via, civico, città, cap, provincia)
+3. Per entità comuni aggiungi SEMPRE gli attributi ovvi:
+   - Utente/User: username, password, email, nome, cognome, dataRegistrazione
+   - Prodotto: nome, descrizione, prezzo, categoria, disponibilità
+   - Ordine: numero, data, stato, totale
+   - Cliente: nome, cognome, telefono, email, indirizzo
+   - Azienda: ragioneSociale, partitaIva, indirizzo, telefono, email
+4. Includi attributi impliciti logicamente necessari (id univoci, timestamp, stati)
+5. Se nella traccia si parla di "informazioni", "dati", "dettagli" di una classe, espandi con tutti gli attributi plausibili
+6. Mantieni tutti gli attributi che derivano da relazioni (chiavi esterne)
+7. Sii GENEROSO con gli attributi - è meglio averne troppi che troppo pochi
+
+
 REGOLE PER LE ASSOCIAZIONI:
 1. Se due classi sono collegate da un verbo o da una frase che indica una relazione, crea sempre un'associazione
 2. Identifica con precisione la direzione della relazione (chi "ha" chi, chi "usa" chi, chi "gestisce" chi)
