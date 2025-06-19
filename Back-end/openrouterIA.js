@@ -42,10 +42,23 @@ L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro.
 Rappresenta:
 - tutte le classi e i loro attributi principali, con tipo e chiavi primarie se deducibili;
 - eventuali enumerazioni;
-- tutte le relazioni tra le classi (associazioni, composizioni, ereditarietà, associationClass), indicando chiaramente:
-  - la molteplicità,
-  - la direzionalità,
-  - eventuali nomi dei ruoli.
+- tutte le relazioni tra le classi, prestando particolare attenzione alle associazioni:
+
+REGOLE PER LE ASSOCIAZIONI:
+1. Se due classi sono collegate da un verbo o da una frase che indica una relazione, crea sempre un'associazione
+2. Identifica con precisione la direzione della relazione (chi "ha" chi, chi "usa" chi, chi "gestisce" chi)
+3. Dedotti la molteplicità dal contesto della traccia:
+   - Parole come "uno", "alcuni", "molti", "tutti" indicano molteplicità specifica
+   - Se non specificato, ragiona logicamente (es: un cliente può avere molti ordini = 1 a *)
+4. Se la relazione ha attributi propri (date, quantità, etc.), usa associationClass
+5. Usa composition solo quando una classe non può esistere senza l'altra
+6. Usa inheritance solo quando c'è esplicita gerarchia (è un tipo di...)
+
+Per ogni associazione specifica:
+- il nome della relazione (verbo o frase descrittiva dalla traccia)
+- la molteplicità esatta per entrambi i lati
+- la direzionalità (navigabilità) quando è chiara dal contesto
+- eventuali nomi dei ruoli quando sono menzionati nella traccia
 
 Evita modelli avanzati, come classi astratte, controller, state machine o normalizzazioni eccessive.
 Interpreta ciò che è scritto nella traccia in modo il più possibile diretto e scolastico.
@@ -71,7 +84,10 @@ GENERA SOLO questo JSON (senza testo aggiuntivo):
       "to": "ClasseDestinazione",
       "type": "association|composition|inheritance|associationClass",
       "name": "nomeRelazione",
-      "multiplicity": "molteplicità_esatta",
+      "multiplicity": "molteplicità_origine",
+      "multiplicityTarget": "molteplicità_destinazione",
+      "direction": "bidirectional|unidirectional",
+      "role": "nomeRuolo",
       "attributes": [ "attributiAssociationClass" ]
     }
   ],

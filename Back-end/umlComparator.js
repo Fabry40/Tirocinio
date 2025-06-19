@@ -95,7 +95,7 @@ export class UMLComparator {
     return false;
   }
 
-  static compareUMLModels(modelA, modelB, weights = { class: 0.5, attr: 0.2, method: 0.2, relation: 0.1 }) {
+  static compareUMLModels(modelA, modelB, weights = { class: 0.4, attr: 0.2, method: 0.2, relation: 0.2 }) {
     let totalScore = 0;
     let totalWeight = 0;
     const matchedClasses = [];
