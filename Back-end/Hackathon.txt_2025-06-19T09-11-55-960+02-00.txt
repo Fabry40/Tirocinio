@@ -1,0 +1,1144 @@
+
+---------------------- Inizio del processo ----------------------
+
+
+----------------------primo step stampo il Contenuto del PDF----------------------  
+  Un hackathon, ovvero una "maratona di hacking", è   un evento durante il quale team di   partecipanti  si sfidano per progettare e implementare nuove soluzioni basate   su una certa tecnologia o mirate a  un certo ambito applicativo.    Ogni hackathon ha un   titolo identificativo, si svolge in una certa sede e in u n certo intervallo di  tempo   (solitamente  2  giorni)  e  ha  un  organizzatore  specifico  (registrato  alla  piattaforma).  L'organizzatore  seleziona  un  gruppo  di  giudici  (selezionati  tra  gli  utenti  della  piattaforma ,   invitandoli).  Infine,   l'organizzatore  apre  le  re gistrazioni,  che  si  chiuderanno  2  giorni  prima  dell'evento. Ogni   evento avrà un numero massimo di iscritti e una dimensione massima del team.   Durante il periodo di registrazione, gli utenti possono registrarsi per l'Hackathon di loro scelta   (eventualmente  registrandosi sulla piattaforma se non lo hanno già fatto). Una volta iscritti,   gli  utenti possono formare team. I team diventano definitivi quando si chiudono le iscrizioni. All'inizio  dell'hackathon, i giudici pubblicano una descrizione del problema da a ffrontare.    Durante l'hackathon, i team lavorano separatamente per risolvere il problema e devono caricare  periodicamente gli aggiornamenti sui "progressi" sulla piattaforma come documento, che può  essere esaminato e commentato dai giudici. Alla fine dell' hackathon, ogni giudice assegna un voto  (da 0 a 10) a ciascun team e la piattaforma, dopo aver acquisito tutti i voti, pubblica le classifiche  dei team.     Requisito per gruppi da tre persone.   Ogni partecipante può contattare un alt ro utente iscritto e chiedere di unirsi al team di cui fa parte,  fornendo un messaggio motivazionale; l'utente può accettare o rifiutare la richiesta. Un iscritto può  essere contattato solo se il team di cui è membro non ha raggiunto la dimensione massima.    
+ 
+📄 Contenuto PDF estratto!
+
+---------------------- secondo step stampo il Model JSON dell'XMI----------------------  
+{
+  "classes": [
+    {
+      "name": "Hackathon",
+      "attributes": [
+        {
+          "name": "sede",
+          "type": null
+        },
+        {
+          "name": "inizio",
+          "type": null
+        },
+        {
+          "name": "fine",
+          "type": null
+        },
+        {
+          "name": "titolo",
+          "type": null
+        },
+        {
+          "name": "numeroMassimoDiIscrizioni",
+          "type": null
+        },
+        {
+          "name": "numeroMassimoPersonePerTeam",
+          "type": null
+        },
+        {
+          "name": "inizioIscrizioni",
+          "type": null
+        },
+        {
+          "name": "fineIscrizioni",
+          "type": null
+        },
+        {
+          "name": "descrizioneProblem",
+          "type": null
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Organizzatore",
+      "attributes": [],
+      "methods": [
+        "inviaMailInvitoGiudice"
+      ]
+    },
+    {
+      "name": "UtenteRegistrato",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Giudice",
+      "attributes": [],
+      "methods": [
+        "pubblicaProblema"
+      ]
+    },
+    {
+      "name": "Partecipante",
+      "attributes": [],
+      "methods": [
+        "invitoTeam",
+        "accettaInvito",
+        "rifutaInvito"
+      ]
+    },
+    {
+      "name": "Team",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Documento",
+      "attributes": [
+        {
+          "name": "documento",
+          "type": null
+        },
+        {
+          "name": "data",
+          "type": null
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Voto",
+      "attributes": [
+        {
+          "name": "valore",
+          "type": null
+        }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Organizzatore",
+      "to": "UtenteRegistrato",
+      "type": "inheritance",
+      "name": "generalization"
+    },
+    {
+      "from": "Giudice",
+      "to": "Team",
+      "type": "association",
+      "name": "*",
+      "multiplicity": "*"
+    },
+    {
+      "from": "Giudice",
+      "to": "UtenteRegistrato",
+      "type": "inheritance",
+      "name": "generalization"
+    },
+    {
+      "from": "Partecipante",
+      "to": "UtenteRegistrato",
+      "type": "inheritance",
+      "name": "generalization"
+    },
+    {
+      "from": "Team",
+      "to": "Giudice",
+      "type": "association",
+      "name": "*",
+      "multiplicity": "*"
+    },
+    {
+      "from": "Team",
+      "to": "Giudice",
+      "type": "associationClass",
+      "name": "Voto",
+      "multiplicity": "* - *",
+      "attributes": [
+        "valore"
+      ]
+    },
+    {
+      "from": "Hackathon",
+      "to": "Organizzatore",
+      "type": "association",
+      "multiplicity": "1..* - 1"
+    },
+    {
+      "from": "Hackathon",
+      "to": "Giudice",
+      "type": "association",
+      "multiplicity": "1..* - 1..*"
+    },
+    {
+      "from": "Partecipante",
+      "to": "Hackathon",
+      "type": "association",
+      "multiplicity": "* - 1..*"
+    },
+    {
+      "from": "Team",
+      "to": "Hackathon",
+      "type": "association",
+      "multiplicity": "* - 1"
+    },
+    {
+      "from": "Team",
+      "to": "Documento",
+      "type": "association",
+      "multiplicity": "1 - *"
+    },
+    {
+      "from": "Partecipante",
+      "to": "Partecipante",
+      "type": "association",
+      "name": "invito",
+      "multiplicity": "* - *"
+    },
+    {
+      "from": "Organizzatore",
+      "to": "Giudice",
+      "type": "association",
+      "name": "invito",
+      "multiplicity": "* - *"
+    },
+    {
+      "from": "Team",
+      "to": "Partecipante",
+      "type": "association",
+      "multiplicity": " - 1..*"
+    }
+  ],
+  "enumerations": []
+}
+
+---------------------- terzo step stampo il risultato della IA----------------------  
+```json
+{
+  "classes": [
+    {
+      "name": "Hackathon",
+      "attributes": [
+        { "name": "titolo", "type": "String" },
+        { "name": "sede", "type": "String" },
+        { "name": "dataInizio", "type": "DateTime" },
+        { "name": "dataFine", "type": "DateTime" },
+        { "name": "numeroMassimoIscritti", "type": "Integer" },
+        { "name": "dimensioneMassimaTeam", "type": "Integer" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Utente",
+      "attributes": [
+        { "name": "id", "type": "Integer" },
+        { "name": "nome", "type": "String" },
+        { "name": "email", "type": "String" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Organizzatore",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Giudice",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Partecipante",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Team",
+      "attributes": [
+        { "name": "id", "type": "Integer" },
+        { "name": "nome", "type": "String" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Problema",
+      "attributes": [
+        { "name": "descrizione", "type": "String" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Documento",
+      "attributes": [
+        { "name": "titolo", "type": "String" },
+        { "name": "contenuto", "type": "String" },
+        { "name": "dataCaricamento", "type": "DateTime" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Voto",
+      "attributes": [
+        { "name": "valore", "type": "Integer" }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Classifica",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "RichiestaPartecipazione",
+      "attributes": [
+        { "name": "messaggio", "type": "String" },
+        { "name": "stato", "type": "String" }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Hackathon",
+      "to": "Organizzatore",
+      "type": "association",
+      "name": "organizzatoDa",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "organizzatore",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Giudice",
+      "type": "association",
+      "name": "seleziona",
+      "multiplicity": "*",
+      "multiplicityTarget": "1..*",
+      "direction": "unidirectional",
+      "role": "giudici",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Team",
+      "type": "association",
+      "name": "ha",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Problema",
+      "type": "association",
+      "name": "pubblica",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "problema",
+      "attributes": []
+    },
+    {
+      "from": "Team",
+      "to": "Partecipante",
+      "type": "association",
+      "name": "compostoDa",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "bidirectional",
+      "role": "membri",
+      "attributes": []
+    },
+    {
+      "from": "Team",
+      "to": "Documento",
+      "type": "association",
+      "name": "carica",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "documenti",
+      "attributes": []
+    },
+    {
+      "from": "Giudice",
+      "to": "Voto",
+      "type": "association",
+      "name": "assegna",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "voti",
+      "attributes": []
+    },
+    {
+      "from": "Voto",
+      "to": "Team",
+      "type": "association",
+      "name": "riceve",
+      "multiplicity": "*",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Partecipante",
+      "to": "RichiestaPartecipazione",
+      "type": "association",
+      "name": "invia",
+      "multiplicity": "*",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "richieste",
+      "attributes": []
+    },
+    {
+      "from": "RichiestaPartecipazione",
+      "to": "Team",
+      "type": "association",
+      "name": "rivoltaA",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Organizzatore",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Giudice",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Partecipante",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "StatoRichiesta",
+      "values": [ "ACCETTATA", "RIFIUTATA" ]
+    }
+  ]
+}
+```
+🧠 Risultato IA ottenuto!
+
+---------------------- quarto step stampo il Model JSON della IA---------------------- 
+{
+  "classes": [
+    {
+      "name": "Hackathon",
+      "attributes": [
+        {
+          "name": "titolo",
+          "type": "String"
+        },
+        {
+          "name": "sede",
+          "type": "String"
+        },
+        {
+          "name": "dataInizio",
+          "type": "DateTime"
+        },
+        {
+          "name": "dataFine",
+          "type": "DateTime"
+        },
+        {
+          "name": "numeroMassimoIscritti",
+          "type": "Integer"
+        },
+        {
+          "name": "dimensioneMassimaTeam",
+          "type": "Integer"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Utente",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "Integer"
+        },
+        {
+          "name": "nome",
+          "type": "String"
+        },
+        {
+          "name": "email",
+          "type": "String"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Organizzatore",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Giudice",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Partecipante",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "Team",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "Integer"
+        },
+        {
+          "name": "nome",
+          "type": "String"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Problema",
+      "attributes": [
+        {
+          "name": "descrizione",
+          "type": "String"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Documento",
+      "attributes": [
+        {
+          "name": "titolo",
+          "type": "String"
+        },
+        {
+          "name": "contenuto",
+          "type": "String"
+        },
+        {
+          "name": "dataCaricamento",
+          "type": "DateTime"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Voto",
+      "attributes": [
+        {
+          "name": "valore",
+          "type": "Integer"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Classifica",
+      "attributes": [],
+      "methods": []
+    },
+    {
+      "name": "RichiestaPartecipazione",
+      "attributes": [
+        {
+          "name": "messaggio",
+          "type": "String"
+        },
+        {
+          "name": "stato",
+          "type": "String"
+        }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Hackathon",
+      "to": "Organizzatore",
+      "type": "association",
+      "name": "organizzatoDa",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "organizzatore",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Giudice",
+      "type": "association",
+      "name": "seleziona",
+      "multiplicity": "*",
+      "multiplicityTarget": "1..*",
+      "direction": "unidirectional",
+      "role": "giudici",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Team",
+      "type": "association",
+      "name": "ha",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Hackathon",
+      "to": "Problema",
+      "type": "association",
+      "name": "pubblica",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "problema",
+      "attributes": []
+    },
+    {
+      "from": "Team",
+      "to": "Partecipante",
+      "type": "association",
+      "name": "compostoDa",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "bidirectional",
+      "role": "membri",
+      "attributes": []
+    },
+    {
+      "from": "Team",
+      "to": "Documento",
+      "type": "association",
+      "name": "carica",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "documenti",
+      "attributes": []
+    },
+    {
+      "from": "Giudice",
+      "to": "Voto",
+      "type": "association",
+      "name": "assegna",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": "voti",
+      "attributes": []
+    },
+    {
+      "from": "Voto",
+      "to": "Team",
+      "type": "association",
+      "name": "riceve",
+      "multiplicity": "*",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Partecipante",
+      "to": "RichiestaPartecipazione",
+      "type": "association",
+      "name": "invia",
+      "multiplicity": "*",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "richieste",
+      "attributes": []
+    },
+    {
+      "from": "RichiestaPartecipazione",
+      "to": "Team",
+      "type": "association",
+      "name": "rivoltaA",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": "team",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Organizzatore",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Giudice",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    },
+    {
+      "from": "Utente",
+      "to": "Partecipante",
+      "type": "inheritance",
+      "name": "isA",
+      "multiplicity": "",
+      "multiplicityTarget": "",
+      "direction": "unidirectional",
+      "role": "",
+      "attributes": []
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "StatoRichiesta",
+      "values": [
+        "ACCETTATA",
+        "RIFIUTATA"
+      ]
+    }
+  ]
+}
+
+---------------------- quinto step stampo il risultato del confronto tra i due modelli----------------------  
+
+Similarità totale: 0.728
+Dettagli: {"classSimilarity":0.716,"attributeSimilarity":0.655,"methodSimilarity":0.625,"relationSimilarity":0.929}
+Classi abbinate: [{"from":"Hackathon","to":"Hackathon","similarity":1},{"from":"Organizzatore","to":"Organizzatore","similarity":1},{"from":"UtenteRegistrato","to":"Utente","similarity":0.88},{"from":"Giudice","to":"Giudice","similarity":1},{"from":"Partecipante","to":"Partecipante","similarity":1},{"from":"Team","to":"Team","similarity":1},{"from":"Documento","to":"Documento","similarity":1},{"from":"Voto","to":"Voto","similarity":1}]
+
+🔍 Analizzando le differenze...
+
+---------------------- ANALISI ERRORI E SUGGERIMENTI ----------------------
+
+
+==================== REPORT ERRORI ====================
+Similarità: 72.8% - Status: MEDIO
+Errori attendibili: 10
+Errori non attendibili: 17
+========================================================
+
+🔴 ERRORI CRITICI (1):
+  1. Manca la classe "UtenteRegistrato"
+     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe UtenteRegistrato che rappresenta..."
+
+🟠 ERRORI IMPORTANTI (3):
+  1. Manca la relazione inheritance tra "Organizzatore" e "UtenteRegistrato"
+     💡 Suggerimento: Specifica nella traccia: "Organizzatore eredita da UtenteRegistrato" o "Organizzatore è un tipo di UtenteRegistrato"
+
+  2. Manca la relazione inheritance tra "Giudice" e "UtenteRegistrato"
+     💡 Suggerimento: Specifica nella traccia: "Giudice eredita da UtenteRegistrato" o "Giudice è un tipo di UtenteRegistrato"
+
+  3. Manca la relazione inheritance tra "Partecipante" e "UtenteRegistrato"
+     💡 Suggerimento: Specifica nella traccia: "Partecipante eredita da UtenteRegistrato" o "Partecipante è un tipo di UtenteRegistrato"
+
+🟡 ERRORI MINORI (6):
+  1. Nella classe "Hackathon" mancano gli attributi: inizio, fine, numeroMassimoDiIscrizioni, numeroMassimoPersonePerTeam, inizioIscrizioni, fineIscrizioni, descrizioneProblem
+     💡 Suggerimento: Specifica nella traccia: "La classe Hackathon deve avere i seguenti attributi: inizio, fine, numeroMassimoDiIscrizioni, numeroMassimoPersonePerTeam, inizioIscrizioni, fineIscrizioni, descrizioneProblem"
+
+  2. Nella classe "Documento" mancano gli attributi: documento, data
+     💡 Suggerimento: Specifica nella traccia: "La classe Documento deve avere i seguenti attributi: documento, data"
+
+  3. Generata classe non richiesta: "Utente"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+
+  4. Generata classe non richiesta: "Problema"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+
+  5. Generata classe non richiesta: "Classifica"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+
+  6. Generata classe non richiesta: "RichiestaPartecipazione"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+
+⚠️  ERRORI NON ATTENDIBILI (17):
+    ℹ️  L'IA spesso genera contenuti extra o ha difficoltà con le associazioni
+    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente
+
+  1. Manca la relazione association tra "Giudice" e "Team"
+     💡 Suggerimento: Specifica nella traccia: "Giudice è associato a Team"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  2. Manca la relazione association tra "Team" e "Giudice"
+     💡 Suggerimento: Specifica nella traccia: "Team è associato a Giudice"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  3. Manca la relazione associationClass tra "Team" e "Giudice"
+     💡 Suggerimento: Specifica nella traccia: "Team è associato a Giudice"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  4. Manca la relazione association tra "Partecipante" e "Hackathon"
+     💡 Suggerimento: Specifica nella traccia: "Partecipante è associato a Hackathon"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  5. Manca la relazione association tra "Partecipante" e "Partecipante"
+     💡 Suggerimento: Specifica nella traccia: "Partecipante è associato a Partecipante"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  6. Manca la relazione association tra "Organizzatore" e "Giudice"
+     💡 Suggerimento: Specifica nella traccia: "Organizzatore è associato a Giudice"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  7. Nella classe "Hackathon" sono stati generati attributi non richiesti: dataInizio, dataFine, numeroMassimoIscritti, dimensioneMassimaTeam
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  8. Nella classe "Team" sono stati generati attributi non richiesti: id, nome
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  9. Nella classe "Documento" sono stati generati attributi non richiesti: titolo, contenuto, dataCaricamento
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  10. Generata relazione non richiesta: association tra "Hackathon" e "Problema"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  11. Generata relazione non richiesta: association tra "Giudice" e "Voto"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  12. Generata relazione non richiesta: association tra "Voto" e "Team"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  13. Generata relazione non richiesta: association tra "Partecipante" e "RichiestaPartecipazione"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  14. Generata relazione non richiesta: association tra "RichiestaPartecipazione" e "Team"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  15. Generata relazione non richiesta: inheritance tra "Utente" e "Organizzatore"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  16. Generata relazione non richiesta: inheritance tra "Utente" e "Giudice"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  17. Generata relazione non richiesta: inheritance tra "Utente" e "Partecipante"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+========================================================
+
+
+---------------------- DIFFERENZE DETTAGLIATE ----------------------
+
+Classi mancanti: [
+  "UtenteRegistrato"
+]
+Classi extra: [
+  "Utente",
+  "Problema",
+  "Classifica",
+  "RichiestaPartecipazione"
+]
+Attributi mancanti: [
+  {
+    "className": "Hackathon",
+    "attributes": [
+      {
+        "name": "inizio",
+        "type": null
+      },
+      {
+        "name": "fine",
+        "type": null
+      },
+      {
+        "name": "numeroMassimoDiIscrizioni",
+        "type": null
+      },
+      {
+        "name": "numeroMassimoPersonePerTeam",
+        "type": null
+      },
+      {
+        "name": "inizioIscrizioni",
+        "type": null
+      },
+      {
+        "name": "fineIscrizioni",
+        "type": null
+      },
+      {
+        "name": "descrizioneProblem",
+        "type": null
+      }
+    ]
+  },
+  {
+    "className": "Documento",
+    "attributes": [
+      {
+        "name": "documento",
+        "type": null
+      },
+      {
+        "name": "data",
+        "type": null
+      }
+    ]
+  }
+]
+Attributi extra: [
+  {
+    "className": "Hackathon",
+    "attributes": [
+      {
+        "name": "dataInizio",
+        "type": "DateTime"
+      },
+      {
+        "name": "dataFine",
+        "type": "DateTime"
+      },
+      {
+        "name": "numeroMassimoIscritti",
+        "type": "Integer"
+      },
+      {
+        "name": "dimensioneMassimaTeam",
+        "type": "Integer"
+      }
+    ]
+  },
+  {
+    "className": "Team",
+    "attributes": [
+      {
+        "name": "id",
+        "type": "Integer"
+      },
+      {
+        "name": "nome",
+        "type": "String"
+      }
+    ]
+  },
+  {
+    "className": "Documento",
+    "attributes": [
+      {
+        "name": "titolo",
+        "type": "String"
+      },
+      {
+        "name": "contenuto",
+        "type": "String"
+      },
+      {
+        "name": "dataCaricamento",
+        "type": "DateTime"
+      }
+    ]
+  }
+]
+Relazioni mancanti: [
+  {
+    "from": "Organizzatore",
+    "to": "UtenteRegistrato",
+    "type": "inheritance",
+    "name": "generalization"
+  },
+  {
+    "from": "Giudice",
+    "to": "Team",
+    "type": "association",
+    "name": "*",
+    "multiplicity": "*"
+  },
+  {
+    "from": "Giudice",
+    "to": "UtenteRegistrato",
+    "type": "inheritance",
+    "name": "generalization"
+  },
+  {
+    "from": "Partecipante",
+    "to": "UtenteRegistrato",
+    "type": "inheritance",
+    "name": "generalization"
+  },
+  {
+    "from": "Team",
+    "to": "Giudice",
+    "type": "association",
+    "name": "*",
+    "multiplicity": "*"
+  },
+  {
+    "from": "Team",
+    "to": "Giudice",
+    "type": "associationClass",
+    "name": "Voto",
+    "multiplicity": "* - *",
+    "attributes": [
+      "valore"
+    ]
+  },
+  {
+    "from": "Partecipante",
+    "to": "Hackathon",
+    "type": "association",
+    "multiplicity": "* - 1..*"
+  },
+  {
+    "from": "Partecipante",
+    "to": "Partecipante",
+    "type": "association",
+    "name": "invito",
+    "multiplicity": "* - *"
+  },
+  {
+    "from": "Organizzatore",
+    "to": "Giudice",
+    "type": "association",
+    "name": "invito",
+    "multiplicity": "* - *"
+  }
+]
+Relazioni extra: [
+  {
+    "from": "Hackathon",
+    "to": "Problema",
+    "type": "association",
+    "name": "pubblica",
+    "multiplicity": "1",
+    "multiplicityTarget": "1",
+    "direction": "unidirectional",
+    "role": "problema",
+    "attributes": []
+  },
+  {
+    "from": "Giudice",
+    "to": "Voto",
+    "type": "association",
+    "name": "assegna",
+    "multiplicity": "1",
+    "multiplicityTarget": "*",
+    "direction": "unidirectional",
+    "role": "voti",
+    "attributes": []
+  },
+  {
+    "from": "Voto",
+    "to": "Team",
+    "type": "association",
+    "name": "riceve",
+    "multiplicity": "*",
+    "multiplicityTarget": "1",
+    "direction": "unidirectional",
+    "role": "team",
+    "attributes": []
+  },
+  {
+    "from": "Partecipante",
+    "to": "RichiestaPartecipazione",
+    "type": "association",
+    "name": "invia",
+    "multiplicity": "*",
+    "multiplicityTarget": "1",
+    "direction": "unidirectional",
+    "role": "richieste",
+    "attributes": []
+  },
+  {
+    "from": "RichiestaPartecipazione",
+    "to": "Team",
+    "type": "association",
+    "name": "rivoltaA",
+    "multiplicity": "1",
+    "multiplicityTarget": "1",
+    "direction": "unidirectional",
+    "role": "team",
+    "attributes": []
+  },
+  {
+    "from": "Utente",
+    "to": "Organizzatore",
+    "type": "inheritance",
+    "name": "isA",
+    "multiplicity": "",
+    "multiplicityTarget": "",
+    "direction": "unidirectional",
+    "role": "",
+    "attributes": []
+  },
+  {
+    "from": "Utente",
+    "to": "Giudice",
+    "type": "inheritance",
+    "name": "isA",
+    "multiplicity": "",
+    "multiplicityTarget": "",
+    "direction": "unidirectional",
+    "role": "",
+    "attributes": []
+  },
+  {
+    "from": "Utente",
+    "to": "Partecipante",
+    "type": "inheritance",
+    "name": "isA",
+    "multiplicity": "",
+    "multiplicityTarget": "",
+    "direction": "unidirectional",
+    "role": "",
+    "attributes": []
+  }
+]
+Tipi relazione sbagliati: []
+
+📊 RIEPILOGO FINALE:
+   Similarità: 72.8%
+   Errori attendibili: 10
+   Errori non attendibili: 17
+   Status: MEDIO
+
+💡 Segui i suggerimenti attendibili sopra per migliorare la traccia.
+⚠️  Gli errori non attendibili potrebbero essere falsi positivi.
