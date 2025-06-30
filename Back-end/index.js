@@ -1,6 +1,6 @@
 import { readdir } from 'fs';
 import { MnipolatoreXmi } from './UmlAtteso.js';
-import { GeminiAPI } from './Gamini.js';
+import { GeminiAPI } from './Gemini.js';
 import { OpenRouterIA } from './OpenrouterIA.js';
 import { UMLComparator } from './UmlComparator.js';
 import { MnipolatorePdf } from './Traccia.js';
