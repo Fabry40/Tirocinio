@@ -1,10 +1,10 @@
 import { readdir } from 'fs';
-import { MnipolatoreXmi } from './UmlAtteso.js';
+import { UmlAtteso } from './UmlAtteso.js';
 import { GeminiAPI } from './Gemini.js';
 import { OpenRouterIA } from './OpenrouterIA.js';
 import { UMLComparator } from './UmlComparator.js';
-import { MnipolatorePdf } from './Traccia.js';
-import { Logger } from './Logger.js';
+import { Traccia } from './Traccia.js';
+import { Logger } from './logger.js';
 import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
 
@@ -17,11 +17,11 @@ async function main() {
   Logger.setLogFileName(`${NAME_FILE}.txt`);
   Logger.logToFile("\n---------------------- Inizio del processo ----------------------\n");
 
-  const contenuto = await MnipolatorePdf.PrintTxtPdf(PDF_FILE);
+  const contenuto = await Traccia.PrintTxtPdf(PDF_FILE);
   Logger.logToFile("\n----------------------primo step stampo il Contenuto del PDF----------------------  \n" + contenuto);
   Logger.logToFile("📄 Contenuto PDF estratto!");
-  const jsonObj = MnipolatoreXmi.parseXmiFile(`./UmlAtteso/${XMI_FILE}`);
-  const modelA = MnipolatoreXmi.estraiModelCompatto(jsonObj);
+  const jsonObj = UmlAtteso.parseXmiFile(`./UmlAtteso/${XMI_FILE}`);
+  const modelA = UmlAtteso.estraiModelCompatto(jsonObj);
   Logger.logToFile("\n---------------------- secondo step stampo il Model JSON dell'XMI----------------------  \n" + JSON.stringify(modelA, null, 2));
 
   //let risultato = await OpenRouterIA.runMeta(contenuto);
@@ -81,24 +81,7 @@ async function main() {
   Logger.logToFile("Relazioni extra: " + JSON.stringify(differences.extraRelations, null, 2));
   Logger.logToFile("Tipi relazione sbagliati: " + JSON.stringify(differences.wrongRelationTypes, null, 2));
 
-  // Summary finale solo nel log
-  Logger.logToFile(`\n📊 RIEPILOGO FINALE:`);
-  Logger.logToFile(`   Similarità: ${(result.similarity * 100).toFixed(1)}%`);
-  Logger.logToFile(`   Errori attendibili: ${errorReport.summary.totalErrors}`);
-  Logger.logToFile(`   Errori non attendibili: ${errorReport.errors.nonReliable.length}`);
-  Logger.logToFile(`   Status: ${errorReport.summary.status}`);
-
-  if (errorReport.summary.totalErrors === 0 && errorReport.errors.nonReliable.length === 0) {
-    Logger.logToFile(`\n🎉 PERFETTO! La traccia genera un UML corrispondente al 100%!`);
-  } else if (errorReport.summary.totalErrors === 0) {
-    Logger.logToFile(`\n✅ OTTIMO! Solo possibili problemi non attendibili (da verificare manualmente).`);
-    Logger.logToFile(`💡 Concentrati sui suggerimenti attendibili per migliorare la traccia.`);
-  } else {
-    Logger.logToFile(`\n💡 Segui i suggerimenti attendibili sopra per migliorare la traccia.`);
-    if (errorReport.errors.nonReliable.length > 0) {
-      Logger.logToFile(`⚠️  Gli errori non attendibili potrebbero essere falsi positivi.`);
-    }
-  }
+  
 
   console.log("Processo di confronto UML completato!");
 }

@@ -1,7 +1,7 @@
 import { XMLParser } from 'fast-xml-parser';
 import fs from 'fs';
 
-export class MnipolatoreXmi {
+export class UmlAtteso {
   // Leggi e parsa un file XMI, restituisce l'oggetto JSON
   static parseXmiFile(filePath) {
     const xmiContent = fs.readFileSync(filePath, 'utf-8');

@@ -1,6 +1,6 @@
 import { PdfReader } from 'pdfreader';
 
-export class MnipolatorePdf {
+export class Traccia {
   static PrintTxtPdf(file) {
     return new Promise((resolve, reject) => {
       let pageTexts = [];
