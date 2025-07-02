@@ -1,16 +1,16 @@
 import { readdir } from 'fs';
 import { UmlAtteso } from './UmlAtteso.js';
 import { GeminiAPI } from './Gemini.js';
-import { OpenRouterIA } from './OpenrouterIA.js';
-import { UMLComparator } from './UmlComparator.js';
+import { OpenRouterIA } from './OpenRouterIA.js';
+import { UMLComparator } from './UMLComparator.js';
 import { Traccia } from './Traccia.js';
 import { Logger } from './logger.js';
 import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
 
-const PDF_FILE = 'Hackathon.pdf'; //Nome del file PDF da analizzare
-const XMI_FILE = 'Hackathon.xmi'; //Nome del file XMI atteso
-const NAME_FILE = 'Hackathon'; // Nome del file di log
+const PDF_FILE = 'Aeroporto.pdf'; //Nome del file PDF da analizzare
+const XMI_FILE = 'Aeroporto.xmi'; //Nome del file XMI atteso
+const NAME_FILE = 'Aeroporto'; // Nome del file di log
 
 async function main() {
   console.log("Inizio del processo di confronto UML...");

@@ -134,7 +134,7 @@ export class OpenRouterIA {
     static async runMeta(traccia) {
       const prompt = OpenRouterIA.generateUMLPrompt(traccia);
       // Meta LLaMA 4 (Maveric)
-      return await OpenRouterIA.callOpenRouterModel('meta-llama/llama-4-maverick:free', prompt);
+      return await OpenRouterIA.callOpenRouterModel('meta-llama/llama-4-scout:free', prompt);
     }
 
     static async runDeepSeek(traccia) {
