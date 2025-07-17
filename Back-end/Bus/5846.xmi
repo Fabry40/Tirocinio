@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model16" name="BusModel16">
+    <ownedMember xmi:type="uml:Class" xmi:id="classBus" name="Bus">
+      <ownedAttribute xmi:id="classBus_attr1" name="Trga" type="string"/>
+      <ownedAttribute xmi:id="classBus_attr2" name="Compagnia" type="string"/>
+      <ownedAttribute xmi:id="classBus_attr3" name="Nlinea" type="string"/>
+      <ownedAttribute xmi:id="classBus_attr4" name="StatoBUS" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classLine2" name="Line2">
+      <ownedAttribute xmi:id="classLine2_attr1" name="Nlinea" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr2" name="Nfermata" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr3" name="PuntoDiPartenza" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr4" name="OrarioDiPartenza" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr5" name="PuntoDiArrivo" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr6" name="OrariDiArrivo" type="string"/>
+      <ownedAttribute xmi:id="classLine2_attr7" name="DataDunfionamento" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFermata" name="Fermata">
+      <ownedAttribute xmi:id="classFermata_attr1" name="NomeFermata" type="string"/>
+      <ownedAttribute xmi:id="classFermata_attr2" name="Obbligazione" type="string"/>
+      <ownedAttribute xmi:id="classFermata_attr3" name="Nlinea" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocBusLinea" name="Bus_Linea">
+      <ownedEnd xmi:id="assocBusLinea_end1" type="classBus">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocBusLinea_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocBusLinea_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocBusLinea_end2" type="classLine2">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocBusLinea_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocBusLinea_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaBus" name="Linea_Bus">
+      <ownedEnd xmi:id="assocLineaBus_end1" type="classLine2">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaBus_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaBus_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaBus_end2" type="classBus">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaBus_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaBus_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+  </uml:Model>
+</xmi:XMI>

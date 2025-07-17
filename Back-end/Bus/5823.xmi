@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model8" name="BusModel8">
+    <ownedMember xmi:type="uml:Enumeration" xmi:id="enumCausaIndisp" name="CausaIndisp">
+      <ownedLiteral xmi:id="enumCausaIndisp_festivo" name="Festivo"/>
+      <ownedLiteral xmi:id="enumCausaIndisp_sciopero" name="sciopero"/>
+      <ownedLiteral xmi:id="enumCausaIndisp_guasto" name="guasto"/>
+      <ownedLiteral xmi:id="enumCausaIndisp_viabilita" name="Viabilita"/>
+      <ownedLiteral xmi:id="enumCausaIndisp_ritirato" name="ritirato"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classCompagnia" name="Compagnia">
+      <ownedAttribute xmi:id="classCompagnia_attr1" name="nome" type="string"/>
+      <ownedAttribute xmi:id="classCompagnia_attr2" name="Sede" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classLinea" name="Linea">
+      <ownedAttribute xmi:id="classLinea_attr1" name="tratta" type="string"/>
+      <ownedAttribute xmi:id="classLinea_attr2" name="sigla" type="string"/>
+      <ownedAttribute xmi:id="classLinea_attr3" name="compagnia" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classCorsa" name="Corsa">
+      <ownedAttribute xmi:id="classCorsa_attr1" name="Data" type="string"/>
+      <ownedAttribute xmi:id="classCorsa_attr2" name="Orario_Partenza" type="string"/>
+      <ownedAttribute xmi:id="classCorsa_attr3" name="Orario_Arrivo" type="string"/>
+      <ownedAttribute xmi:id="classCorsa_attr4" name="Linea" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFermata" name="Fermata">
+      <ownedAttribute xmi:id="classFermata_attr1" name="nome" type="string"/>
+      <ownedAttribute xmi:id="classFermata_attr2" name="numero" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFermataIntermedia" name="Fermata_intermedia">
+      <ownedAttribute xmi:id="classFermataIntermedia_attr1" name="Linea" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classCorsaInPartenza" name="Corsa_in_partenza">
+      <ownedAttribute xmi:id="classCorsaInPartenza_attr1" name="Destinazione" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classCorsaInArrivo" name="Corsa_in_arrivo">
+      <ownedAttribute xmi:id="classCorsaInArrivo_attr1" name="Origine" type="string"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classIndisponibilita" name="Indisponibilita">
+      <ownedAttribute xmi:id="classIndisponibilita_attr1" name="data" type="string"/>
+      <ownedAttribute xmi:id="classIndisponibilita_attr2" name="Causa" type="CausaIndisp"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaCompagnia" name="Linea_Compagnia">
+      <ownedEnd xmi:id="assocLineaCompagnia_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCompagnia_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCompagnia_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaCompagnia_end2" type="classCompagnia">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCompagnia_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCompagnia_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaFermata" name="Linea_Fermata">
+      <ownedEnd xmi:id="assocLineaFermata_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaFermata_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaFermata_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaFermata_end2" type="classFermata">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaFermata_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaFermata_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaCorsa" name="Linea_Corsa">
+      <ownedEnd xmi:id="assocLineaCorsa_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCorsa_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCorsa_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaCorsa_end2" type="classCorsa">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCorsa_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCorsa_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocCorsaIndisponibilita" name="Corsa_Indisponibilita">
+      <ownedEnd xmi:id="assocCorsaIndisponibilita_end1" type="classCorsa">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocCorsaIndisponibilita_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocCorsaIndisponibilita_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocCorsaIndisponibilita_end2" type="classIndisponibilita">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocCorsaIndisponibilita_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocCorsaIndisponibilita_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Generalization" xmi:id="genCorsaInPartenzaCorsa" name="Corsa_in_partenza_Corsa">
+      <general xmi:idref="classCorsa"/>
+      <specific xmi:idref="classCorsaInPartenza"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Generalization" xmi:id="genCorsaInArrivoCorsa" name="Corsa_in_arrivo_Corsa">
+      <general xmi:idref="classCorsa"/>
+      <specific xmi:idref="classCorsaInArrivo"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Generalization" xmi:id="genFermataIntermediaFermata" name="Fermata_intermedia_Fermata">
+      <general xmi:idref="classFermata"/>
+      <specific xmi:idref="classFermataIntermedia"/>
+    </ownedMember>
+  </uml:Model>
+</xmi:XMI>
