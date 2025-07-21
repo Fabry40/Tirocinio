@@ -28,15 +28,30 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
    ```
 
 ## 🛠️ Configurazione
-
-- Nel file `index.js`, modifica le seguenti costanti (riga 10–12) per selezionare i file da confrontare e indicare il file Log:
+- Nel file `index.js`, Scegli quale processo avviare(riga:180-181):
+  ```js
+    Voto();//Calcola la similarita sia su file campione sia su IA
+    main();//permette di eseguire il calsolo di similarita con l'algoritmo Nikiforova 
+  ```
+  - Nel file `index.js` modifica le seguenti costanti riga 14 per indicare il file Log:
+  ```js
+  const NAME_FILE = 'esempio'; // Nome del file di log
+  ```
+- Nel file `index.js`, quando si seleziona il metodo Main(), modifica le seguenti costanti riga 12–13 per selezionare i file da confrontare :
   ```js
   const PDF_FILE = 'esempio.pdf'; //Nome del file PDF da analizzare
   const XMI_FILE = 'esempio.xmi'; //Nome del file XMI atteso
-  const NAME_FILE = 'esempio'; // Nome del file di log
+  ```
+  - Nel file `index.js`, quando si seleziona il metodo Voto(), modifica le seguenti costanti (riga 12–14) per selezionare i file da confrontare:
+  ```js
+   const DIRECTORY_ATTESO = './UmlAtteso';//DIRECTORY dove prendere l'UMLatteso 
+   const DIRECTORY_CAMPIONI = './Album';//DIRECTORY dove prendere i campioni da testare
+   const FILE_ESTENSIONE = '.xmi';// estensione dei file
+   const XMI_FILE_Traccia_Prof = 'Fotografia.xmi'; //Nome del file XMI atteso
+   const PDF_FILE_Traccia_Prof = 'Fotografia.pdf'; //Nome del file PDF da analizzare
   ```
 
-- Scegli l’IA da utilizzare (riga 24–26), mantenendo attiva solo una delle seguenti righe e commentando le altre:
+- Scegli l’IA da utilizzare (per main() riga 24–26 e per voto() riga 140-141), mantenendo attiva solo una delle seguenti righe e commentando le altre:
   ```js
   let risultato = await OpenRouterIA.runMeta(contenuto);
   let risultato = await OpenRouterIA.runDeepSeek(contenuto);
