@@ -30,8 +30,8 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
 ## 🛠️ Configurazione
 - Nel file `index.js`, Scegli quale processo avviare(riga:180-181):
   ```js
-    Voto();//permette di verificre file UML calcolando per ognuno di essi le due tipologie di similarita
-    main();// permette di eseguire il calsolo di similarita con l'algoritmo Nikiforova 
+    Voto();//Calcola la similarita sia su file campione sia su IA
+    main();//permette di eseguire il calsolo di similarita con l'algoritmo Nikiforova 
   ```
   - Nel file `index.js` modifica le seguenti costanti riga 14 per indicare il file Log:
   ```js
