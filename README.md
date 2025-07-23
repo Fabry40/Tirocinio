@@ -1,6 +1,6 @@
 # UML Comparator - JS
 
-Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un modello UML generato automaticamente da un'IA, a partire da una traccia in PDF. Il sistema calcola la similarità tra i due modelli e genera un report dettagliato.
+Questo progetto confronta modelli UML con configurazione flessibile tramite file `Config.js`.
 
 ## 🚀 Requisiti
 
@@ -14,61 +14,94 @@ Questo progetto confronta un modello UML atteso (in formato `.xmi`) con un model
    npm install
    ```
 
-2. **Crea il file `.env`** nella cartella `Back-end` con il seguente contenuto (sostituisci le chiavi con quelle reali):
+2. **Crea il file `.env`** nella cartella `Back-end`:
    ```
    GEMINI_API_KEY="la_tua_chiave_gemini"
    openrouter_API_KEY="la_tua_chiave_openrouter"
    ```
 
-3. **Crea le seguenti cartelle** nella cartella `Back-end`:
+3. **Crea le cartelle necessarie** nella cartella `Back-end`:
    ```
    Back-end/
-   ├── Traccia/      # Contiene i file PDF delle tracce
-   └── UmlAtteso/    # Contiene i file XMI dei modelli UML attesi
+   ├── Traccia/      # File PDF delle tracce
+   ├── UmlAtteso/    # File XMI di riferimento (docente)
+   ├── Album/        # File XMI degli studenti (per esperimento "Voto")
+   └── risultati/    # Cartella per i file log di output
    ```
 
 ## 🛠️ Configurazione
-- Nel file `index.js`, Scegli quale processo avviare(riga:180-181):
-  ```js
-    Voto();//Calcola la similarita sia su file campione sia su IA
-    main();//permette di eseguire il calsolo di similarita con l'algoritmo Nikiforova 
-  ```
-  - Nel file `index.js` modifica le seguenti costanti riga 14 per indicare il file Log:
-  ```js
-  const NAME_FILE = 'esempio'; // Nome del file di log
-  ```
-- Nel file `index.js`, quando si seleziona il metodo Main(), modifica le seguenti costanti riga 12–13 per selezionare i file da confrontare :
-  ```js
-  const PDF_FILE = 'esempio.pdf'; //Nome del file PDF da analizzare
-  const XMI_FILE = 'esempio.xmi'; //Nome del file XMI atteso
-  ```
-  - Nel file `index.js`, quando si seleziona il metodo Voto(), modifica le seguenti costanti (riga 12–14) per selezionare i file da confrontare:
-  ```js
-   const DIRECTORY_ATTESO = './UmlAtteso';//DIRECTORY dove prendere l'UMLatteso 
-   const DIRECTORY_CAMPIONI = './Album';//DIRECTORY dove prendere i campioni da testare
-   const FILE_ESTENSIONE = '.xmi';// estensione dei file
-   const XMI_FILE_Traccia_Prof = 'Fotografia.xmi'; //Nome del file XMI atteso
-   const PDF_FILE_Traccia_Prof = 'Fotografia.pdf'; //Nome del file PDF da analizzare
-  ```
 
-- Scegli l’IA da utilizzare (per main() riga 24–26 e per voto() riga 140-141), mantenendo attiva solo una delle seguenti righe e commentando le altre:
-  ```js
-  let risultato = await OpenRouterIA.runMeta(contenuto);
-  let risultato = await OpenRouterIA.runDeepSeek(contenuto);
-  let risultato = await GeminiAPI.getGeminiResponse(contenuto);
-  ```
-  ⚠️ Il programma utilizza solo l'ultima IA attiva. Non è progettato per gestire più risultati contemporaneamente.
+**Modifica il file `Config.js`** per scegliere:
+
+### Esempi di configurazione per replicare sperimentazioni:
+
+#### **Esperimento "main" - Confronto XMI atteso vs XMI con IA:**
+```javascript
+export const experiment = "main";
+export const aiProvider = "deepSeek";  // "deepSeek", "meta", "gemini"
+export const pdfFile = "Fotografia.pdf";
+export const xmiFile = "Fotografia.xmi";
+export const logFile = "Fotografia";
+export const directoryCampioni = "";//non serve
+```
+
+#### **Esperimento "Voto" - Valutazione multipla anche IA rsipetto XMIAtteso:**
+```javascript
+export const experiment = "Voto";
+export const aiProvider = "gemini"; // "deepSeek", "meta", "gemini"
+export const pdfFile = "Fotografia.pdf";
+export const xmiFile = "Fotografia.xmi";
+export const logFile = "Fotografia_voto";
+export const directoryCampioni = "./Album";
+```
 
 ## ▶️ Avvio
 
-Avvia il programma:
 ```bash
 npm start
 ```
 
+## 📋 Replicazione delle sperimentazioni
+
+### Per replicare una sperimentazione esistente:
+1. Modifica `Config.js` con i parametri desiderati
+2. Assicurati che i file PDF/XMI esistano nelle cartelle corrette
+3. Avvia con `npm start`
+4. I risultati saranno nel file di log specificato
+
+### Per aggiungere una nuova sperimentazione:
+1. Aggiungi i file PDF e XMI nelle cartelle appropriate
+2. Modifica `Config.js` con i nuovi nomi dei file
+3. Scegli l'esperimento (`"main"` o `"Voto"`) e l'IA
+4. Avvia il programma
+
+### Parametri di configurazione:
+
+| Parametro | Descrizione | Valori |
+|-----------|-------------|---------|
+| `experiment` | Tipo di sperimentazione | `"main"`, `"Voto"` |
+| `aiProvider` | IA da utilizzare | `"deepSeek"`, `"meta"`, `"gemini"` |
+| `pdfFile` | File PDF della traccia | Nome file in `Traccia/` |
+| `xmiFile` | File XMI di riferimento | Nome file in `UmlAtteso/` |
+| `logFile` | Nome base del log | Stringa senza estensione |
+| `directoryCampioni` | Cartella file studenti | Percorso cartella |
+
 ## 📄 Output
 
-Il file di log con i risultati verrà salvato nella cartella `Back-end`. Il nome del file sarà del tipo:
-```
-esempio<data>.txt
-```
+I file di log vengono salvati nella cartella `Back-end` con formato:
+- Esperimento "main": `nomeFile.txt`  
+- Esperimento "Voto": `nomeFile_voto.txt`
+
+**✨ Non serve più modificare il codice: tutto è configurabile tramite `Config.js`!**
+
+## 📊 Dati raw delle sperimentazioni
+
+I dati raw delle sperimentazioni sono disponibili nelle cartelle:
+- [`Back-end/Album`](Back-end/Album): file XMI prodotti dagli studenti (esperimento "Voto")
+- [`Back-end/Bus`](Back-end/Bus): file XMI di un altro set di sperimentazione
+- [`Back-end/risultati`](Back-end/risultati): file di log generati dagli esperimenti
+
+### Come leggere i dati
+
+- I file `.xmi` sono in formato XML/XMI e possono essere aperti con un editor di testo, strumenti UML o analizzati tramite script.
+

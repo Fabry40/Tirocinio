@@ -1,14 +1,14 @@
 import natural from 'natural';
 
-export class VotoComparator {
+export class SimilaritaNumeroErrori {
   static normalizeName(name) {
     if (!name) return "";
     return name.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
   static nameSimilarity(a, b) {
-    a = VotoComparator.normalizeName(a);
-    b = VotoComparator.normalizeName(b);
+    a = SimilaritaNumeroErrori.normalizeName(a);
+    b = SimilaritaNumeroErrori.normalizeName(b);
     return natural.JaroWinklerDistance(a, b);
   }
 
@@ -16,7 +16,7 @@ export class VotoComparator {
     let bestMatch = null;
     let bestScore = 0;
     namesB.forEach(nameB => {
-      const score = VotoComparator.nameSimilarity(nameA, nameB);
+      const score = SimilaritaNumeroErrori.nameSimilarity(nameA, nameB);
       if (score > bestScore) {
         bestScore = score;
         bestMatch = nameB;
@@ -28,10 +28,10 @@ export class VotoComparator {
   static compareClasses(classiProf, classiStud, threshold) {
     let errori = 0;
     classiProf.forEach(name => {
-      if (!VotoComparator.findClosestMatch(name, classiStud, threshold)) errori++;
+      if (!SimilaritaNumeroErrori.findClosestMatch(name, classiStud, threshold)) errori++;
     });
     classiStud.forEach(name => {
-      if (!VotoComparator.findClosestMatch(name, classiProf, threshold)) errori++;
+      if (!SimilaritaNumeroErrori.findClosestMatch(name, classiProf, threshold)) errori++;
     });
     return errori;
   }
@@ -40,16 +40,16 @@ export class VotoComparator {
     let errori = 0;
     modelProf.classes.forEach(profClass => {
       const studClass = modelStud.classes.find(
-        c => VotoComparator.nameSimilarity(c.name, profClass.name) >= threshold
+        c => SimilaritaNumeroErrori.nameSimilarity(c.name, profClass.name) >= threshold
       );
       const attrProf = (profClass.attributes || []).map(a => a.name || a);
       if (studClass) {
         const attrStud = (studClass.attributes || []).map(a => a.name || a);
         attrProf.forEach(name => {
-          if (!VotoComparator.findClosestMatch(name, attrStud, threshold)) errori++;
+          if (!SimilaritaNumeroErrori.findClosestMatch(name, attrStud, threshold)) errori++;
         });
         attrStud.forEach(name => {
-          if (!VotoComparator.findClosestMatch(name, attrProf, threshold)) errori++;
+          if (!SimilaritaNumeroErrori.findClosestMatch(name, attrProf, threshold)) errori++;
         });
       } else {
         errori += attrProf.length;
@@ -61,10 +61,10 @@ export class VotoComparator {
   static compareEnumerations(enumProf, enumStud, threshold) {
     let errori = 0;
     enumProf.forEach(name => {
-      if (!VotoComparator.findClosestMatch(name, enumStud, threshold)) errori++;
+      if (!SimilaritaNumeroErrori.findClosestMatch(name, enumStud, threshold)) errori++;
     });
     enumStud.forEach(name => {
-      if (!VotoComparator.findClosestMatch(name, enumProf, threshold)) errori++;
+      if (!SimilaritaNumeroErrori.findClosestMatch(name, enumProf, threshold)) errori++;
     });
     return errori;
   }
@@ -116,7 +116,7 @@ export class VotoComparator {
     let errori = 0;
     relProf.forEach(rp => {
       const rs = relStud.find(rs => rs.from === rp.from && rs.to === rp.to);
-      if (!rs || !VotoComparator.equivalentMultiplicity(rp.multiplicity, rs.multiplicity)) errori++;
+      if (!rs || !SimilaritaNumeroErrori.equivalentMultiplicity(rp.multiplicity, rs.multiplicity)) errori++;
     });
     return errori;
   }
@@ -137,7 +137,7 @@ export class VotoComparator {
   }
 
   static isId(name) {
-    name = VotoComparator.normalizeName(name);
+    name = SimilaritaNumeroErrori.normalizeName(name);
     return name === 'id' || name.endsWith('id');
   }
 
@@ -149,13 +149,13 @@ export class VotoComparator {
   // 1. Classi
   const classiProf = modelProf.classes.map(c => c.name);
   const classiStud = modelStud.classes.map(c => c.name);
-  if (VotoComparator.compareClasses(classiProf, classiStud, THRESHOLD) > 0) {
+  if (SimilaritaNumeroErrori.compareClasses(classiProf, classiStud, THRESHOLD) > 0) {
     errori++;
     erroriDettaglio.push("Classi");
   }
 
   // 2. Attributi
-  if (VotoComparator.compareAttributes(modelProf, modelStud, THRESHOLD) > 0) {
+  if (SimilaritaNumeroErrori.compareAttributes(modelProf, modelStud, THRESHOLD) > 0) {
     errori++;
     erroriDettaglio.push("Attributi");
   }
@@ -163,13 +163,13 @@ export class VotoComparator {
   // 3. Associazioni
   const relProf = (modelProf.relations || []).filter(r => r.type === 'association');
   const relStud = (modelStud.relations || []).filter(r => r.type === 'association');
-  if (VotoComparator.compareRelations(relProf, relStud) > 0) {
+  if (SimilaritaNumeroErrori.compareRelations(relProf, relStud) > 0) {
     errori++;
     erroriDettaglio.push("Associazioni");
   }
 
   // 4. Molteplicità
-  if (VotoComparator.compareMultiplicity(relProf, relStud) > 0) {
+  if (SimilaritaNumeroErrori.compareMultiplicity(relProf, relStud) > 0) {
     errori++;
     erroriDettaglio.push("Molteplicità");
   }
@@ -177,7 +177,7 @@ export class VotoComparator {
   // 5. Enumerazioni
   const enumProf = (modelProf.enumerations || []).map(e => e.name);
   const enumStud = (modelStud.enumerations || []).map(e => e.name);
-  if (VotoComparator.compareEnumerations(enumProf, enumStud, THRESHOLD) > 0) {
+  if (SimilaritaNumeroErrori.compareEnumerations(enumProf, enumStud, THRESHOLD) > 0) {
     errori++;
     erroriDettaglio.push("Enumerazioni");
   }
@@ -185,7 +185,7 @@ export class VotoComparator {
   // 6. Generalizzazioni
   const genProf = (modelProf.relations || []).filter(r => r.type === 'generalization');
   const genStud = (modelStud.relations || []).filter(r => r.type === 'generalization');
-  if (VotoComparator.compareGeneralizations(genProf, genStud) > 0) {
+  if (SimilaritaNumeroErrori.compareGeneralizations(genProf, genStud) > 0) {
     errori++;
     erroriDettaglio.push("Generalizzazioni");
   }
@@ -195,7 +195,7 @@ export class VotoComparator {
   modelStud.classes.forEach(studClass => {
     (studClass.attributes || []).forEach(attr => {
       const attrName = attr.name || attr;
-      if (VotoComparator.isId(attrName)) idError = true;
+      if (SimilaritaNumeroErrori.isId(attrName)) idError = true;
     });
   });
   if (idError) {

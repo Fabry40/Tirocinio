@@ -7,11 +7,32 @@ import { Traccia } from './Traccia.js';
 import { Logger } from './logger.js';
 import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
-import { VotoComparator } from './Voto.js';
+import { SimilaritaNumeroErrori } from './Voto.js'; 
+// Importa la configurazione
+import { experiment, pdfFile, xmiFile, logFile, directoryCampioni, aiProvider } from './Config.js';
 
-const PDF_FILE = 'Aeroporto.pdf'; //Nome del file PDF da analizzare
-const XMI_FILE = 'Autobus.xmi'; //Nome del file XMI atteso
-const NAME_FILE = 'Fotografia'; // Nome del file di log
+// Usa i valori dalla configurazione
+const PDF_FILE = pdfFile;
+const XMI_FILE = xmiFile;
+const NAME_FILE = logFile;
+const DIRECTORY_ATTESO = './UmlAtteso';
+const DIRECTORY_CAMPIONI = directoryCampioni;
+const FILE_ESTENSIONE = '.xmi';
+
+async function callAI(contenuto) {
+  switch (aiProvider) {
+    case "deepSeek":
+      return await OpenRouterIA.runDeepSeek(contenuto);
+    case "meta":
+      return await OpenRouterIA.runMeta(contenuto);
+    case "gemini":
+      return await GeminiAPI.getGeminiResponse(contenuto);
+    default:
+      console.error(`❌ Provider IA non riconosciuto: ${aiProvider}`);
+      console.error("Valori validi: 'deepSeek', 'meta', 'gemini'");
+      return null;
+  }
+}
 
 async function main() {
   console.log("Inizio del processo di confronto UML...");
@@ -21,13 +42,10 @@ async function main() {
   const contenuto = await Traccia.PrintTxtPdf(PDF_FILE);
   Logger.logToFile("\n----------------------primo step stampo il Contenuto del PDF----------------------  \n" + contenuto);
   Logger.logToFile("📄 Contenuto PDF estratto!");
-  const jsonObj = UmlAtteso.parseXmiFile(`./UmlAtteso/${XMI_FILE}`);
+  const jsonObj = UmlAtteso.parseXmiFile(`${DIRECTORY_ATTESO}/${XMI_FILE}`);
   const modelA = UmlAtteso.estraiModelCompatto(jsonObj);
   Logger.logToFile("\n---------------------- secondo step stampo il Model JSON dell'XMI----------------------  \n" + JSON.stringify(modelA, null, 2));
-
-  //let risultato = await OpenRouterIA.runMeta(contenuto);
-  let risultato = await OpenRouterIA.runDeepSeek(contenuto);
-  //let  risultato = await GeminiAPI.getGeminiResponse(contenuto);
+  let risultato = await callAI(contenuto);
   Logger.logToFile("\n---------------------- terzo step stampo il risultato della IA----------------------  \n" + risultato);
   Logger.logToFile("🧠 Risultato IA ottenuto!");
 
@@ -81,22 +99,13 @@ async function main() {
   Logger.logToFile("Relazioni mancanti: " + JSON.stringify(differences.missingRelations, null, 2));
   Logger.logToFile("Relazioni extra: " + JSON.stringify(differences.extraRelations, null, 2));
   Logger.logToFile("Tipi relazione sbagliati: " + JSON.stringify(differences.wrongRelationTypes, null, 2));
-
-  
-
- 
 }
-const DIRECTORY_ATTESO = './UmlAtteso';
-const DIRECTORY_CAMPIONI = './Album';
-const FILE_ESTENSIONE = '.xmi';
-const XMI_FILE_Traccia_Prof = 'Fotografia.xmi'; //Nome del file XMI atteso
-const PDF_FILE_Traccia_Prof = 'Fotografia.pdf'; //Nome del file PDF da analizzare
 
 async function Voto() {
   Logger.setLogFileName(`${NAME_FILE}_voto.txt`);
   Logger.logToFile("\n---------------------- INIZIO ANALISI VOTO ----------------------\n");
 
-  const modelProf = UmlAtteso.estraiModelCompatto(UmlAtteso.parseXmiFile(`${DIRECTORY_ATTESO}/${XMI_FILE_Traccia_Prof}`));
+  const modelProf = UmlAtteso.estraiModelCompatto(UmlAtteso.parseXmiFile(`${DIRECTORY_ATTESO}/${XMI_FILE}`));
   UmlAtteso.stampaModelCompatto(modelProf, Logger.logToFile);
 
   const files = await readdir(DIRECTORY_CAMPIONI);
@@ -112,10 +121,10 @@ async function Voto() {
       }
       UmlAtteso.stampaModelCompatto(modelStud, Logger.logToFile);
 
-      // Confronto con VotoComparator
-      const risultatoVoto = VotoComparator.similaritaVoto(modelProf, modelStud);
+      // Confronto con SimilaritaNumeroErrori
+      const risultatoVoto = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelStud);
       risultatiVoto.push(risultatoVoto);
-      Logger.logToFile("Similarità voto (VotoComparator): " + risultatoVoto);
+      Logger.logToFile("Similarità voto (SimilaritaNumeroErrori): " + risultatoVoto);
 
       // Confronto con UMLComparator
       const risultatoUML = UMLComparator.compareUMLModels(modelProf, modelStud);
@@ -126,7 +135,7 @@ async function Voto() {
   }
   if (risultatiVoto.length > 0) {
     const mediaVoto = risultatiVoto.reduce((a, b) => a + b, 0) / risultatiVoto.length;
-    Logger.logToFile(`\nMedia Similarità voto (VotoComparator): ${mediaVoto.toFixed(2)}`);
+    Logger.logToFile(`\nMedia Similarità voto (SimilaritaNumeroErrori): ${mediaVoto.toFixed(2)}`);
   } else {
     Logger.logToFile("Nessun file XMI trovato.");
   }
@@ -136,13 +145,12 @@ async function Voto() {
   }
 
   // Estrazione traccia e chiamata IA (fuori dal ciclo)
-  const contenuto = await Traccia.PrintTxtPdf(PDF_FILE_Traccia_Prof);
-  //let rispostaIA = await OpenRouterIA.runDeepSeek(contenuto);
-  let  rispostaIA = await GeminiAPI.getGeminiResponse(contenuto);
+  const contenuto = await Traccia.PrintTxtPdf(PDF_FILE);
+  let rispostaIA = await callAI(contenuto);
   if (!rispostaIA) {
-  console.log("❌ Errore: la IA non ha restituito alcuna risposta.");
-  return;
-}
+    console.log("❌ Errore: la IA non ha restituito alcuna risposta.");
+    return;
+  }
   let modelIA = null;
   if (typeof rispostaIA === "string") {
     try {
@@ -165,9 +173,9 @@ async function Voto() {
   Logger.logToFile("\n========== MODELLO IA GENERATO ==========\n");
   UmlAtteso.stampaModelCompatto(modelIA, Logger.logToFile);
 
-  // Confronto IA con VotoComparator
-  let risultatoIA = VotoComparator.similaritaVoto(modelProf, modelIA);
-  Logger.logToFile("Similarità voto IA (VotoComparator): " + risultatoIA);
+  // Confronto IA con SimilaritaNumeroErrori
+  let risultatoIA = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelIA);
+  Logger.logToFile("Similarità voto IA (SimilaritaNumeroErrori): " + risultatoIA);
 
   // Confronto IA con UMLComparator
   const risultatoUML_IA = UMLComparator.compareUMLModels(modelProf, modelIA);
@@ -175,7 +183,12 @@ async function Voto() {
   Logger.logToFile("Dettagli UMLComparator IA: " + JSON.stringify(risultatoUML_IA.details));
 }
 
-
-
-Voto();
-//main()
+// Selezione dell'esperimento basata sulla configurazione
+if (experiment === "Voto") {
+  Voto();
+} else if (experiment === "main") {
+  main();
+} else {
+  console.error("❌ Esperimento non riconosciuto. Modifica 'experiment' in Config.js.");
+  console.error("Valori validi: 'Voto' o 'main'");
+}
