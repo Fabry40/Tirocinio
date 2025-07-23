@@ -35,7 +35,7 @@ Questo progetto confronta modelli UML con configurazione flessibile tramite file
 
 ### Esempi di configurazione per replicare sperimentazioni:
 
-#### **Esperimento "main" - Confronto XMI atteso vs XMI con IA:**
+#### **Esperimento "main" - Confronto XMI atteso con XMI con IA:**
 ```javascript
 export const experiment = "main";
 export const aiProvider = "deepSeek";  // "deepSeek", "meta", "gemini"

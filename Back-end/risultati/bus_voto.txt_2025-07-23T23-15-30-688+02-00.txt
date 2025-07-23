@@ -1,5 +1,5 @@
 
----------------------- INIZIO ANALISI VOTO ----------------------  DeepSeek
+---------------------- INIZIO ANALISI VOTO ---------------------- deepSeek
 
 Classi:
 - Linea
@@ -49,7 +49,7 @@ Relazioni:
 - Corsa -> Fermata (association)
 - Corsa -> Linea (association)
 - Linea -> Compagnie (association)
-Similarità voto (VotoComparator): 4
+Similarità voto (SimilaritaNumeroErrori): 4
 Similarità voto (UMLComparator): 0.764
 Dettagli UMLComparator: {"classSimilarity":0.8,"attributeSimilarity":0.443,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -73,7 +73,7 @@ Relazioni:
 - Autubus -> compagnia (association)
 - Autubus -> Corsa (association)
 - Corsa -> tappa (association)
-Similarità voto (VotoComparator): 4
+Similarità voto (SimilaritaNumeroErrori): 4
 Similarità voto (UMLComparator): 0.704
 Dettagli UMLComparator: {"classSimilarity":0.675,"attributeSimilarity":0.501,"methodSimilarity":1,"relationSimilarity":0.667}
 
@@ -100,7 +100,7 @@ Relazioni:
 - Linea -> Compagnia (association)
 - Linea -> FermataIntermedia (association)
 - Compagnia -> Corsa (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.819
 Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.552,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -126,7 +126,7 @@ Relazioni:
 - Corsa -> Fermata (association)
 - Corsa -> Fermata (association)
 - Corsa -> Fermata (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.789
 Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.556,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -152,7 +152,7 @@ Relazioni:
 - Linea -> Indisponibilita (association)
 - Linea -> Fermata (association)
 - Linea -> Corsa (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.834
 Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.631,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -178,7 +178,7 @@ Relazioni:
 - Corsa -> Indisponibilita (association)
 - LineaAutubus -> Fermata (association)
 - LineaAutubus -> Corsa (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.82
 Dettagli UMLComparator: {"classSimilarity":0.865,"attributeSimilarity":0.595,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -201,7 +201,7 @@ Relazioni:
 - Compagnia -> Linea (association)
 - Linea -> Corsa (association)
 - Linea -> Fermata (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.762
 Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.419,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -231,7 +231,7 @@ Relazioni:
 - Fermata -> Fermata Arrivo (association)
 - Fermata -> Fermata Intermedia (association)
 - Corsa -> Indisponibilita (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.742
 Dettagli UMLComparator: {"classSimilarity":0.771,"attributeSimilarity":0.391,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -254,7 +254,7 @@ Relazioni:
 - Compagnia -> Linea (association)
 - Linea -> Fermata (association)
 - Linea -> Corsa (association)
-Similarità voto (VotoComparator): 4
+Similarità voto (SimilaritaNumeroErrori): 4
 Similarità voto (UMLComparator): 0.774
 Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.477,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -285,7 +285,7 @@ Relazioni:
 - Corsa -> Indisponibilita (association)
 - LineaAutubus -> FermataArrivo (association)
 - LineaAutubus -> FermataPartenza (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.81
 Dettagli UMLComparator: {"classSimilarity":0.865,"attributeSimilarity":0.542,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -305,7 +305,7 @@ Enumerazioni:
 Relazioni:
 - Corsa -> Linea (association)
 - Linea -> Compagnia (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.767
 Dettagli UMLComparator: {"classSimilarity":0.743,"attributeSimilarity":0.572,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -332,7 +332,7 @@ Relazioni:
 - Linea -> Fermata (association)
 - Linea -> Indisponibilita (association)
 - Linea -> Corsa (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.844
 Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.678,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -364,7 +364,7 @@ Relazioni:
 - Linea -> Fermata (association)
 - Linea -> Corsa (association)
 - Corsa -> Indisponibilita (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.768
 Dettagli UMLComparator: {"classSimilarity":0.777,"attributeSimilarity":0.509,"methodSimilarity":1,"relationSimilarity":0.778}
 
@@ -381,7 +381,7 @@ Classi:
 Relazioni:
 - Bus -> Line2 (association)
 - Line2 -> Bus (association)
-Similarità voto (VotoComparator): 4
+Similarità voto (SimilaritaNumeroErrori): 4
 Similarità voto (UMLComparator): 0.624
 Dettagli UMLComparator: {"classSimilarity":0.674,"attributeSimilarity":0.439,"methodSimilarity":1,"relationSimilarity":0.333}
 
@@ -408,36 +408,37 @@ Relazioni:
 - Linea -> Corsa (association)
 - Arrivo -> Fermata (association)
 - Partenza -> Fermata (association)
-Similarità voto (VotoComparator): 3
+Similarità voto (SimilaritaNumeroErrori): 3
 Similarità voto (UMLComparator): 0.873
 Dettagli UMLComparator: {"classSimilarity":0.89,"attributeSimilarity":0.806,"methodSimilarity":1,"relationSimilarity":0.778}
 
-Media Similarità voto (VotoComparator): 3.27
+Media Similarità voto (SimilaritaNumeroErrori): 3.27
 Media Similarità voto (UMLComparator): 0.78
 
 ========== MODELLO IA GENERATO ==========
 
 Classi:
-- Compagnia
+- Compania
+  Attributi: id, nome
 - Linea
-  Attributi: sigla
+  Attributi: id, sigla
 - Corsa
-  Attributi: orarioPartenza, orarioArrivoPresunto, giorniOperativita
+  Attributi: id, orarioPartenza, orarioArrivoPresunto, giorniOperativita
 - Fermata
-  Attributi: nome, numero
+  Attributi: id, nome, numero
 - Indisponibilita
-  Attributi: giorno, mese, anno, causa
+  Attributi: id, giorno, mese, anno, causa
 
 Enumerazioni:
 - CausaIndisponibilita: [FESTIVITA, SCIOPERO, GUASTO, VIABILITA, RITARDO]
 
 Relazioni:
-- Compagnia -> Linea (association)
+- Compania -> Linea (association)
 - Linea -> Corsa (association)
 - Linea -> Fermata (association)
 - Linea -> Fermata (association)
 - Linea -> Fermata (association)
-- Corsa -> Indisponibilita (association)
-Similarità voto IA (VotoComparator): 3
-Similarità voto IA (UMLComparator): 0.82
-Dettagli UMLComparator IA: {"classSimilarity":0.881,"attributeSimilarity":0.562,"methodSimilarity":1,"relationSimilarity":0.778}
+- Linea -> Indisponibilita (association)
+Similarità voto IA (SimilaritaNumeroErrori): 4
+Similarità voto IA (UMLComparator): 0.8
+Dettagli UMLComparator IA: {"classSimilarity":0.878,"attributeSimilarity":0.466,"methodSimilarity":1,"relationSimilarity":0.778}
