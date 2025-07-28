@@ -56,7 +56,7 @@ export const directoryCampioni = "";//non serve
 ```
 #### modifica anche il file prompt.js per cambiare il prompt
 
-#### **Esperimento "Voto" - Valutazione multipla anche IA rsipetto XMIAtteso:** esperimento RQ2
+#### **Esperimento "Voto" - Valutazione multipla anche IA rsipetto XMIAtteso:** esperimento RQ4
 ```javascript
 export const experiment = "Voto";
 export const aiProvider = "gemini"; // "deepSeek", "meta", "gemini"
