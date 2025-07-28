@@ -99,7 +99,7 @@ npm start
 
 ## 📄 Output
 
-I file di log vengono salvati nella cartella `Back-end` con formato:
+I file di log vengono salvati nella cartella `risultati` con formato:
 - Esperimento "main": `nomeFile.txt`  
 - Esperimento "Voto": `nomeFile_voto.txt`
 
