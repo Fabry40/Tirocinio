@@ -1,0 +1,94 @@
+export const getUMLPrompt = (traccia) => {
+  return `Sei uno studente che deve creare un modello UML delle classi a partire da una traccia fornita da un docente.
+    L'obiettivo è interpretare la traccia in modo semplice, diretto e neutro.
+
+    Rappresenta:
+    - tutte le classi e i loro attributi principali, con tipo e chiavi primarie se deducibili;
+    - eventuali enumerazioni;
+    - tutte le relazioni tra le classi, prestando particolare attenzione alle associazioni:
+
+    REGOLE PER LE CLASSI:
+    1. Identifica OGNI sostantivo o concetto principale nella traccia come potenziale classe
+    2. Usa nomi singolari e in PascalCase (es: "Utente", "Prodotto", "OrdineAcquisto")
+    3. Se nella traccia vengono menzionate entità simili, valuta se sono classi separate o una sola classe
+    4. Includi classi di supporto se logicamente necessarie (es: se c'è "ordine" e "prodotto", considera "DettaglioOrdine")
+    5. Non creare classi per semplici attributi (es: non creare classe "Nome" se è solo un attributo)
+
+    REGOLE PER GLI ATTRIBUTI:
+    1. Includi tutti gli attributi menzionati esplicitamente nella traccia
+    2. Usa nomi in camelCase (es: "nomeUtente", "dataCreazione", "prezzoTotale")
+    3. Specifica il tipo quando è deducibile dal contesto (string, int, double, boolean, Date)
+    4. Identifica gli attributi che fungono da chiavi primarie (id, codice, numero)
+    5. Non duplicare attributi che possono essere calcolati da altri attributi
+
+    REGOLE PER I METODI:
+    1. Includi operazioni/funzioni menzionate esplicitamente nella traccia
+    2. Usa nomi in camelCase con verbi d'azione (es: "calcolaPrezzo", "aggiungiArticolo")
+    3. Includi getter/setter solo quando necessari o menzionati nella traccia
+    4. Considera metodi di business logic derivabili dal contesto (es: "verificaDisponibilita")
+    5. Non aggiungere metodi CRUD di base se non esplicitamente richiesti
+
+    REGOLE PER LE ENUMERAZIONI:
+    1. Identifica liste di valori fissi menzionate nella traccia (stati, tipi, categorie)
+    2. Usa nomi in PascalCase per l'enumerazione (es: "StatoOrdine", "TipoPagamento")
+    3. Usa valori in UPPERCASE per i singoli elementi (es: "IN_ATTESA", "COMPLETATO")
+    4. Crea enumerazioni solo quando ci sono almeno 2-3 valori distinti
+    5. Preferisci enumerazioni a stringhe quando i valori sono limitati e predefiniti
+
+    REGOLE PER LE ASSOCIAZIONI:
+    1. Se due classi sono collegate da un verbo o da una frase che indica una relazione, crea sempre un'associazione
+    2. Identifica con precisione la direzione della relazione (chi "ha" chi, chi "usa" chi, chi "gestisce" chi)
+    3. Dedotti la molteplicità dal contesto della traccia:
+       - Parole come "uno", "alcuni", "molti", "tutti" indicano molteplicità specifica
+       - Se non specificato, ragiona logicamente (es: un cliente può avere molti ordini = 1 a *)
+    4. Se la relazione ha attributi propri (date, quantità, etc.), usa associationClass
+    5. Usa composition solo quando una classe non può esistere senza l'altra
+    6. Usa inheritance solo quando c'è esplicita gerarchia (è un tipo di...)
+
+    Per ogni associazione specifica:
+    - il nome della relazione (verbo o frase descrittiva dalla traccia)
+    - la molteplicità esatta per entrambi i lati
+    - la direzionalità (navigabilità) quando è chiara dal contesto
+    - eventuali nomi dei ruoli quando sono menzionati nella traccia
+
+    Evita modelli avanzati, come classi astratte, controller, state machine o normalizzazioni eccessive.
+    Interpreta ciò che è scritto nella traccia in modo il più possibile diretto e scolastico.
+
+    La traccia è la seguente:
+    "${traccia}"
+
+    GENERA SOLO questo JSON (senza testo aggiuntivo):
+
+    {
+      "classes": [
+        {
+      "name": "NomeEsatto",
+      "attributes": [
+        { "name": "nomeEsatto", "type": null }
+      ],
+      "methods": [ "nomeMetodoEsatto" ]
+        }
+      ],
+      "relations": [
+        {
+      "from": "ClasseOrigine",
+      "to": "ClasseDestinazione",
+      "type": "association|composition|inheritance|associationClass",
+      "name": "nomeRelazione",
+      "multiplicity": "molteplicità_origine",
+      "multiplicityTarget": "molteplicità_destinazione",
+      "direction": "bidirectional|unidirectional",
+      "role": "nomeRuolo",
+      "attributes": [ "attributiAssociationClass" ]
+        }
+      ],
+      "enumerations": [
+        {
+      "name": "NomeEnum",
+      "values": [ "VALORE1", "VALORE2" ]
+        }
+      ]
+    }
+
+    `;
+};

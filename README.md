@@ -23,10 +23,10 @@ Questo progetto confronta modelli UML con configurazione flessibile tramite file
 3. **Crea le cartelle necessarie** nella cartella `Back-end`:
    ```
    Back-end/
-   ├── Traccia/      # File PDF delle tracce
-   ├── UmlAtteso/    # File XMI di riferimento (docente)
-   ├── Album/        # File XMI degli studenti (per esperimento "Voto")
-   └── risultati/    # Cartella per i file log di output
+   Traccia/      # File PDF delle tracce
+   UmlAtteso/    # File XMI di riferimento (docente)
+   Album/        # File XMI degli studenti (per esperimento "Voto")
+   risultati/    # Cartella per i file log di output
    ```
 
 ## 🛠️ Configurazione
@@ -35,7 +35,7 @@ Questo progetto confronta modelli UML con configurazione flessibile tramite file
 
 ### Esempi di configurazione per replicare sperimentazioni:
 
-#### **Esperimento "main" - Confronto XMI atteso con XMI con IA:**
+#### **Esperimento "main" - Confronto XMI atteso con XMI con IA:** esperimento RQ1 
 ```javascript
 export const experiment = "main";
 export const aiProvider = "deepSeek";  // "deepSeek", "meta", "gemini"
@@ -45,7 +45,18 @@ export const logFile = "Fotografia";
 export const directoryCampioni = "";//non serve
 ```
 
-#### **Esperimento "Voto" - Valutazione multipla anche IA rsipetto XMIAtteso:**
+#### **Esperimento "main" - Confronto XMI atteso con XMI con IA cambiano il promt:** esperimento RQ2 e RQ3
+```javascript
+export const experiment = "main";
+export const aiProvider = "deepSeek";  
+export const pdfFile = "Fotografia.pdf";
+export const xmiFile = "Fotografia.xmi";
+export const logFile = "Fotografia";
+export const directoryCampioni = "";//non serve
+```
+#### modifica anche il file prompt.js per cambiare il prompt
+
+#### **Esperimento "Voto" - Valutazione multipla anche IA rsipetto XMIAtteso:** esperimento RQ2
 ```javascript
 export const experiment = "Voto";
 export const aiProvider = "gemini"; // "deepSeek", "meta", "gemini"

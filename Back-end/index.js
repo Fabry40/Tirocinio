@@ -4,7 +4,7 @@ import { GeminiAPI } from './Gemini.js';
 import { OpenRouterIA } from './OpenRouterIA.js';
 import { UMLComparator } from './UMLComparator.js';
 import { Traccia } from './Traccia.js';
-import { Logger } from './logger.js';
+import { Logger } from './Logger.js';
 import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
 import { SimilaritaNumeroErrori } from './Voto.js'; 
@@ -15,7 +15,7 @@ import { experiment, pdfFile, xmiFile, logFile, directoryCampioni, aiProvider } 
 const PDF_FILE = pdfFile;
 const XMI_FILE = xmiFile;
 const NAME_FILE = logFile;
-const DIRECTORY_ATTESO = './UmlAtteso';
+const DIRECTORY_ATTESO = '../UmlAtteso';
 const DIRECTORY_CAMPIONI = directoryCampioni;
 const FILE_ESTENSIONE = '.xmi';
 

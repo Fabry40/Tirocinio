@@ -23,4 +23,4 @@ export const logFile = "bus";
 
 // Cartella dove si trovano i file XMI degli studenti o dei campioni da valutare.(serve solo se scegli Voto)
 // Tutti i file XMI presenti in questa cartella verranno valutati se experiment è "Voto".
-export const directoryCampioni = "./Bus";
+export const directoryCampioni = "../Bus";

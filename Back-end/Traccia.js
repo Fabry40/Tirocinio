@@ -8,7 +8,7 @@ export class Traccia {
       let printedFileName = false;
       let resultTexts = [];
 
-      new PdfReader().parseFileItems(`./traccia/${file}`, (err, item) => {
+      new PdfReader().parseFileItems(`../Traccia/${file}`, (err, item) => {
         if (err) {
           console.error("error:", err);
           reject(err);

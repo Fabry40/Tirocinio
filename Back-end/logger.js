@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 
 export class Logger {
   static logFileName = 'log.txt';
-  static resultsDir = './risultati';
+  static resultsDir = '../risultati';
 
   static setLogFileName(baseName) {
     // Ottieni la data/ora corrente in Europe/Rome
