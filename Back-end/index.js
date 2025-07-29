@@ -8,8 +8,9 @@ import { Logger } from './Logger.js';
 import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
 import { SimilaritaNumeroErrori } from './Voto.js'; 
+import { PlantUMLGenerator } from './plantUML.js';
 // Importa la configurazione
-import { experiment, pdfFile, xmiFile, logFile, directoryCampioni, aiProvider } from './Config.js';
+import { experiment, pdfFile, xmiFile, logFile, directoryCampioni, aiProvider } from './config.js';
 
 // Usa i valori dalla configurazione
 const PDF_FILE = pdfFile;
@@ -37,6 +38,7 @@ async function callAI(contenuto) {
 async function main() {
   console.log("Inizio del processo di confronto UML...");
   Logger.setLogFileName(`${NAME_FILE}.txt`);
+  Logger.logToFile(`IA UTILIZZATA: ${aiProvider.toUpperCase()}`);
   Logger.logToFile("\n---------------------- Inizio del processo ----------------------\n");
 
   const contenuto = await Traccia.PrintTxtPdf(PDF_FILE);
@@ -99,14 +101,38 @@ async function main() {
   Logger.logToFile("Relazioni mancanti: " + JSON.stringify(differences.missingRelations, null, 2));
   Logger.logToFile("Relazioni extra: " + JSON.stringify(differences.extraRelations, null, 2));
   Logger.logToFile("Tipi relazione sbagliati: " + JSON.stringify(differences.wrongRelationTypes, null, 2));
+
+  // GENERAZIONE PLANTUML
+  Logger.logToFile("\n---------------------- GENERAZIONE PLANTUML ----------------------\n");
+  try {
+    const plantUMLAtteso = PlantUMLGenerator.generatePlantUML(modelA);
+    const plantUMLIA = PlantUMLGenerator.generatePlantUML(modelB);
+    
+    Logger.logToFile("\n--- PLANTUML MODELLO ATTESO ---\n");
+    Logger.logToFile(plantUMLAtteso);
+    Logger.logToFile("\n--- PLANTUML MODELLO IA ---\n");
+    Logger.logToFile(plantUMLIA);
+  } catch (error) {
+    Logger.logToFile("❌ Errore durante la generazione PlantUML: " + error.message);
+  }
 }
 
 async function Voto() {
   Logger.setLogFileName(`${NAME_FILE}_voto.txt`);
+  Logger.logToFile(`IA UTILIZZATA: ${aiProvider.toUpperCase()}`);
   Logger.logToFile("\n---------------------- INIZIO ANALISI VOTO ----------------------\n");
 
   const modelProf = UmlAtteso.estraiModelCompatto(UmlAtteso.parseXmiFile(`${DIRECTORY_ATTESO}/${XMI_FILE}`));
   UmlAtteso.stampaModelCompatto(modelProf, Logger.logToFile);
+
+  // PLANTUML del modello professore (riferimento)
+  Logger.logToFile("\n--- PLANTUML MODELLO PROFESSORE (RIFERIMENTO) ---\n");
+  try {
+    const plantUMLProf = PlantUMLGenerator.generatePlantUML(modelProf);
+    Logger.logToFile(plantUMLProf);
+  } catch (error) {
+    Logger.logToFile("❌ Errore durante la generazione PlantUML professore: " + error.message);
+  }
 
   const files = await readdir(DIRECTORY_CAMPIONI);
   let risultatiVoto = [];
@@ -122,7 +148,7 @@ async function Voto() {
       UmlAtteso.stampaModelCompatto(modelStud, Logger.logToFile);
 
       // Confronto con SimilaritaNumeroErrori
-      const risultatoVoto = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelStud);
+      const risultatoVoto = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelStud, Logger.logToFile);
       risultatiVoto.push(risultatoVoto);
       Logger.logToFile("Similarità voto (SimilaritaNumeroErrori): " + risultatoVoto);
 
@@ -131,6 +157,15 @@ async function Voto() {
       risultatiUML.push(risultatoUML.similarity);
       Logger.logToFile("Similarità voto (UMLComparator): " + risultatoUML.similarity);
       Logger.logToFile("Dettagli UMLComparator: " + JSON.stringify(risultatoUML.details));
+      
+      // PLANTUML per questo studente
+      Logger.logToFile("\n--- PLANTUML MODELLO STUDENTE ---\n");
+      try {
+        const plantUMLStud = PlantUMLGenerator.generatePlantUML(modelStud);
+        Logger.logToFile(plantUMLStud);
+      } catch (error) {
+        Logger.logToFile("❌ Errore durante la generazione PlantUML studente: " + error.message);
+      }
     }
   }
   if (risultatiVoto.length > 0) {
@@ -174,13 +209,22 @@ async function Voto() {
   UmlAtteso.stampaModelCompatto(modelIA, Logger.logToFile);
 
   // Confronto IA con SimilaritaNumeroErrori
-  let risultatoIA = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelIA);
+  let risultatoIA = SimilaritaNumeroErrori.similaritaVoto(modelProf, modelIA, Logger.logToFile);
   Logger.logToFile("Similarità voto IA (SimilaritaNumeroErrori): " + risultatoIA);
 
   // Confronto IA con UMLComparator
   const risultatoUML_IA = UMLComparator.compareUMLModels(modelProf, modelIA);
   Logger.logToFile("Similarità voto IA (UMLComparator): " + risultatoUML_IA.similarity);
   Logger.logToFile("Dettagli UMLComparator IA: " + JSON.stringify(risultatoUML_IA.details));
+
+  // PLANTUML per il modello IA
+  Logger.logToFile("\n--- PLANTUML MODELLO IA ---\n");
+  try {
+    const plantUMLIA = PlantUMLGenerator.generatePlantUML(modelIA);
+    Logger.logToFile(plantUMLIA);
+  } catch (error) {
+    Logger.logToFile("❌ Errore durante la generazione PlantUML IA: " + error.message);
+  }
 }
 
 // Selezione dell'esperimento basata sulla configurazione

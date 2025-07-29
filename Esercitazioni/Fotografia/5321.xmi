@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model29" name="AlbumModel">
+    <ownedMember xmi:type="uml:Class" xmi:id="classAlbumFoto" name="AlbumFoto"/>
+    <ownedMember xmi:type="uml:Class" xmi:id="classUtente" name="Utente">
+      <ownedAttribute xmi:id="classUtente_attr1" name="Nome" type="String"/>
+      <ownedAttribute xmi:id="classUtente_attr2" name="Password" type="String"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFoto" name="Foto">
+      <ownedAttribute xmi:id="classFoto_attr1" name="Titolo" type="String"/>
+      <ownedAttribute xmi:id="classFoto_attr2" name="autore" type="Utente"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classLuogo" name="Luogo">
+      <ownedAttribute xmi:id="classLuogo_attr1" name="Longitudine" type="String"/>
+      <ownedAttribute xmi:id="classLuogo_attr2" name="latitudine" type="String"/>
+      <ownedAttribute xmi:id="classLuogo_attr3" name="Nmemonico" type="String"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classAlbumPersonale" name="AlbumPersonale"/>
+    <ownedMember xmi:type="uml:Class" xmi:id="classAlbumLuogo" name="AlbumLuogo"/>
+    <ownedMember xmi:type="uml:Generalization" xmi:id="genAlbumPersonaleAlbumFoto" name="AlbumPersonale_AlbumFoto">
+      <general xmi:idref="classAlbumFoto"/>
+      <specific xmi:idref="classAlbumPersonale"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Generalization" xmi:id="genAlbumLuogoAlbumFoto" name="AlbumLuogo_AlbumFoto">
+      <general xmi:idref="classAlbumFoto"/>
+      <specific xmi:idref="classAlbumLuogo"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocAlbumUtente" name="Album_Utente">
+      <ownedEnd xmi:id="assocAlbumUtente_end1" type="classAlbumFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumUtente_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumUtente_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocAlbumUtente_end2" type="classUtente">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumUtente_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumUtente_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocFotoUtenteAggiunge" name="Foto_Utente_Aggiunge">
+      <ownedEnd xmi:id="assocFotoUtenteAggiunge_end1" type="classFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoUtenteAggiunge_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoUtenteAggiunge_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocFotoUtenteAggiunge_end2" type="classUtente">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoUtenteAggiunge_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoUtenteAggiunge_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocFotoUtenteRaffigura" name="Foto_Utente_Raffigura">
+      <ownedEnd xmi:id="assocFotoUtenteRaffigura_end1" type="classFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoUtenteRaffigura_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoUtenteRaffigura_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocFotoUtenteRaffigura_end2" type="classUtente">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoUtenteRaffigura_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoUtenteRaffigura_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocAlbumFoto" name="Album_Foto">
+      <ownedEnd xmi:id="assocAlbumFoto_end1" type="classAlbumFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumFoto_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumFoto_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocAlbumFoto_end2" type="classFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumFoto_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumFoto_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocFotoLuogo" name="Foto_Luogo">
+      <ownedEnd xmi:id="assocFotoLuogo_end1" type="classFoto">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoLuogo_end1_lower" value="0"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoLuogo_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocFotoLuogo_end2" type="classLuogo">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotoLuogo_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotoLuogo_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocAlbumLuogo" name="AlbumLuogo_Luogo">
+      <ownedEnd xmi:id="assocAlbumLuogo_end1" type="classAlbumLuogo">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumLuogo_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumLuogo_end1_upper" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocAlbumLuogo_end2" type="classLuogo">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumLuogo_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumLuogo_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocUtenteAlbumPersonale" name="Utente_AlbumPersonale">
+      <ownedEnd xmi:id="assocUtenteAlbumPersonale_end1" type="classUtente">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocUtenteAlbumPersonale_end1_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocUtenteAlbumPersonale_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocUtenteAlbumPersonale_end2" type="classAlbumPersonale">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocUtenteAlbumPersonale_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocUtenteAlbumPersonale_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+  </uml:Model>
+</xmi:XMI>

@@ -141,7 +141,7 @@ export class SimilaritaNumeroErrori {
     return name === 'id' || name.endsWith('id');
   }
 
- static similaritaVoto(modelProf, modelStud) {
+ static similaritaVoto(modelProf, modelStud, logFunction = null) {
   const THRESHOLD = 0.3;
   let errori = 0;
   let erroriDettaglio = [];
@@ -204,11 +204,14 @@ export class SimilaritaNumeroErrori {
   }
   
 
-  // Stampa le categorie di errore trovate
-  if (erroriDettaglio.length > 0) {
-    console.log("Categorie di errore riscontrate:", erroriDettaglio.join(", "));
-  } else {
-    console.log("Nessun errore riscontrato.");
+  // Stampa le categorie di errore trovate (console e log se fornito)
+  const errorMessage = erroriDettaglio.length > 0 
+    ? "Categorie di errore riscontrate: " + erroriDettaglio.join(", ")
+    : "Nessun errore riscontrato.";
+  
+  console.log(errorMessage);
+  if (logFunction) {
+    logFunction(errorMessage);
   }
 
   // Restituisce un numero da 0 a 7

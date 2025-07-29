@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model32" name="AlbumModel">
+    <ownedMember xmi:type="uml:Class" xmi:id="classAlbum" name="Album">
+      <ownedAttribute xmi:id="classAlbum_attr1" name="autore" type="Utente"/>
+      <ownedAttribute xmi:id="classAlbum_attr2" name="fotografie" type="ArrayList"/>
+      <ownedAttribute xmi:id="classAlbum_attr3" name="tipoAlbum" type="TipoAlbum"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classUtente" name="Utente">
+      <ownedAttribute xmi:id="classUtente_attr1" name="nome" type="String"/>
+      <ownedAttribute xmi:id="classUtente_attr2" name="password" type="String"/>
+      <ownedAttribute xmi:id="classUtente_attr3" name="album" type="ArrayList"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFotografia" name="Fotografia">
+      <ownedAttribute xmi:id="classFotografia_attr1" name="autore" type="Utente"/>
+      <ownedAttribute xmi:id="classFotografia_attr2" name="titolo" type="String"/>
+      <ownedAttribute xmi:id="classFotografia_attr3" name="luogo" type="Luogo"/>
+      <ownedAttribute xmi:id="classFotografia_attr4" name="personePresenti" type="ArrayList"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classLuogo" name="Luogo">
+      <ownedAttribute xmi:id="classLuogo_attr1" name="cordinate" type="String"/>
+      <ownedAttribute xmi:id="classLuogo_attr2" name="nome" type="String"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Enumeration" xmi:id="enumTipoAlbum" name="TipoAlbum">
+      <ownedLiteral xmi:id="enumTipoAlbum_normale" name="Normale"/>
+      <ownedLiteral xmi:id="enumTipoAlbum_localizzato" name="Localizzato"/>
+      <ownedLiteral xmi:id="enumTipoAlbum_personale" name="Personale"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocAlbumUtente" name="Album_Utente">
+      <ownedEnd xmi:id="assocAlbumUtente_end1" type="classAlbum">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumUtente_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumUtente_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocAlbumUtente_end2" type="classUtente">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumUtente_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumUtente_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocAlbumFotografia" name="Album_Fotografia">
+      <ownedEnd xmi:id="assocAlbumFotografia_end1" type="classAlbum">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumFotografia_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumFotografia_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocAlbumFotografia_end2" type="classFotografia">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocAlbumFotografia_end2_lower" value="*"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocAlbumFotografia_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocFotografiaLuogo" name="Fotografia_Luogo">
+      <ownedEnd xmi:id="assocFotografiaLuogo_end1" type="classFotografia">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotografiaLuogo_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotografiaLuogo_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocFotografiaLuogo_end2" type="classLuogo">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocFotografiaLuogo_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocFotografiaLuogo_end2_upper" value="1"/>
+      </ownedEnd>
+    </ownedMember>
+  </uml:Model>
+</xmi:XMI>

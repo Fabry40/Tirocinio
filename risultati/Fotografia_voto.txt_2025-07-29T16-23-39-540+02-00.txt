@@ -1,0 +1,1210 @@
+IA UTILIZZATA: DEEPSEEK
+
+---------------------- INIZIO ANALISI VOTO ----------------------
+
+Classi:
+- Utente
+  Attributi: nome, password
+- Album
+- Fotografia
+  Attributi: titolo
+- Luogo
+  Attributi: latitudine, longitudine, nome
+- Album Localizzato
+- Album Personale
+
+Relazioni:
+- Album Localizzato -> Album (inheritance)
+- Album Personale -> Album (inheritance)
+- Fotografia -> Utente (association)
+- Fotografia -> Luogo (association)
+- Fotografia -> Utente (association)
+- Utente -> Album (association)
+- Album Localizzato -> Luogo (association)
+- Utente -> Album Personale (association)
+- Fotografia -> Album (association)
+
+--- PLANTUML MODELLO PROFESSORE (RIFERIMENTO) ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente {
+  nome
+  password
+}
+
+class Album {
+}
+
+class Fotografia {
+  titolo
+}
+
+class Luogo {
+  latitudine
+  longitudine
+  nome
+}
+
+class Album Localizzato {
+}
+
+class Album Personale {
+}
+
+Album Localizzato --|> Album
+Album Personale --|> Album
+Fotografia "0..*" --  "1"Utente : scatto
+Fotografia "1..*" --  "0..1"Luogo
+Fotografia "0..*" --  "0..*"Utente : raffigura >
+Utente "1" --  "0..*"Album
+Album Localizzato "1" --  "1"Luogo
+Utente "1" --  "1"Album Personale
+Fotografia "1..*" --  "1..*"Album
+
+
+@enduml
+
+========== FILE ANALIZZATO: 4210.xmi ==========
+
+Classi:
+- AlbumFotografico
+  Attributi: NumeroFoto, CreatoreAlbulm
+- Album Localizzato
+- Album Personale
+- Utente
+  Attributi: Nome, Password
+  Metodi: CreaAlbum, AggiungiFoto, VediAlbum
+- Fotografie
+  Attributi: attore, Titolo, Come
+- Luogo
+  Attributi: Latitudine, Longitudine, NomeMomento
+
+Relazioni:
+- AlbumFotografico -> Utente (association)
+- AlbumFotografico -> Fotografie (association)
+- Utente -> Fotografie (association)
+- Fotografie -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.898
+Dettagli UMLComparator: {"classSimilarity":0.972,"attributeSimilarity":0.933,"methodSimilarity":0.833,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class AlbumFotografico {
+  NumeroFoto : num
+  CreatoreAlbulm : string
+}
+
+class Album Localizzato {
+}
+
+class Album Personale {
+}
+
+class Utente {
+  Nome : string
+  Password : string
+  --
+  CreaAlbum()
+  AggiungiFoto()
+  VediAlbum()
+}
+
+class Fotografie {
+  attore : string
+  Titolo : string
+  Come : string
+}
+
+class Luogo {
+  Latitudine : string
+  Longitudine : string
+  NomeMomento : string
+}
+
+AlbumFotografico "*..*" --  "*..*"Utente : AlbumFotografico_Utente
+AlbumFotografico "*..*" --  "1..*"Fotografie : AlbumFotografico_Fotografie
+Utente -- Fotografie : Utente_Fotografie
+Fotografie "1..*" --  "1..1"Luogo : Fotografie_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 4534.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore
+- Album Localizzato
+  Attributi: Luogo
+- Album Personale
+  Attributi: Sogetto
+- Utente
+  Attributi: Nome, Password
+  Metodi: CreaAlbum, AggiungiFoto
+- Fotografia
+  Attributi: Autore, Titolo
+- Luogo
+  Attributi: Latitudine, Longitudine, Nome
+
+Relazioni:
+- Album -> Utente (association)
+- Utente -> Fotografia (association)
+- Fotografia -> Luogo (association)
+- Album Personale -> Utente (association)
+- Album Localizzato -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.808
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.429,"methodSimilarity":0.833,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : string
+}
+
+class Album Localizzato {
+  Luogo : Luogo
+}
+
+class Album Personale {
+  Sogetto : Utente
+}
+
+class Utente {
+  Nome : String
+  Password : String
+  --
+  CreaAlbum()
+  AggiungiFoto()
+}
+
+class Fotografia {
+  Autore : String
+  Titolo : String
+}
+
+class Luogo {
+  Latitudine : String
+  Longitudine : String
+  Nome : String
+}
+
+Album "0..*" -- Utente : Album_Utente
+Utente "0..*" --  "0..*"Fotografia : Utente_Fotografia
+Fotografia "1..*" --  "0..1"Luogo : Fotografia_Luogo
+Album Personale "1..1" --  "1..1"Utente : AlbumPersonale_Utente
+Album Localizzato "1..1" --  "1..1"Luogo : AlbumLocalizzato_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 4994.xmi ==========
+
+Classi:
+- Album
+- Utente
+  Attributi: Nome, Password
+- Fotografia
+  Attributi: luogo, Titolo, autore, LuogoCordinate, LuogoNome
+- Cordinate
+  Attributi: Longitudine, latitudine
+
+Relazioni:
+- Album -> Utente (association)
+- Fotografia -> Utente (association)
+- Utente -> Fotografia (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.836
+Dettagli UMLComparator: {"classSimilarity":0.876,"attributeSimilarity":0.871,"methodSimilarity":1,"relationSimilarity":0.556}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+}
+
+class Utente {
+  Nome : String
+  Password : String
+}
+
+class Fotografia {
+  luogo : String
+  Titolo : String
+  autore : Utente
+  LuogoCordinate : Cordinate
+  LuogoNome : String
+}
+
+class Cordinate {
+  Longitudine : String
+  latitudine : String
+}
+
+Album "*..*" --  "1..1"Utente : Album_Utente
+Fotografia "*..*" --  "1..1"Utente : Fotografia_Scatta_Utente
+Utente "*..*" -- Fotografia : Utente_Rappresenta_Fotografia
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5058.xmi ==========
+
+Classi:
+- Album
+  Attributi: nome
+- Utente
+  Attributi: Nome, Password
+- Fotografia
+  Attributi: Titolo, Data
+- Luogo
+  Attributi: Longitudine, latitudine, Nmemonico
+- AlbumPersonale
+- AlbumLocalizzato
+
+Relazioni:
+- Album -> Utente (association)
+- Fotografia -> Utente (association)
+- Fotografia -> Utente (association)
+- Album -> Fotografia (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.914
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.795,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  nome : String
+}
+
+class Utente {
+  Nome : String
+  Password : String
+}
+
+class Fotografia {
+  Titolo : String
+  Data : Date
+}
+
+class Luogo {
+  Longitudine : String
+  latitudine : String
+  Nmemonico : String
+}
+
+class AlbumPersonale {
+}
+
+class AlbumLocalizzato {
+}
+
+Album "*..*" --  "1..1"Utente : Album_Creatore
+Fotografia "*..*" --  "1..1"Utente : Fotografia_Autore
+Fotografia "*..*" --  "*..*"Utente : Fotografia_Raffigura_Utente
+Album "1..*" --  "*..*"Fotografia : Album_Contiene_Fotografia
+Fotografia "0..*" --  "0..1"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5092.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore, Tipo, Titolo
+  Metodi: AggiungiFoto
+- Utente
+  Attributi: Nome, Password
+  Metodi: CreaAlbum
+- Fotografia
+  Attributi: NomeUtente, Titolo, UtenteFotografo, Latitudine, Longitudine, nmemonico
+
+Enumerazioni:
+- Tipo: [albumLocalizzato, AlbumPersonale]
+
+Relazioni:
+- Album -> Utente (association)
+- Fotografia -> Album (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.601
+Dettagli UMLComparator: {"classSimilarity":0.876,"attributeSimilarity":0.365,"methodSimilarity":0.333,"relationSimilarity":0.556}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : Utente
+  Tipo : Tipo
+  Titolo : String
+  --
+  AggiungiFoto()
+}
+
+class Utente {
+  Nome : String
+  Password : String
+  --
+  CreaAlbum()
+}
+
+class Fotografia {
+  NomeUtente : String
+  Titolo : String
+  UtenteFotografo : String
+  Latitudine : String
+  Longitudine : String
+  nmemonico : String
+}
+
+enum Tipo {
+  albumLocalizzato
+  AlbumPersonale
+}
+
+Album "*..*" --  "1..1"Utente : Album_Utente
+Fotografia "*..*" --  "*..*"Album : Fotografia_Album
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5102.xmi ==========
+
+Classi:
+- Album
+  Attributi: creatore, numFoto
+- Utente
+  Attributi: nome, password
+- Fotografia
+  Attributi: titolo, autore, luogo, tipoFoto
+- Luogo
+  Attributi: longitudine, latitudine, nmemonico
+- AlbumPersonale
+  Attributi: utenteRappresentato
+- AlbumLocalizzato
+  Attributi: luogo
+
+Enumerazioni:
+- TipoFoto: [Foto_scattata, Foto_Raffigurata]
+
+Relazioni:
+- Album -> Utente (association)
+- Album -> Fotografia (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.846
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.45,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  creatore : Utente
+  numFoto : int
+}
+
+class Utente {
+  nome : String
+  password : String
+}
+
+class Fotografia {
+  titolo : String
+  autore : Utente
+  luogo : Luogo
+  tipoFoto : TipoFoto
+}
+
+class Luogo {
+  longitudine : String
+  latitudine : String
+  nmemonico : String
+}
+
+class AlbumPersonale {
+  utenteRappresentato : Utente
+}
+
+class AlbumLocalizzato {
+  luogo : Luogo
+}
+
+enum TipoFoto {
+  Foto_scattata
+  Foto_Raffigurata
+}
+
+Album "*..*" --  "1..1"Utente : Album_Crea_Utente
+Album "*..*" --  "*..*"Fotografia : Album_Inclusa_Fotografia
+Fotografia "1..1" --  "1..1"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5129.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore, Fotografie
+- Album Localizzato
+  Attributi: Luogo
+- Album Personale
+  Attributi: Sogetto
+- Utente
+  Attributi: Nome, Password
+- Fotografia
+  Attributi: Luogo, UtentiPresenti
+- Luogo
+  Attributi: Latitudine, Longitudine, Nome
+
+Relazioni:
+- Album -> Utente (association)
+- Utente -> Fotografia (association)
+- Utente -> Fotografia (association)
+- Album Personale -> Utente (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.841
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.427,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : Utente
+  Fotografie : ArrayList
+}
+
+class Album Localizzato {
+  Luogo : Luogo
+}
+
+class Album Personale {
+  Sogetto : Utente
+}
+
+class Utente {
+  Nome : String
+  Password : String
+}
+
+class Fotografia {
+  Luogo : Luogo
+  UtentiPresenti : ArrayList
+}
+
+class Luogo {
+  Latitudine : String
+  Longitudine : String
+  Nome : String
+}
+
+Album "*..*" -- Utente : Album_Utente
+Utente "*..*" --  "*..*"Fotografia : Utente_Scatta_Fotografia
+Utente "*..*" --  "*..*"Fotografia : Utente_Presenta_Fotografia
+Album Personale "1..*" -- Utente : AlbumPersonale_Utente
+Fotografia "*..*" --  "*..*"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5140.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore
+- Album Localizzato
+- Album Personale
+- Utente
+  Attributi: Nome, Password
+  Metodi: CreaAlbum, AggiungiFotoScattate, AggiungiFotoRaffigurate, VisualizazzioneAlbum
+- Fotografia
+  Attributi: Autore, Titolo, Luogo
+- Luogo
+  Attributi: Latitudine, Longitudine, nmemonico
+
+Relazioni:
+- Album -> Utente (association)
+- Utente -> Fotografia (association)
+- Utente -> Fotografia (association)
+- Fotografia -> Luogo (association)
+- Fotografia -> Album (association)
+- Fotografia -> Album (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.876
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.77,"methodSimilarity":0.833,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : String
+}
+
+class Album Localizzato {
+}
+
+class Album Personale {
+}
+
+class Utente {
+  Nome : String
+  Password : String
+  --
+  CreaAlbum()
+  AggiungiFotoScattate()
+  AggiungiFotoRaffigurate()
+  VisualizazzioneAlbum()
+}
+
+class Fotografia {
+  Autore : String
+  Titolo : String
+  Luogo : luogo
+}
+
+class Luogo {
+  Latitudine : String
+  Longitudine : String
+  nmemonico : String
+}
+
+Album "0..*" --  "1..1"Utente : Album_Utente
+Utente "0..*" --  "1..1"Fotografia : Utente_Raffigurare_Fotografie
+Utente "1..1" --  "1..*"Fotografia : Utente_Scatto_Fotografie
+Fotografia "1..1" --  "0..1"Luogo : Fotografia_Luogo
+Fotografia "1..1" --  "0..*"Album : Fotografia_Album_Inclusa
+Fotografia "1..*" --  "1..*"Album : Fotografia_Album_Composto
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5209.xmi ==========
+
+Classi:
+- AlbumFotografico
+  Attributi: utenteCreatore, numerototo
+- Utente
+  Attributi: Nome, Password
+- Fotografia
+  Attributi: luogo, titolo, autore
+- AlbumTipologie
+  Attributi: albumLocalizato, albumPersonale
+- Luogo
+  Attributi: longitudine, latitudine, mnemonico
+
+Relazioni:
+- AlbumFotografico -> Utente (association)
+- Fotografia -> Utente (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.764
+Dettagli UMLComparator: {"classSimilarity":0.926,"attributeSimilarity":0.41,"methodSimilarity":1,"relationSimilarity":0.556}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class AlbumFotografico {
+  utenteCreatore : Utente
+  numerototo : String
+}
+
+class Utente {
+  Nome : String
+  Password : String
+}
+
+class Fotografia {
+  luogo : Luogo
+  titolo : String
+  autore : Utente
+}
+
+class AlbumTipologie {
+  albumLocalizato : String
+  albumPersonale : String
+}
+
+class Luogo {
+  longitudine : String
+  latitudine : String
+  mnemonico : String
+}
+
+AlbumFotografico "*..*" --  "*..*"Utente : AlbumFotografico_Utente
+Fotografia "*..*" --  "1..1"Utente : Fotografia_Utente
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5292.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore, Tipo
+  Metodi: AggiungiFoto, VisualizazzioneAutore
+- Utente
+  Attributi: Nome, Password
+  Metodi: ComponiAlbum, VisualizazzioneAlbum
+- Fotografia
+  Attributi: NomeUtente, Titolo, UtenteFotografo, Luogo
+- Luogo
+  Attributi: Latitudine, Longitudine, nmemonico
+
+Enumerazioni:
+- Tipo: [albumLocalizzato, AlbumPersonale]
+
+Relazioni:
+- Album -> Utente (association)
+- Fotografia -> Album (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.689
+Dettagli UMLComparator: {"classSimilarity":0.956,"attributeSimilarity":0.423,"methodSimilarity":0.333,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : String
+  Tipo : Tipo
+  --
+  AggiungiFoto()
+  VisualizazzioneAutore()
+}
+
+class Utente {
+  Nome : String
+  Password : String
+  --
+  ComponiAlbum()
+  VisualizazzioneAlbum()
+}
+
+class Fotografia {
+  NomeUtente : String
+  Titolo : String
+  UtenteFotografo : String
+  Luogo : Luogo
+}
+
+class Luogo {
+  Latitudine : String
+  Longitudine : String
+  nmemonico : String
+}
+
+enum Tipo {
+  albumLocalizzato
+  AlbumPersonale
+}
+
+Album "*..*" --  "1..1"Utente : Album_Utente
+Fotografia "*..*" --  "*..*"Album : Fotografia_Album
+Fotografia "1..1" --  "0..1"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5293.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore, Tipo
+- Utente
+  Attributi: Nome, Password
+  Metodi: AggiungiFoto, VisualizazzioneAlbum
+- Fotografia
+  Attributi: Autore, Titolo
+
+Enumerazioni:
+- Luogo: [Latitudine, Longitudine, nmemonico]
+- Tipo: [Album, albumLocalizzato, AlbumPersonale]
+
+Relazioni:
+- Album -> Utente (association)
+- Fotografia -> Album (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.701
+Dettagli UMLComparator: {"classSimilarity":0.876,"attributeSimilarity":0.365,"methodSimilarity":0.833,"relationSimilarity":0.556}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : String
+  Tipo : Tipo
+}
+
+class Utente {
+  Nome : String
+  Password : String
+  --
+  AggiungiFoto()
+  VisualizazzioneAlbum()
+}
+
+class Fotografia {
+  Autore : String
+  Titolo : String
+}
+
+enum Luogo {
+  Latitudine
+  Longitudine
+  nmemonico
+}
+
+enum Tipo {
+  Album
+  albumLocalizzato
+  AlbumPersonale
+}
+
+Album "*..*" --  "1..1"Utente : Album_Utente
+Fotografia "0..*" --  "*..*"Album : Fotografia_Album
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5304.xmi ==========
+
+Classi:
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0
+Dettagli UMLComparator: {"classSimilarity":0,"attributeSimilarity":0,"methodSimilarity":0,"relationSimilarity":0}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5311.xmi ==========
+
+Classi:
+- Album
+  Attributi: Fotografia
+- Utente
+  Attributi: Nome, Cognome, Password, Email
+- Fotografia
+  Attributi: Titolo, autore, Data
+- Luogo
+  Attributi: Longitudine, latitudine, Nmemonico
+- AlbumPersonale
+- AlbumLocalizzato
+
+Relazioni:
+- Album -> Utente (association)
+- Album -> Fotografia (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.908
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.764,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Fotografia : ArrayList
+}
+
+class Utente {
+  Nome : String
+  Cognome : String
+  Password : String
+  Email : String
+}
+
+class Fotografia {
+  Titolo : String
+  autore : Utente
+  Data : Date
+}
+
+class Luogo {
+  Longitudine : String
+  latitudine : String
+  Nmemonico : String
+}
+
+class AlbumPersonale {
+}
+
+class AlbumLocalizzato {
+}
+
+Album "*..*" --  "1..1"Utente : Album_Utente
+Album "1..1" --  "1..*"Fotografia : Album_Fotografia
+Fotografia "*..*" --  "1..1"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5321.xmi ==========
+
+Classi:
+- AlbumFoto
+- Utente
+  Attributi: Nome, Password
+- Foto
+  Attributi: Titolo, autore
+- Luogo
+  Attributi: Longitudine, latitudine, Nmemonico
+- AlbumPersonale
+- AlbumLuogo
+
+Relazioni:
+- AlbumFoto -> Utente (association)
+- Foto -> Utente (association)
+- Foto -> Utente (association)
+- AlbumFoto -> Foto (association)
+- Foto -> Luogo (association)
+- AlbumLuogo -> Luogo (association)
+- Utente -> AlbumPersonale (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.925
+Dettagli UMLComparator: {"classSimilarity":0.945,"attributeSimilarity":0.958,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class AlbumFoto {
+}
+
+class Utente {
+  Nome : String
+  Password : String
+}
+
+class Foto {
+  Titolo : String
+  autore : Utente
+}
+
+class Luogo {
+  Longitudine : String
+  latitudine : String
+  Nmemonico : String
+}
+
+class AlbumPersonale {
+}
+
+class AlbumLuogo {
+}
+
+AlbumFoto "1..1" --  "*..*"Utente : Album_Utente
+Foto "*..*" --  "1..1"Utente : Foto_Utente_Aggiunge
+Foto "*..*" --  "*..*"Utente : Foto_Utente_Raffigura
+AlbumFoto "1..1" --  "*..*"Foto : Album_Foto
+Foto "0..1" --  "1..*"Luogo : Foto_Luogo
+AlbumLuogo "1..1" --  "*..*"Luogo : AlbumLuogo_Luogo
+Utente "*..*" --  "1..1"AlbumPersonale : Utente_AlbumPersonale
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5456.xmi ==========
+
+Classi:
+- Album
+  Attributi: Creatore
+- Album Localizzato
+- Album Personale
+- Utente
+  Attributi: Nome, Password
+- Fotografie
+  Attributi: attore, Titolo, mnemonico
+- Luogo
+  Attributi: Latitudine, Longitudine
+
+Relazioni:
+- Album -> Utente (association)
+- Album -> Fotografie (association)
+- Utente -> Fotografie (association)
+- Utente -> Fotografie (association)
+- Album Personale -> Utente (association)
+- Album Localizzato -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.905
+Dettagli UMLComparator: {"classSimilarity":0.993,"attributeSimilarity":0.763,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  Creatore : string
+}
+
+class Album Localizzato {
+}
+
+class Album Personale {
+}
+
+class Utente {
+  Nome : string
+  Password : string
+}
+
+class Fotografie {
+  attore : string
+  Titolo : string
+  mnemonico : string
+}
+
+class Luogo {
+  Latitudine : string
+  Longitudine : string
+}
+
+Album "1..1" --  "0..*"Utente : Album_Utente
+Album "0..*" --  "0..*"Fotografie : Album_Fotografie
+Utente "0..*" --  "1..1"Fotografie : Utente_Scatta_Fotografie
+Utente "0..*" --  "0..*"Fotografie : Utente_Raffigura_Fotografie
+Album Personale "1..1" --  "0..*"Utente : AlbumPersonale_Utente
+Album Localizzato "1..1" --  "0..*"Luogo : AlbumLocalizzato_Luogo
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5504.xmi ==========
+
+Classi:
+- Album
+  Attributi: NumeroFoto
+- Album Localizzato
+  Attributi: Luogo
+- Album Personale
+  Attributi: NomeUtente
+- Utente
+  Attributi: NomeUtente, Password
+- Fotografia
+  Attributi: NomeUtente, Titolo
+- Luogo
+  Attributi: Latitudine, Longitudine, Immnemonico
+
+Relazioni:
+- Album -> Utente (association)
+- Album -> Fotografia (association)
+- Utente -> Fotografia (association)
+- Fotografia -> Luogo (association)
+- Album Localizzato -> Luogo (association)
+- Album Personale -> Utente (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.833
+Dettagli UMLComparator: {"classSimilarity":1,"attributeSimilarity":0.388,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  NumeroFoto : string
+}
+
+class Album Localizzato {
+  Luogo : string
+}
+
+class Album Personale {
+  NomeUtente : string
+}
+
+class Utente {
+  NomeUtente : string
+  Password : string
+}
+
+class Fotografia {
+  NomeUtente : string[]
+  Titolo : string
+}
+
+class Luogo {
+  Latitudine : string
+  Longitudine : string
+  Immnemonico : string
+}
+
+Album "0..1" -- Utente : Album_Utente
+Album --  "0..*"Fotografia : Album_Fotografia
+Utente "0..*" --  "0..*"Fotografia : Utente_Fotografia
+Fotografia --  "0..1"Luogo : Fotografia_Luogo
+Album Localizzato --  "0..1"Luogo : AlbumLocalizzato_Luogo
+Album Personale "0..1" -- Utente : AlbumPersonale_Utente
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5629.xmi ==========
+
+Classi:
+- Album
+  Attributi: autore, fotografie, tipoAlbum
+- Utente
+  Attributi: nome, password, album
+- Fotografia
+  Attributi: autore, titolo, luogo, personePresenti
+- Luogo
+  Attributi: cordinate, nome
+
+Enumerazioni:
+- TipoAlbum: [Normale, Localizzato, Personale]
+
+Relazioni:
+- Album -> Utente (association)
+- Album -> Fotografia (association)
+- Fotografia -> Luogo (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.809
+Dettagli UMLComparator: {"classSimilarity":0.956,"attributeSimilarity":0.355,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Album {
+  autore : Utente
+  fotografie : ArrayList
+  tipoAlbum : TipoAlbum
+}
+
+class Utente {
+  nome : String
+  password : String
+  album : ArrayList
+}
+
+class Fotografia {
+  autore : Utente
+  titolo : String
+  luogo : Luogo
+  personePresenti : ArrayList
+}
+
+class Luogo {
+  cordinate : String
+  nome : String
+}
+
+enum TipoAlbum {
+  Normale
+  Localizzato
+  Personale
+}
+
+Album "1..*" --  "1..1"Utente : Album_Utente
+Album "1..*" --  "*..*"Fotografia : Album_Fotografia
+Fotografia "1..*" --  "1..1"Luogo : Fotografia_Luogo
+
+
+@enduml
+
+Media Similarità voto (SimilaritaNumeroErrori): 3.35
+Media Similarità voto (UMLComparator): 0.77
+
+========== MODELLO IA GENERATO ==========
+
+Classi:
+- Utente
+  Attributi: nome, password
+- Album
+  Attributi: creatore
+- AlbumLocalizzato
+- AlbumPersonale
+- Fotografia
+  Attributi: titolo, autore
+- Luogo
+  Attributi: latitudine, longitudine, nomeMnemonico
+
+Relazioni:
+- Utente -> Album (association)
+- Album -> Fotografia (association)
+- Fotografia -> Utente (association)
+- AlbumLocalizzato -> Album (inheritance)
+- AlbumPersonale -> Album (inheritance)
+- Fotografia -> Luogo (association)
+Similarità voto IA (SimilaritaNumeroErrori): 3
+Similarità voto IA (UMLComparator): 0.961
+Dettagli UMLComparator IA: {"classSimilarity":1,"attributeSimilarity":0.807,"methodSimilarity":1,"relationSimilarity":1}
+
+--- PLANTUML MODELLO IA ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente {
+  nome : string
+  password : string
+}
+
+class Album {
+  creatore : Utente
+}
+
+class AlbumLocalizzato {
+}
+
+class AlbumPersonale {
+}
+
+class Fotografia {
+  titolo : string
+  autore : Utente
+}
+
+class Luogo {
+  latitudine : double
+  longitudine : double
+  nomeMnemonico : string
+}
+
+Utente -- Album : crea
+Album -- Fotografia : contiene
+Fotografia -- Utente : raffigura
+AlbumLocalizzato --|> Album : extends
+AlbumPersonale --|> Album : extends
+Fotografia -- Luogo : scattataIn
+
+
+@enduml

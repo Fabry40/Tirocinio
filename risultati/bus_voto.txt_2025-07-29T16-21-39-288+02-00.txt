@@ -1,0 +1,1694 @@
+IA UTILIZZATA: DEEPSEEK
+
+---------------------- INIZIO ANALISI VOTO ----------------------
+
+Classi:
+- Linea
+  Attributi: sigla
+- Corsa
+  Attributi: orarioPartenza, orarioArrivoPresunto
+- Compagnia
+  Attributi: nom
+- Indisponibilita
+  Attributi: giorno, mese, anno, causa
+- Fermata
+  Attributi: nome, numero
+- Partenza
+- Arrivo
+
+Enumerazioni:
+- GiornoSettimana: [lunedi, martedi, mercoledi, giovedi, venerdi, sabato, domenica]
+
+Relazioni:
+- Partenza -> Fermata (inheritance)
+- Arrivo -> Fermata (inheritance)
+- Corsa -> GiornoSettimana (association)
+- Linea -> Corsa (association)
+- Linea -> Compagnia (association)
+- Corsa -> Indisponibilita (association)
+- Linea -> Partenza (association)
+- Linea -> Arrivo (association)
+- Linea -> Fermata (association)
+
+--- PLANTUML MODELLO PROFESSORE (RIFERIMENTO) ---
+
+@startuml
+!define RECTANGLE class
+
+class Linea {
+  sigla
+}
+
+class Corsa {
+  orarioPartenza
+  orarioArrivoPresunto
+}
+
+class Compagnia {
+  nom
+}
+
+class Indisponibilita {
+  giorno
+  mese
+  anno
+  causa
+}
+
+class Fermata {
+  nome
+  numero
+}
+
+class Partenza {
+}
+
+class Arrivo {
+}
+
+enum GiornoSettimana {
+  lunedi
+  martedi
+  mercoledi
+  giovedi
+  venerdi
+  sabato
+  domenica
+}
+
+Partenza --|> Fermata
+Arrivo --|> Fermata
+Linea "1" --  "1..*"Corsa
+Linea "1..*" --  "1"Compagnia
+Corsa "1" --  "0..*"Indisponibilita
+Linea "0..*" --  "1"Partenza
+Linea "0..*" --  "1"Arrivo
+Linea "0..*" --  "0..*"Fermata
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5403.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome, linea
+- Linea
+  Attributi: compagnia, sigla
+- Fermata
+  Attributi: nome, numero
+- Corsa
+  Attributi: orarioDiPartenza, orarioDiArrivo, giorniDiCorsa, stazioneFermata, stazioneIntermedio, stazioneArrivo
+- Indisponibilita
+  Attributi: causa, giorno
+
+Enumerazioni:
+- Causa: [Festivo, Sciopero, Guasto, Viabilita]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Linea -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.813
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.526,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : String
+  linea : Array<Linea>
+}
+
+class Linea {
+  compagnia : Compagnia
+  sigla : String
+}
+
+class Fermata {
+  nome : String
+  numero : int
+}
+
+class Corsa {
+  orarioDiPartenza : String
+  orarioDiArrivo : String
+  giorniDiCorsa : Array<String>
+  stazioneFermata : Fermata
+  stazioneIntermedio : Fermata
+  stazioneArrivo : Fermata
+}
+
+class Indisponibilita {
+  causa : Causa
+  giorno : String
+}
+
+enum Causa {
+  Festivo
+  Sciopero
+  Guasto
+  Viabilita
+}
+
+Linea "1..*" --  "1..*"Compagnia : Linea_Compagnia
+Linea "1..*" --  "1..*"Fermata : Linea_Fermata
+Linea "1..*" --  "1..*"Corsa : Linea_Corsa
+Linea "1..*" --  "1..*"Indisponibilita : Linea_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5423.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: Nome
+- Linea
+  Attributi: sigla, Partenza, Arrivo
+- Corsa
+  Attributi: OrarioPartenza, OrarioArrivo, giorni
+- Indisponibilita
+  Attributi: Giorni, mese, anno, Causa
+- Fermata
+  Attributi: Nome, Numero
+
+Enumerazioni:
+- Causa: [Festivo, Sciopero, Guasto, Viabilita, Ritirato]
+- Giorno: [Lunedi, Martedì, Mercoledì, Giovedì, Venerdi]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Corsa -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.841
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.667,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  Nome : String
+}
+
+class Linea {
+  sigla : String
+  Partenza : Fermata
+  Arrivo : Fermata
+}
+
+class Corsa {
+  OrarioPartenza : int
+  OrarioArrivo : int
+  giorni : Array<Giorno>
+}
+
+class Indisponibilita {
+  Giorni : int
+  mese : int
+  anno : int
+  Causa : Causa
+}
+
+class Fermata {
+  Nome : String
+  Numero : int
+}
+
+enum Causa {
+  Festivo
+  Sciopero
+  Guasto
+  Viabilita
+  Ritirato
+}
+
+enum Giorno {
+  Lunedi
+  Martedì
+  Mercoledì
+  Giovedì
+  Venerdi
+}
+
+Linea "*..*" --  "1..1"Compagnia : Linea_Appartiene_Compagnia
+Linea "*..*" --  "*..*"Fermata : Linea_Intermedie_Fermata
+Linea "*..*" --  "*..*"Corsa : Linea_Effettua_Corsa
+Corsa "*..*" --  "0..1"Indisponibilita : Corsa_Non_Disponibile_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5440.xmi ==========
+
+Classi:
+- Compagnie
+  Attributi: nome, Linee
+- Linea
+  Attributi: compagnia, sigla, corse, day
+- Corsa
+  Attributi: linea, Fermate, timestart, stato, fermataStart, fermataEnd, start, end
+- Fermata
+  Attributi: ID, nome
+
+Enumerazioni:
+- stato: [in_orario, cancellata]
+- tipo: [partenza, arrivo, intemedio]
+
+Relazioni:
+- Corsa -> Fermata (association)
+- Corsa -> Linea (association)
+- Linea -> Compagnie (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.764
+Dettagli UMLComparator: {"classSimilarity":0.8,"attributeSimilarity":0.443,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnie {
+  nome : string
+  Linee : Linea[]
+}
+
+class Linea {
+  compagnia : string
+  sigla : string
+  corse : Corsa[]
+  day : string
+}
+
+class Corsa {
+  linea : string
+  Fermate : Fermata[]
+  timestart : DateTime
+  stato : stato
+  fermataStart : string
+  fermataEnd : string
+  start : fermate
+  end : fermate
+}
+
+class Fermata {
+  ID : int
+  nome : string
+}
+
+enum stato {
+  in_orario
+  cancellata
+}
+
+enum tipo {
+  partenza
+  arrivo
+  intemedio
+}
+
+Corsa "*..*" --  "1..*"Fermata : Corsa_Fermata
+Corsa "1..*" --  "1..1"Linea : Corsa_Linea
+Linea "1..*" --  "1..1"Compagnie : Linea_Compagnie
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5474.xmi ==========
+
+Classi:
+- compagnia
+  Attributi: Nome, id, Sede, Contatti, p.iva
+- Autubus
+  Attributi: Codice, Compagnia, Corsa
+- Corsa
+  Attributi: OrarioA, OrarioP, LuogoP, LuogoA, Giorni, Stato_Corsa, Tappa
+- tappa
+  Attributi: Luogo, orario, Stato_Tappa
+
+Enumerazioni:
+- Stato: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- Contatti: [Riferimento, Numero, Email]
+
+Relazioni:
+- Autubus -> compagnia (association)
+- Autubus -> Corsa (association)
+- Corsa -> tappa (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.704
+Dettagli UMLComparator: {"classSimilarity":0.675,"attributeSimilarity":0.501,"methodSimilarity":1,"relationSimilarity":0.667}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class compagnia {
+  Nome : string
+  id : string
+  Sede : string
+  Contatti : Contatti
+  p.iva : string
+}
+
+class Autubus {
+  Codice : string
+  Compagnia : string
+  Corsa : Corsa[]
+}
+
+class Corsa {
+  OrarioA : string
+  OrarioP : string
+  LuogoP : string
+  LuogoA : string
+  Giorni : string
+  Stato_Corsa : Stato
+  Tappa : Tappa[]
+}
+
+class tappa {
+  Luogo : string
+  orario : string
+  Stato_Tappa : Stato
+}
+
+enum Stato {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum Contatti {
+  Riferimento
+  Numero
+  Email
+}
+
+Autubus "1..*" --  "1..1"compagnia : Autubus_Compagnia
+Autubus "1..1" --  "1..*"Corsa : Autubus_Corsa
+Corsa "1..1" --  "0..*"tappa : Corsa_Tappa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5505.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: lineaAutobus
+- Linea
+  Attributi: sigla, puntodipartenza, puntoD'arrivo
+- Corsa
+  Attributi: Cadenza, OrarioPartenza, OrarioArrivo, Stato
+- Fermata
+  Attributi: nome
+- FermataIntermedia
+  Attributi: nome, Numero
+- Indisponibilita
+  Attributi: Giorno, Mese, Anno
+
+Enumerazioni:
+- StatoCorsa: [Festivo, sciopero, guasto, Viabilita, ritirato]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> FermataIntermedia (association)
+- Compagnia -> Corsa (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.819
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.552,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  lineaAutobus : string
+}
+
+class Linea {
+  sigla : string
+  puntodipartenza : string
+  puntoD'arrivo : string
+}
+
+class Corsa {
+  Cadenza : string
+  OrarioPartenza : string
+  OrarioArrivo : string
+  Stato : StatoCorsa
+}
+
+class Fermata {
+  nome : string
+}
+
+class FermataIntermedia {
+  nome : string
+  Numero : string
+}
+
+class Indisponibilita {
+  Giorno : string
+  Mese : string
+  Anno : string
+}
+
+enum StatoCorsa {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+Linea "1..*" --  "1..1"Compagnia : Linea_Compagnia
+Linea "*..*" --  "1..1"FermataIntermedia : Linea_FermataIntermedia
+Compagnia "*..*" --  "1..1"Corsa : Compagnia_Corsa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5516.xmi ==========
+
+Classi:
+- Compagnia
+- Linea
+  Attributi: fPartenza, fArrivo, Tipo
+- Corsa
+  Attributi: pPartenza, oArrivo, giorni
+- Giornata
+  Attributi: Giornata
+- Indisponibilita
+  Attributi: data, Causa
+- Fermata
+  Attributi: Nome, Numero
+
+Enumerazioni:
+- Causa: [Festivo, Sciopero, Guasto, Viabilita]
+- Tipo: [S1, S2, R6]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Linea -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.779
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.356,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+}
+
+class Linea {
+  fPartenza : Fermata
+  fArrivo : Fermata
+  Tipo : Tipo
+}
+
+class Corsa {
+  pPartenza : String
+  oArrivo : String
+  giorni : Array<Giorno>
+}
+
+class Giornata {
+  Giornata : Giorno
+}
+
+class Indisponibilita {
+  data : Date
+  Causa : Causa
+}
+
+class Fermata {
+  Nome : String
+  Numero : int
+}
+
+enum Causa {
+  Festivo
+  Sciopero
+  Guasto
+  Viabilita
+}
+
+enum Tipo {
+  S1
+  S2
+  R6
+}
+
+Linea "1..1" --  "*..*"Compagnia : Linea_Amministra_Compagnia
+Linea "1..*" --  "1..*"Fermata : Linea_Ferma_Fermata
+Linea "1..*" --  "1..*"Corsa : Linea_Fermata_Corsa
+Linea "1..*" --  "1..*"Indisponibilita : Linea_Indisponibile_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5523.xmi ==========
+
+Classi:
+- compagnia
+  Attributi: Nome
+- Linea
+  Attributi: Sigla, Durata
+- Corsa
+  Attributi: Cadenza, Indisponibilita
+- Fermata
+  Attributi: Nome, Numero
+
+Enumerazioni:
+- Indiponibilita: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- Cadenza: [Lunedi, Martedi, Mercoledi, Giocedi, Venerdi, Sabato, Domenica]
+
+Relazioni:
+- Linea -> compagnia (association)
+- Linea -> Corsa (association)
+- Corsa -> Fermata (association)
+- Corsa -> Fermata (association)
+- Corsa -> Fermata (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.789
+Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.556,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class compagnia {
+  Nome : string
+}
+
+class Linea {
+  Sigla : string
+  Durata : string
+}
+
+class Corsa {
+  Cadenza : Cadenza
+  Indisponibilita : Indiponibilita
+}
+
+class Fermata {
+  Nome : string
+  Numero : string
+}
+
+enum Indiponibilita {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum Cadenza {
+  Lunedi
+  Martedi
+  Mercoledi
+  Giocedi
+  Venerdi
+  Sabato
+  Domenica
+}
+
+Linea "1..*" --  "1..1"compagnia : Linea_Compagnia
+Linea "1..1" --  "1..*"Corsa : Linea_Corsa
+Corsa "1..*" --  "*..*"Fermata : Corsa_Fermata
+Corsa "1..*" --  "*..*"Fermata : Corsa_Finisce_Fermata
+Corsa "1..*" --  "*..*"Fermata : Corsa_Inizia_Fermata
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5579.xmi ==========
+
+Classi:
+- compagnia
+  Attributi: Nome
+- Linea
+  Attributi: sigla, Giorni
+- Corsa
+  Attributi: OraArrivo, OraPartenza
+- Fermata
+  Attributi: nome, numero, Ispartenza, IsArrivo
+- Indisponibilita
+  Attributi: Giorno, Mese, Anno, Tipo
+
+Enumerazioni:
+- Tipo: [Festivo, sciopero, guasto, Viabilita, ritirato]
+
+Relazioni:
+- Linea -> compagnia (association)
+- Linea -> Indisponibilita (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.834
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.631,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class compagnia {
+  Nome : string
+}
+
+class Linea {
+  sigla : string
+  Giorni : string[]
+}
+
+class Corsa {
+  OraArrivo : string
+  OraPartenza : string
+}
+
+class Fermata {
+  nome : string
+  numero : string
+  Ispartenza : string
+  IsArrivo : string
+}
+
+class Indisponibilita {
+  Giorno : string
+  Mese : string
+  Anno : string
+  Tipo : Tipo
+}
+
+enum Tipo {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+Linea "1..*" --  "1..1"compagnia : Linea_Compagnia
+Linea "*..*" --  "*..*"Indisponibilita : Linea_Indisponibilita
+Linea "1..*" --  "1..1"Fermata : Linea_Fermata
+Linea "1..*" --  "1..*"Corsa : Linea_Corsa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5628.xmi ==========
+
+Classi:
+- compagnia
+  Attributi: Nome
+- LineaAutubus
+  Attributi: sigla, GiorniServizio
+- Corsa
+  Attributi: OrarioArrivo, OrarioPartenza, DataEOra
+- Fermata
+  Attributi: nome, numero
+- Indisponibilita
+  Attributi: Causa
+
+Enumerazioni:
+- Porblema: [Festivo, sciopero, guasto, Viabilita, ritirato]
+
+Relazioni:
+- LineaAutubus -> compagnia (association)
+- Corsa -> Indisponibilita (association)
+- LineaAutubus -> Fermata (association)
+- LineaAutubus -> Corsa (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.82
+Dettagli UMLComparator: {"classSimilarity":0.865,"attributeSimilarity":0.595,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class compagnia {
+  Nome : string
+}
+
+class LineaAutubus {
+  sigla : string
+  GiorniServizio : string[]
+}
+
+class Corsa {
+  OrarioArrivo : string
+  OrarioPartenza : string
+  DataEOra : string
+}
+
+class Fermata {
+  nome : string
+  numero : string
+}
+
+class Indisponibilita {
+  Causa : Porblema
+}
+
+enum Porblema {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+LineaAutubus "1..*" --  "1..1"compagnia : LineaAutubus_Compagnia
+Corsa "1..*" --  "0..1"Indisponibilita : Corsa_Indisponibilita
+LineaAutubus "*..*" --  "*..*"Fermata : LineaAutubus_Fermata
+LineaAutubus "1..1" --  "1..*"Corsa : LineaAutubus_Corsa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5645.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome
+- Linea
+  Attributi: nome
+- Corsa
+  Attributi: OrarioPartenza, OrarioArrivo
+- Fermata
+  Attributi: OrarioPartenza, OrarioArrivo, FermataAttuale
+
+Enumerazioni:
+- Giorni: [Lunedi, Martedì, Mercoledì, Giovedì, Venerdi]
+
+Relazioni:
+- Compagnia -> Linea (association)
+- Linea -> Corsa (association)
+- Linea -> Fermata (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.762
+Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.419,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+}
+
+class Linea {
+  nome : string
+}
+
+class Corsa {
+  OrarioPartenza : Localdata
+  OrarioArrivo : Localdata
+}
+
+class Fermata {
+  OrarioPartenza : string
+  OrarioArrivo : string
+  FermataAttuale : fermate
+}
+
+enum Giorni {
+  Lunedi
+  Martedì
+  Mercoledì
+  Giovedì
+  Venerdi
+}
+
+Compagnia "1..1" --  "1..*"Linea : Compagnia_Linea
+Linea "1..1" --  "1..*"Corsa : Linea_Corsa
+Linea "1..1" --  "1..*"Fermata : Linea_Fermata
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5647.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome, numeroAutobus, numeroLinea
+- Linea
+  Attributi: sigla, orarioPartenza, orarioArrivo, fermate
+- Fermata
+  Attributi: primaFermata, fermataIntermedio, ultimaFermata, nomeFermata, numeroFermata
+- Calendario
+  Attributi: orarioDiPartenza, orarioDiArrivo, giorniDiCorsa, corseMancate
+
+Enumerazioni:
+- Causa: [Festivo, Sciopero, Guasto, Viabilita]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Calendario (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.758
+Dettagli UMLComparator: {"classSimilarity":0.78,"attributeSimilarity":0.452,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : String
+  numeroAutobus : int
+  numeroLinea : int
+}
+
+class Linea {
+  sigla : String
+  orarioPartenza : String
+  orarioArrivo : String
+  fermate : Array<Fermata>
+}
+
+class Fermata {
+  primaFermata : String
+  fermataIntermedio : String
+  ultimaFermata : String
+  nomeFermata : String
+  numeroFermata : int
+}
+
+class Calendario {
+  orarioDiPartenza : String
+  orarioDiArrivo : String
+  giorniDiCorsa : Array<String>
+  corseMancate : Causa
+}
+
+enum Causa {
+  Festivo
+  Sciopero
+  Guasto
+  Viabilita
+}
+
+Linea "1..*" --  "1..*"Compagnia : Linea_Compagnia
+Linea "1..*" --  "1..*"Fermata : Linea_Fermata
+Linea "1..*" --  "1..*"Calendario : Linea_Calendario
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5648.xmi ==========
+
+Classi:
+- compagnia
+- Linea
+- Corsa
+  Attributi: OrarioPartenza, OrarioArrivo, GiornoDisponibile
+- Fermata
+  Attributi: nome, numero
+- Fermata Partenza
+- Fermata Arrivo
+- Fermata Intermedia
+- Indisponibilita
+  Attributi: GiornoDisponibile, Mese, Anno
+
+Enumerazioni:
+- Causa: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- sigla: [s1, s2, R6]
+
+Relazioni:
+- Linea -> compagnia (association)
+- Linea -> Fermata (association)
+- Fermata -> Fermata Partenza (association)
+- Fermata -> Fermata Arrivo (association)
+- Fermata -> Fermata Intermedia (association)
+- Corsa -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.742
+Dettagli UMLComparator: {"classSimilarity":0.771,"attributeSimilarity":0.391,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class compagnia {
+}
+
+class Linea {
+}
+
+class Corsa {
+  OrarioPartenza : string
+  OrarioArrivo : string
+  GiornoDisponibile : string
+}
+
+class Fermata {
+  nome : string
+  numero : string
+}
+
+class Fermata Partenza {
+}
+
+class Fermata Arrivo {
+}
+
+class Fermata Intermedia {
+}
+
+class Indisponibilita {
+  GiornoDisponibile : string
+  Mese : string
+  Anno : string
+}
+
+enum Causa {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum sigla {
+  s1
+  s2
+  R6
+}
+
+Linea "1..*" --  "1..1"compagnia : Linea_Compagnia
+Linea -- Fermata : Linea_Fermata
+Fermata -- Fermata Partenza : Fermata_FermataPartenza
+Fermata -- Fermata Arrivo : Fermata_FermataArrivo
+Fermata -- Fermata Intermedia : Fermata_FermataIntermedia
+Corsa -- Indisponibilita : Corsa_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5650.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome, linea
+- Linea
+  Attributi: compagnia, sigla
+- Fermata
+  Attributi: nome, numero
+- Corsa
+  Attributi: orarioDiPartenza, orarioDiArrivo, giorniDiCorsa, stazioneFermata, stazioneIntermedio, stazioneArrivo
+- Indisponibilita
+  Attributi: causa, giorno
+
+Enumerazioni:
+- Causa: [Festivo, Sciopero, Guasto, Viabilita]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Linea -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.813
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.526,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : String
+  linea : Array<Linea>
+}
+
+class Linea {
+  compagnia : Compagnia
+  sigla : String
+}
+
+class Fermata {
+  nome : String
+  numero : int
+}
+
+class Corsa {
+  orarioDiPartenza : String
+  orarioDiArrivo : String
+  giorniDiCorsa : Array<String>
+  stazioneFermata : Fermata
+  stazioneIntermedio : Fermata
+  stazioneArrivo : Fermata
+}
+
+class Indisponibilita {
+  causa : Causa
+  giorno : String
+}
+
+enum Causa {
+  Festivo
+  Sciopero
+  Guasto
+  Viabilita
+}
+
+Linea "1..*" --  "1..*"Compagnia : Linea_Compagnia
+Linea "1..*" --  "1..*"Fermata : Linea_Fermata
+Linea "1..*" --  "1..*"Corsa : Linea_Corsa
+Linea "1..*" --  "1..*"Indisponibilita : Linea_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5652.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome, id
+- Linea
+  Attributi: operatica, numID
+- Corsa
+  Attributi: OraPart, OraArri, motivo, inteventuale
+- Fermata
+  Attributi: numID, nome
+
+Enumerazioni:
+- MotivoIn: [festivo, sciopero, guasto, viabilita, ritardo]
+
+Relazioni:
+- Compagnia -> Linea (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.774
+Dettagli UMLComparator: {"classSimilarity":0.807,"attributeSimilarity":0.477,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+  id : int
+}
+
+class Linea {
+  operatica : string
+  numID : string
+}
+
+class Corsa {
+  OraPart : string
+  OraArri : string
+  motivo : MotivoIn
+  inteventuale : string
+}
+
+class Fermata {
+  numID : string
+  nome : string
+}
+
+enum MotivoIn {
+  festivo
+  sciopero
+  guasto
+  viabilita
+  ritardo
+}
+
+Compagnia "1..1" --  "1..*"Linea : Compagnia_Linea
+Linea "1..*" --  "2..*"Fermata : Linea_Fermata
+Linea "1..1" --  "1..*"Corsa : Linea_Corsa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5715.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome
+- LineaAutubus
+  Attributi: Tipo, oraPartenza, oraArrivo
+- Corsa
+  Attributi: giorniSettimanali
+- Indisponibilita
+  Attributi: Giorno, Mese, Anno, Motivo
+- Fermata
+  Attributi: nome, numero
+- FermataPartenza
+- FermataArrivo
+
+Enumerazioni:
+- Causa: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- sigla: [s1, s2, R6]
+
+Relazioni:
+- LineaAutubus -> Compagnia (association)
+- LineaAutubus -> Fermata (association)
+- LineaAutubus -> Corsa (association)
+- Corsa -> Indisponibilita (association)
+- LineaAutubus -> FermataArrivo (association)
+- LineaAutubus -> FermataPartenza (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.81
+Dettagli UMLComparator: {"classSimilarity":0.865,"attributeSimilarity":0.542,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+}
+
+class LineaAutubus {
+  Tipo : sigla
+  oraPartenza : string
+  oraArrivo : string
+}
+
+class Corsa {
+  giorniSettimanali : string
+}
+
+class Indisponibilita {
+  Giorno : string
+  Mese : string
+  Anno : string
+  Motivo : Causa
+}
+
+class Fermata {
+  nome : string
+  numero : string
+}
+
+class FermataPartenza {
+}
+
+class FermataArrivo {
+}
+
+enum Causa {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum sigla {
+  s1
+  s2
+  R6
+}
+
+LineaAutubus "*..*" --  "1..1"Compagnia : LineaAutubus_Compagnia
+LineaAutubus "0..*" --  "0..*"Fermata : LineaAutubus_Fermata
+LineaAutubus "1..*" --  "1..*"Corsa : LineaAutubus_Corsa
+Corsa "0..*" --  "0..1"Indisponibilita : Corsa_Indisponibilita
+LineaAutubus "1..*" --  "1..1"FermataArrivo : LineaAutubus_FermataArrivo
+LineaAutubus "1..*" --  "1..1"FermataPartenza : LineaAutubus_FermataPartenza
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5771.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome
+- Linea
+  Attributi: sigla, fermataPartenza, fermataArrivo, fermataIntermedia
+- Corsa
+  Attributi: OrarioPartenza, OrarioArrivo, gironoCorsa, gironoMancataCorsa, meseMancataCorsa, annoMancataCorsa
+
+Enumerazioni:
+- Giorno: [Lunedi, Martedì, Mercoledì, Giovedì, Venerdì, Sabato, Domenica]
+
+Relazioni:
+- Corsa -> Linea (association)
+- Linea -> Compagnia (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.767
+Dettagli UMLComparator: {"classSimilarity":0.743,"attributeSimilarity":0.572,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+}
+
+class Linea {
+  sigla : string
+  fermataPartenza : string
+  fermataArrivo : string
+  fermataIntermedia : string
+}
+
+class Corsa {
+  OrarioPartenza : int
+  OrarioArrivo : int
+  gironoCorsa : Giorno
+  gironoMancataCorsa : string
+  meseMancataCorsa : string
+  annoMancataCorsa : int
+}
+
+enum Giorno {
+  Lunedi
+  Martedì
+  Mercoledì
+  Giovedì
+  Venerdì
+  Sabato
+  Domenica
+}
+
+Corsa "*..*" --  "*..*"Linea : Corsa_Linea
+Linea "1..*" --  "1..1"Compagnia : Linea_Compagnia
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5783.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome
+- Linea
+  Attributi: sigla
+- Corsa
+  Attributi: OrarioPartenza, OrarioArrivo, GiorniDisponibili
+- Fermata
+  Attributi: nome, numero, Tipo
+- Indisponibilita
+  Attributi: Giorno, Mese, Anno, Corsa
+
+Enumerazioni:
+- CausaMomentaneaCaorsa: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- TipoFermata: [diPartenza, diArrivo, Intermedia]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Indisponibilita (association)
+- Linea -> Corsa (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.844
+Dettagli UMLComparator: {"classSimilarity":0.881,"attributeSimilarity":0.678,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+}
+
+class Linea {
+  sigla : string
+}
+
+class Corsa {
+  OrarioPartenza : string
+  OrarioArrivo : string
+  GiorniDisponibili : string
+}
+
+class Fermata {
+  nome : string
+  numero : int
+  Tipo : TipoFermata
+}
+
+class Indisponibilita {
+  Giorno : int
+  Mese : int
+  Anno : int
+  Corsa : CausaMomentaneaCaorsa
+}
+
+enum CausaMomentaneaCaorsa {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum TipoFermata {
+  diPartenza
+  diArrivo
+  Intermedia
+}
+
+Linea "1..*" --  "1..1"Compagnia : Linea_Compagnia
+Linea "1..1" --  "1..*"Fermata : Linea_Fermata
+Linea "1..1" --  "0..*"Indisponibilita : Linea_Indisponibilita
+Linea "1..1" --  "1..*"Corsa : Linea_Corsa
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5823.xmi ==========
+
+Classi:
+- Compagnia
+  Attributi: nome, Sede
+- Linea
+  Attributi: tratta, sigla, compagnia
+- Corsa
+  Attributi: Data, Orario_Partenza, Orario_Arrivo, Linea
+- Fermata
+  Attributi: nome, numero
+- Fermata_intermedia
+  Attributi: Linea
+- Corsa_in_partenza
+  Attributi: Destinazione
+- Corsa_in_arrivo
+  Attributi: Origine
+- Indisponibilita
+  Attributi: data, Causa
+
+Enumerazioni:
+- CausaIndisp: [Festivo, sciopero, guasto, Viabilita, ritirato]
+
+Relazioni:
+- Linea -> Compagnia (association)
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Corsa -> Indisponibilita (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.768
+Dettagli UMLComparator: {"classSimilarity":0.777,"attributeSimilarity":0.509,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  nome : string
+  Sede : string
+}
+
+class Linea {
+  tratta : string
+  sigla : string
+  compagnia : string
+}
+
+class Corsa {
+  Data : string
+  Orario_Partenza : string
+  Orario_Arrivo : string
+  Linea : string
+}
+
+class Fermata {
+  nome : string
+  numero : string
+}
+
+class Fermata_intermedia {
+  Linea : string
+}
+
+class Corsa_in_partenza {
+  Destinazione : string
+}
+
+class Corsa_in_arrivo {
+  Origine : string
+}
+
+class Indisponibilita {
+  data : string
+  Causa : CausaIndisp
+}
+
+enum CausaIndisp {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+Linea "*..*" --  "1..1"Compagnia : Linea_Compagnia
+Linea "*..*" --  "*..*"Fermata : Linea_Fermata
+Linea "1..*" --  "*..*"Corsa : Linea_Corsa
+Corsa "1..1" --  "1..1"Indisponibilita : Corsa_Indisponibilita
+
+
+@enduml
+
+========== FILE ANALIZZATO: 5846.xmi ==========
+
+Classi:
+- Bus
+  Attributi: Trga, Compagnia, Nlinea, StatoBUS
+- Line2
+  Attributi: Nlinea, Nfermata, PuntoDiPartenza, OrarioDiPartenza, PuntoDiArrivo, OrariDiArrivo, DataDunfionamento
+- Fermata
+  Attributi: NomeFermata, Obbligazione, Nlinea
+
+Relazioni:
+- Bus -> Line2 (association)
+- Line2 -> Bus (association)
+Similarità voto (SimilaritaNumeroErrori): 4
+Similarità voto (UMLComparator): 0.624
+Dettagli UMLComparator: {"classSimilarity":0.674,"attributeSimilarity":0.439,"methodSimilarity":1,"relationSimilarity":0.333}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Bus {
+  Trga : string
+  Compagnia : string
+  Nlinea : string
+  StatoBUS : string
+}
+
+class Line2 {
+  Nlinea : string
+  Nfermata : string
+  PuntoDiPartenza : string
+  OrarioDiPartenza : string
+  PuntoDiArrivo : string
+  OrariDiArrivo : string
+  DataDunfionamento : string
+}
+
+class Fermata {
+  NomeFermata : string
+  Obbligazione : string
+  Nlinea : string
+}
+
+Bus "1..1" --  "*..*"Line2 : Bus_Linea
+Line2 "*..*" --  "*..*"Bus : Linea_Bus
+
+
+@enduml
+
+========== FILE ANALIZZATO: lafragola.xmi ==========
+
+Classi:
+- Autobus
+  Attributi: Compagnia
+- Linea
+  Attributi: Sigla, Giorni
+- Corsa
+  Attributi: OraPrtenza, OraArrivo, Annullato
+- Fermata
+  Attributi: nome, numero
+- Partenza
+- Arrivo
+
+Enumerazioni:
+- Annullato: [Festivo, sciopero, guasto, Viabilita, ritirato]
+- sigla: [s1, s2, R6]
+
+Relazioni:
+- Linea -> Fermata (association)
+- Linea -> Corsa (association)
+- Arrivo -> Fermata (association)
+- Partenza -> Fermata (association)
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.873
+Dettagli UMLComparator: {"classSimilarity":0.89,"attributeSimilarity":0.806,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO STUDENTE ---
+
+@startuml
+!define RECTANGLE class
+
+class Autobus {
+  Compagnia : string
+}
+
+class Linea {
+  Sigla : sigla
+  Giorni : string
+}
+
+class Corsa {
+  OraPrtenza : string
+  OraArrivo : string
+  Annullato : Annullato
+}
+
+class Fermata {
+  nome : string
+  numero : string
+}
+
+class Partenza {
+}
+
+class Arrivo {
+}
+
+enum Annullato {
+  Festivo
+  sciopero
+  guasto
+  Viabilita
+  ritirato
+}
+
+enum sigla {
+  s1
+  s2
+  R6
+}
+
+Linea "*..*" --  "*..*"Fermata : Linea_Fermata
+Linea "1..1" --  "*..*"Corsa : Linea_Corsa
+Arrivo "1..1" --  "1..1"Fermata : Arrivo_Fermata
+Partenza "1..1" --  "1..1"Fermata : Partenza_Fermata
+
+
+@enduml
+
+Media Similarità voto (SimilaritaNumeroErrori): 3.20
+Media Similarità voto (UMLComparator): 0.78
+
+========== MODELLO IA GENERATO ==========
+
+Classi:
+- Compagnia
+  Attributi: id, nome
+- Linea
+  Attributi: id, sigla, giorniOperativi
+- Corsa
+  Attributi: id, orarioPartenza, orarioArrivoPresunto
+- Fermata
+  Attributi: id, nome, numero
+- Indisponibilita
+  Attributi: id, giorno, mese, anno, causa
+
+Enumerazioni:
+- CausaIndisponibilita: [FESTIVITA, SCIOPERO, GUASTO, VIABILITA, RITARDO]
+
+Relazioni:
+- Compagnia -> Linea (association)
+- Linea -> Corsa (association)
+- Linea -> Fermata (association)
+- Linea -> Fermata (association)
+- Linea -> Fermata (association)
+- Corsa -> Indisponibilita (association)
+Similarità voto IA (SimilaritaNumeroErrori): 4
+Similarità voto IA (UMLComparator): 0.8
+Dettagli UMLComparator IA: {"classSimilarity":0.881,"attributeSimilarity":0.461,"methodSimilarity":1,"relationSimilarity":0.778}
+
+--- PLANTUML MODELLO IA ---
+
+@startuml
+!define RECTANGLE class
+
+class Compagnia {
+  id : int
+  nome : string
+}
+
+class Linea {
+  id : int
+  sigla : string
+  giorniOperativi : string
+}
+
+class Corsa {
+  id : int
+  orarioPartenza : Date
+  orarioArrivoPresunto : Date
+}
+
+class Fermata {
+  id : int
+  nome : string
+  numero : int
+}
+
+class Indisponibilita {
+  id : int
+  giorno : int
+  mese : int
+  anno : int
+  causa : CausaIndisponibilita
+}
+
+enum CausaIndisponibilita {
+  FESTIVITA
+  SCIOPERO
+  GUASTO
+  VIABILITA
+  RITARDO
+}
+
+Compagnia -- Linea : possiede
+Linea -- Corsa : ha
+Linea -- Fermata : parteDa
+Linea -- Fermata : arrivaA
+Linea -- Fermata : ha
+Corsa -- Indisponibilita : nonOperativa
+
+
+@enduml
