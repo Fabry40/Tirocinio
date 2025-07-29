@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:uml="http://www.omg.org/spec/UML/20090901">
+  <uml:Model xmi:id="model38" name="BusSystemModel">
+    <ownedMember xmi:type="uml:Class" xmi:id="classCompagnia" name="Compagnia">
+      <ownedAttribute xmi:id="classCompagnia_attr1" name="nome" type="String"/>
+      <ownedAttribute xmi:id="classCompagnia_attr2" name="numeroAutobus" type="int"/>
+      <ownedAttribute xmi:id="classCompagnia_attr3" name="numeroLinea" type="int"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classLinea" name="Linea">
+      <ownedAttribute xmi:id="classLinea_attr1" name="sigla" type="String"/>
+      <ownedAttribute xmi:id="classLinea_attr2" name="orarioPartenza" type="String"/>
+      <ownedAttribute xmi:id="classLinea_attr3" name="orarioArrivo" type="String"/>
+      <ownedAttribute xmi:id="classLinea_attr4" name="fermate" type="Array<Fermata>"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classFermata" name="Fermata">
+      <ownedAttribute xmi:id="classFermata_attr1" name="primaFermata" type="String"/>
+      <ownedAttribute xmi:id="classFermata_attr2" name="fermataIntermedio" type="String"/>
+      <ownedAttribute xmi:id="classFermata_attr3" name="ultimaFermata" type="String"/>
+      <ownedAttribute xmi:id="classFermata_attr4" name="nomeFermata" type="String"/>
+      <ownedAttribute xmi:id="classFermata_attr5" name="numeroFermata" type="int"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Class" xmi:id="classCalendario" name="Calendario">
+      <ownedAttribute xmi:id="classCalendario_attr1" name="orarioDiPartenza" type="String"/>
+      <ownedAttribute xmi:id="classCalendario_attr2" name="orarioDiArrivo" type="String"/>
+      <ownedAttribute xmi:id="classCalendario_attr3" name="giorniDiCorsa" type="Array<String>"/>
+      <ownedAttribute xmi:id="classCalendario_attr4" name="corseMancate" type="Causa"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Enumeration" xmi:id="enumCausa" name="Causa">
+      <ownedLiteral xmi:id="enumCausa_festivo" name="Festivo"/>
+      <ownedLiteral xmi:id="enumCausa_sciopero" name="Sciopero"/>
+      <ownedLiteral xmi:id="enumCausa_guasto" name="Guasto"/>
+      <ownedLiteral xmi:id="enumCausa_viabilita" name="Viabilita"/>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaCompagnia" name="Linea_Compagnia">
+      <ownedEnd xmi:id="assocLineaCompagnia_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCompagnia_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCompagnia_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaCompagnia_end2" type="classCompagnia">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCompagnia_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCompagnia_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaFermata" name="Linea_Fermata">
+      <ownedEnd xmi:id="assocLineaFermata_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaFermata_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaFermata_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaFermata_end2" type="classFermata">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaFermata_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaFermata_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+    <ownedMember xmi:type="uml:Association" xmi:id="assocLineaCalendario" name="Linea_Calendario">
+      <ownedEnd xmi:id="assocLineaCalendario_end1" type="classLinea">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCalendario_end1_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCalendario_end1_upper" value="*"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="assocLineaCalendario_end2" type="classCalendario">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="assocLineaCalendario_end2_lower" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="assocLineaCalendario_end2_upper" value="*"/>
+      </ownedEnd>
+    </ownedMember>
+  </uml:Model>
+</xmi:XMI>
