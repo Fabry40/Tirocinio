@@ -108,8 +108,8 @@ I file di log vengono salvati nella cartella `risultati` con formato:
 ## 📊 Dati raw delle sperimentazioni
 
 I dati raw delle sperimentazioni sono disponibili nelle cartelle:
-- [`Back-end/Album`](Back-end/Album): file XMI prodotti dagli studenti (esperimento "Voto")
-- [`Back-end/Bus`](Back-end/Bus): file XMI di un altro set di sperimentazione
+- [`Esercitazioni/Fotografia`](Esercitazioni/Fotografia): file XMI prodotti dagli studenti (esperimento "Voto")
+- [`Esercitazioni/Autobus`](Esercitazioni/Autobus): file XMI di un altro set di sperimentazione
 - [`Back-end/risultati`](Back-end/risultati): file di log generati dagli esperimenti
 
 ### Come leggere i dati
