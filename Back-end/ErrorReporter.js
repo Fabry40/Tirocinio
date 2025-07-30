@@ -177,7 +177,7 @@ export class ErrorReporter {
     if (report.errors.nonReliable.length > 0) {
       output.push(`⚠️  ERRORI NON ATTENDIBILI (${report.errors.nonReliable.length}):`);
       output.push(`    ℹ️  L'IA spesso genera contenuti extra o ha difficoltà con le associazioni`);
-      output.push(`    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente`);
+      output.push(`    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente la traccia`);
       output.push('');
       report.errors.nonReliable.forEach((error, i) => {
         output.push(`  ${i + 1}. ${error.message}`);

@@ -5,7 +5,6 @@ import { OpenRouterIA } from './OpenRouterIA.js';
 import { UMLComparator } from './UMLComparator.js';
 import { Traccia } from './Traccia.js';
 import { Logger } from './Logger.js';
-import { DifferenceAnalyzer } from './DifferenceAnalyzer.js';
 import { ErrorReporter } from './ErrorReporter.js';
 import { SimilaritaNumeroErrori } from './Voto.js'; 
 import { PlantUMLGenerator } from './plantUML.js';
@@ -85,7 +84,8 @@ async function main() {
   Logger.logToFile("\n🔍 Analizzando le differenze...");
   Logger.logToFile("\n---------------------- ANALISI ERRORI E SUGGERIMENTI ----------------------\n");
 
-  const differences = DifferenceAnalyzer.analyzeDifferences(modelA, modelB);
+  // Usa le differenze già calcolate da UMLComparator
+  const differences = result.differences;
   const errorReport = ErrorReporter.generateErrorReport(differences, result.similarity);
   const formattedReport = ErrorReporter.formatReport(errorReport);
 
