@@ -24,9 +24,9 @@ Questo progetto confronta modelli UML con configurazione flessibile tramite file
    ```
    Back-end/
    Traccia/      # File PDF delle tracce
-   UmlAtteso/    # File XMI di riferimento (docente)
-   Album/        # File XMI degli studenti (per esperimento "Voto")
+   UmlAtteso/    # File XMI di riferimento (docente)      
    risultati/    # Cartella per i file log di output
+   Sperimentazioni  # File XMI degli studenti 
    ```
 
 ## 🛠️ Configurazione
@@ -108,8 +108,8 @@ I file di log vengono salvati nella cartella `risultati` con formato:
 ## 📊 Dati raw delle sperimentazioni
 
 I dati raw delle sperimentazioni sono disponibili nelle cartelle:
-- [`Esercitazioni/Fotografia`](Esercitazioni/Fotografia): file XMI prodotti dagli studenti (esperimento "Voto")
-- [`Esercitazioni/Autobus`](Esercitazioni/Autobus): file XMI di un altro set di sperimentazione
+- [`Sperimentazioni/Fotografia`](Sperimentazioni/Fotografia): file XMI prodotti dagli studenti (esperimento "Voto")
+- [`Sperimentazioni/Autobus`](Sperimentazioni/Autobus): file XMI di un altro set di sperimentazione
 - [`Back-end/risultati`](Back-end/risultati): file di log generati dagli esperimenti
 
 ### Come leggere i dati
