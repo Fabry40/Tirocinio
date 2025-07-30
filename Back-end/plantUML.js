@@ -81,12 +81,7 @@ export class PlantUMLGenerator {
     return output;
   }
 
-  /**
-   * Genera il codice PlantUML per le relazioni
-   * @param {Array} relations - Array delle relazioni
-   * @param {Array} enumerations - Array delle enumerazioni (per filtrare le relazioni)
-   * @returns {string} - Codice PlantUML per le relazioni
-   */
+
   static generateRelations(relations, enumerations = []) {
     if (!relations || relations.length === 0) {
       return '';

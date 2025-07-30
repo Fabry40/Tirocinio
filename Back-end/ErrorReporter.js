@@ -10,7 +10,7 @@ export class ErrorReporter {
         critical: [],
         important: [],
         minor: [],
-        nonReliable: [] // Rinominata da "associations" a "nonReliable" per essere più generale
+        nonReliable: [] 
       },
       suggestions: []
     };
