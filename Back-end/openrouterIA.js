@@ -8,7 +8,15 @@ const endpoint = 'https://openrouter.ai/api/v1/chat/completions';
 export class OpenRouterIA {
   // Funzione generica per chiamare un modello su OpenRouter
   static async callOpenRouterModel(modelName, prompt) {
+    // Verifica che l'API key sia configurata
+    if (!API_KEY) {
+      console.error(`❌ API KEY di OpenRouter non configurata!`);
+      console.error(`Assicurati di aver impostato la variabile d'ambiente 'openrouter_API_KEY'`);
+      return null;
+    }
+
     try {
+      console.log(`🤖 Chiamando ${modelName}...`);
       const response = await axios.post(
         endpoint,
         {
@@ -27,10 +35,18 @@ export class OpenRouterIA {
         }
       );
 
-      //console.log(`💬 Risposta da ${modelName}:\n`, response.data.choices[0].message.content);
+      console.log(`✅ Risposta ricevuta da ${modelName}`);
       return response.data.choices[0].message.content;
     } catch (error) {
-      //console.error(`❌ Errore con ${modelName}:`, error.response?.data || error.message);
+      console.error(`❌ Errore con ${modelName}:`);
+      if (error.response) {
+        console.error(`Status: ${error.response.status}`);
+        console.error(`Data:`, error.response.data);
+      } else if (error.request) {
+        console.error(`Nessuna risposta ricevuta:`, error.request);
+      } else {
+        console.error(`Errore nella configurazione:`, error.message);
+      }
       return null;
     }
   }
@@ -39,12 +55,13 @@ export class OpenRouterIA {
     const prompt = getUMLPrompt(traccia);
       // Meta LLaMA 4 (Maveric)
       return await OpenRouterIA.callOpenRouterModel('meta-llama/llama-3.1-405b-instruct:free', prompt);
+      //console.log(`meta non disponibile`);
     }
 
     static async runDeepSeek(traccia) {
       const prompt = getUMLPrompt(traccia);
       // DeepSeek: R1 0528
-      return await OpenRouterIA.callOpenRouterModel('deepseek/deepseek-chat-v3-0324:free', prompt);
+      return await OpenRouterIA.callOpenRouterModel('deepseek/deepseek-r1-0528-qwen3-8b:free', prompt);
     }
 
 }

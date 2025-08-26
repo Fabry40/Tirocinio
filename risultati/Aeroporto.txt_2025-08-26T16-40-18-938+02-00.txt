@@ -1,6 +1,8 @@
+IA UTILIZZATA: GEMINI
+esperimento : main
 
 ---------------------- Inizio del processo ----------------------
-DeepSeek
+
 
 ----------------------primo step stampo il Contenuto del PDF----------------------  
 Si sviluppi un sistema informativo per la gestione d ell’ aeroporto   di Napoli , composto  da una base di dati relazionale e da un applicativo Java con interfaccia grafica  realizzata con Swing. Questo sistema deve consentire di organizzare e monitorare le  operazioni aeroportuali in modo efficiente e intuitivo.   Il sistema può essere ut ilizzato da utenti autenticati tramite una login e una  password.  Gli utenti sono suddivisi in due ruoli: utenti generici, che possono  prenotare voli, e amministratori del sistema, che gestiscono l’inserimento e  l’aggiornamento dei voli.   Il sistema  gestisce   i voli in arrivo e  quelli  in partenza. Ogni volo è caratterizzato da  un codice univoco, la compagnia aerea, l’aeroporto di origine  (per i voli in arrivo a  Napoli) e   quello di  destinazione   (per i voli in partenza da Napoli) ,  la data del volo,  l’orario prev isto , l’eventuale ritardo   e lo stato del volo (programmato,  decollato,  in  ritardo, atterrato, cancellato). Gli amministratori del sistema hanno la possibilità di  inserire nuovi voli e aggiornare le informazioni sui voli esistenti.   Gli utenti generici posso no effettuare prenotazioni per i voli   programmati . Ogni  prenotazione è legata a un volo e contiene informazioni come i   dati del  passeggero   (che non deve necessariamente coincidere con il nome dell’utente che lo ha  prenotato) , il numero del biglietto, il po sto assegnato e lo stato della prenotazione  (confermata, in attesa, cancellata). Gli utenti possono cercare e modificare le proprie  prenotazioni in base al nome  del passeggero  o al numero del volo.   Il sistema gestisce anche i gate di imbarco   (identificati  da un numero) ,  assegnandoli  ai voli in partenza. Gli amministratori possono modificare l’assegnazione dei gate.    Il sistema consente agli utenti di visualizzare aggiornamenti sui voli prenotati  accedendo alla propria area personale, dove possono controllar e eventuali ritardi,  cancellazioni o variazioni direttamente dall'interfaccia. Inoltre, all'interno della  homepage degli utenti viene mostrata una tabella con gli orari aggiornati dei voli in  partenza e in arrivo, fornendo una panoramica immediata delle op erazioni  aeroportuali.   Infine, il sistema permette di eseguire ricerche rapide per trovare voli, passeggeri e  bagagli in base a diversi criteri. Le informazioni più importanti vengono evidenziate,  come i voli in ritardo o cancellati, per facilitare la gest ione delle operazioni  aeroportuali.     Requisito per gruppi da tre persone.   Un’altra funzione importante è il monitoraggio dei bagagli. Ogni bagaglio è associato  al volo del passeggero e viene registrato nel sistema  durante l’operazione di  check - in, generand o un codice univoco che consente il tracciamento. Durante il  percorso, lo stato del bagaglio viene gestito manualmente dagli amministratori, che  aggiornano il sistema indicando se è stato caricato sull'aereo o è disponibile per il  ritiro. Gli utenti posson o visualizzare lo stato aggiornato del proprio bagaglio tramite  l'interfaccia del sistema. Se un bagaglio viene smarrito, l’utente può segnalarlo 
@@ -334,154 +336,8 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
     {
       "name": "Utente",
       "attributes": [
-        { "name": "id", "type": "int" },
-        { "name": "username", "type": "string" },
-        { "name": "password", "type": "string" },
-        { "name": "ruolo", "type": "RuoloUtente" }
-      ],
-      "methods": ["login", "logout"]
-    },
-    {
-      "name": "Volo",
-      "attributes": [
-        { "name": "codice", "type": "string" },
-        { "name": "compagniaAerea", "type": "string" },
-        { "name": "aeroportoOrigine", "type": "string" },
-        { "name": "aeroportoDestinazione", "type": "string" },
-        { "name": "data", "type": "Date" },
-        { "name": "orarioPrevisto", "type": "Time" },
-        { "name": "ritardo", "type": "int" },
-        { "name": "stato", "type": "StatoVolo" },
-        { "name": "gate", "type": "string" }
-      ],
-      "methods": ["aggiornaStato", "assegnaGate"]
-    },
-    {
-      "name": "Prenotazione",
-      "attributes": [
-        { "name": "numeroBiglietto", "type": "string" },
-        { "name": "postoAssegnato", "type": "string" },
-        { "name": "stato", "type": "StatoPrenotazione" }
-      ],
-      "methods": ["conferma", "cancella"]
-    },
-    {
-      "name": "Passeggero",
-      "attributes": [
-        { "name": "nome", "type": "string" },
-        { "name": "cognome", "type": "string" },
-        { "name": "documento", "type": "string" }
-      ],
-      "methods": []
-    },
-    {
-      "name": "Bagaglio",
-      "attributes": [
-        { "name": "codice", "type": "string" },
-        { "name": "stato", "type": "StatoBagaglio" }
-      ],
-      "methods": []
-    },
-    {
-      "name": "Gate",
-      "attributes": [
-        { "name": "numero", "type": "int" }
-      ],
-      "methods": []
-    }
-  ],
-  "relations": [
-    {
-      "from": "Utente",
-      "to": "Prenotazione",
-      "type": "association",
-      "name": "effettua",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "unidirectional",
-      "role": "prenotazioni"
-    },
-    {
-      "from": "Prenotazione",
-      "to": "Volo",
-      "type": "association",
-      "name": "riferitaA",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": "volo"
-    },
-    {
-      "from": "Prenotazione",
-      "to": "Passeggero",
-      "type": "association",
-      "name": "per",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": "passeggero"
-    },
-    {
-      "from": "Volo",
-      "to": "Gate",
-      "type": "association",
-      "name": "assegnatoA",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": "gate"
-    },
-    {
-      "from": "Passeggero",
-      "to": "Bagaglio",
-      "type": "association",
-      "name": "possiede",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "unidirectional",
-      "role": "bagagli"
-    },
-    {
-      "from": "Bagaglio",
-      "to": "Volo",
-      "type": "association",
-      "name": "associatoA",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": "volo"
-    }
-  ],
-  "enumerations": [
-    {
-      "name": "RuoloUtente",
-      "values": ["GENERICO", "AMMINISTRATORE"]
-    },
-    {
-      "name": "StatoVolo",
-      "values": ["PROGRAMMATO", "DECOLLATO", "IN_RITARDO", "ATTERRATO", "CANCELLATO"]
-    },
-    {
-      "name": "StatoPrenotazione",
-      "values": ["CONFERMATA", "IN_ATTESA", "CANCELLATA"]
-    },
-    {
-      "name": "StatoBagaglio",
-      "values": ["CARICATO", "DISPONIBILE", "SMARRITO"]
-    }
-  ]
-}
-```
-🧠 Risultato IA ottenuto!
-
----------------------- quarto step stampo il Model JSON della IA---------------------- 
-{
-  "classes": [
-    {
-      "name": "Utente",
-      "attributes": [
         {
-          "name": "id",
+          "name": "idUtente",
           "type": "int"
         },
         {
@@ -494,19 +350,16 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
         },
         {
           "name": "ruolo",
-          "type": "RuoloUtente"
+          "type": "string"
         }
       ],
-      "methods": [
-        "login",
-        "logout"
-      ]
+      "methods": []
     },
     {
       "name": "Volo",
       "attributes": [
         {
-          "name": "codice",
+          "name": "codiceVolo",
           "type": "string"
         },
         {
@@ -522,30 +375,23 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
           "type": "string"
         },
         {
-          "name": "data",
+          "name": "dataVolo",
           "type": "Date"
         },
         {
           "name": "orarioPrevisto",
-          "type": "Time"
+          "type": "string"
         },
         {
           "name": "ritardo",
           "type": "int"
         },
         {
-          "name": "stato",
+          "name": "statoVolo",
           "type": "StatoVolo"
-        },
-        {
-          "name": "gate",
-          "type": "string"
         }
       ],
-      "methods": [
-        "aggiornaStato",
-        "assegnaGate"
-      ]
+      "methods": []
     },
     {
       "name": "Prenotazione",
@@ -555,33 +401,28 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
           "type": "string"
         },
         {
+          "name": "nomePasseggero",
+          "type": "string"
+        },
+        {
           "name": "postoAssegnato",
           "type": "string"
         },
         {
-          "name": "stato",
+          "name": "statoPrenotazione",
           "type": "StatoPrenotazione"
         }
       ],
       "methods": [
-        "conferma",
-        "cancella"
+        "cercaPrenotazioni"
       ]
     },
     {
-      "name": "Passeggero",
+      "name": "Gate",
       "attributes": [
         {
-          "name": "nome",
-          "type": "string"
-        },
-        {
-          "name": "cognome",
-          "type": "string"
-        },
-        {
-          "name": "documento",
-          "type": "string"
+          "name": "numeroGate",
+          "type": "int"
         }
       ],
       "methods": []
@@ -590,21 +431,21 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
       "name": "Bagaglio",
       "attributes": [
         {
-          "name": "codice",
+          "name": "codiceBagaglio",
           "type": "string"
         },
         {
-          "name": "stato",
-          "type": "StatoBagaglio"
+          "name": "statoBagaglio",
+          "type": "string"
         }
       ],
       "methods": []
     },
     {
-      "name": "Gate",
+      "name": "SegnalazioneSmarrimento",
       "attributes": [
         {
-          "name": "numero",
+          "name": "idSegnalazione",
           "type": "int"
         }
       ],
@@ -620,67 +461,55 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
       "multiplicity": "1",
       "multiplicityTarget": "*",
       "direction": "unidirectional",
-      "role": "prenotazioni"
+      "role": null,
+      "attributes": []
     },
     {
-      "from": "Prenotazione",
-      "to": "Volo",
+      "from": "Volo",
+      "to": "Prenotazione",
       "type": "association",
-      "name": "riferitaA",
+      "name": "ha",
       "multiplicity": "1",
-      "multiplicityTarget": "1",
+      "multiplicityTarget": "*",
       "direction": "unidirectional",
-      "role": "volo"
-    },
-    {
-      "from": "Prenotazione",
-      "to": "Passeggero",
-      "type": "association",
-      "name": "per",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": "passeggero"
+      "role": null,
+      "attributes": []
     },
     {
       "from": "Volo",
       "to": "Gate",
       "type": "association",
-      "name": "assegnatoA",
+      "name": "assegna",
       "multiplicity": "1",
       "multiplicityTarget": "1",
       "direction": "unidirectional",
-      "role": "gate"
+      "role": null,
+      "attributes": []
     },
     {
-      "from": "Passeggero",
+      "from": "Volo",
       "to": "Bagaglio",
       "type": "association",
-      "name": "possiede",
+      "name": "associa",
       "multiplicity": "1",
       "multiplicityTarget": "*",
       "direction": "unidirectional",
-      "role": "bagagli"
+      "role": null,
+      "attributes": []
     },
     {
       "from": "Bagaglio",
-      "to": "Volo",
+      "to": "SegnalazioneSmarrimento",
       "type": "association",
-      "name": "associatoA",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
+      "name": "segnala",
+      "multiplicity": "0..1",
+      "multiplicityTarget": "0..1",
       "direction": "unidirectional",
-      "role": "volo"
+      "role": null,
+      "attributes": []
     }
   ],
   "enumerations": [
-    {
-      "name": "RuoloUtente",
-      "values": [
-        "GENERICO",
-        "AMMINISTRATORE"
-      ]
-    },
     {
       "name": "StatoVolo",
       "values": [
@@ -698,13 +527,208 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
         "IN_ATTESA",
         "CANCELLATA"
       ]
+    }
+  ]
+}
+```
+🧠 Risultato IA ottenuto!
+
+---------------------- quarto step stampo il Model JSON della IA---------------------- 
+{
+  "classes": [
+    {
+      "name": "Utente",
+      "attributes": [
+        {
+          "name": "idUtente",
+          "type": "int"
+        },
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        },
+        {
+          "name": "ruolo",
+          "type": "string"
+        }
+      ],
+      "methods": []
     },
     {
-      "name": "StatoBagaglio",
+      "name": "Volo",
+      "attributes": [
+        {
+          "name": "codiceVolo",
+          "type": "string"
+        },
+        {
+          "name": "compagniaAerea",
+          "type": "string"
+        },
+        {
+          "name": "aeroportoOrigine",
+          "type": "string"
+        },
+        {
+          "name": "aeroportoDestinazione",
+          "type": "string"
+        },
+        {
+          "name": "dataVolo",
+          "type": "Date"
+        },
+        {
+          "name": "orarioPrevisto",
+          "type": "string"
+        },
+        {
+          "name": "ritardo",
+          "type": "int"
+        },
+        {
+          "name": "statoVolo",
+          "type": "StatoVolo"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Prenotazione",
+      "attributes": [
+        {
+          "name": "numeroBiglietto",
+          "type": "string"
+        },
+        {
+          "name": "nomePasseggero",
+          "type": "string"
+        },
+        {
+          "name": "postoAssegnato",
+          "type": "string"
+        },
+        {
+          "name": "statoPrenotazione",
+          "type": "StatoPrenotazione"
+        }
+      ],
+      "methods": [
+        "cercaPrenotazioni"
+      ]
+    },
+    {
+      "name": "Gate",
+      "attributes": [
+        {
+          "name": "numeroGate",
+          "type": "int"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Bagaglio",
+      "attributes": [
+        {
+          "name": "codiceBagaglio",
+          "type": "string"
+        },
+        {
+          "name": "statoBagaglio",
+          "type": "string"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "SegnalazioneSmarrimento",
+      "attributes": [
+        {
+          "name": "idSegnalazione",
+          "type": "int"
+        }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Utente",
+      "to": "Prenotazione",
+      "type": "association",
+      "name": "effettua",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Volo",
+      "to": "Prenotazione",
+      "type": "association",
+      "name": "ha",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Volo",
+      "to": "Gate",
+      "type": "association",
+      "name": "assegna",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Volo",
+      "to": "Bagaglio",
+      "type": "association",
+      "name": "associa",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Bagaglio",
+      "to": "SegnalazioneSmarrimento",
+      "type": "association",
+      "name": "segnala",
+      "multiplicity": "0..1",
+      "multiplicityTarget": "0..1",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "StatoVolo",
       "values": [
-        "CARICATO",
-        "DISPONIBILE",
-        "SMARRITO"
+        "PROGRAMMATO",
+        "DECOLLATO",
+        "IN_RITARDO",
+        "ATTERRATO",
+        "CANCELLATO"
+      ]
+    },
+    {
+      "name": "StatoPrenotazione",
+      "values": [
+        "CONFERMATA",
+        "IN_ATTESA",
+        "CANCELLATA"
       ]
     }
   ]
@@ -712,9 +736,9 @@ per visionare le richieste  di smarrimento.     Possibile Soluzione
 
 ---------------------- quinto step stampo il risultato del confronto tra i due modelli----------------------  
 
-Similarità totale: 0.69
-Dettagli: {"classSimilarity":0.872,"attributeSimilarity":0.577,"methodSimilarity":0.365,"relationSimilarity":0.765}
-Classi abbinate: [{"from":"Utente generico","to":"Utente","similarity":0.89},{"from":"Amministratore","to":"Gate","similarity":0.55},{"from":"Utente","to":"Utente","similarity":1},{"from":"Volo","to":"Volo","similarity":1},{"from":"Prenotazione","to":"Prenotazione","similarity":1},{"from":"Volo In Partenza","to":"Volo","similarity":0.86},{"from":"Volo in Arrivo","to":"Volo","similarity":0.87},{"from":"Passeggero","to":"Passeggero","similarity":1},{"from":"Gate","to":"Gate","similarity":1},{"from":"Bagaglio","to":"Bagaglio","similarity":1},{"from":"Persona","to":"Prenotazione","similarity":0.71},{"from":"Automobile","to":"Utente","similarity":0.6}]
+Similarità totale: 0.418
+Dettagli: {"classSimilarity":0,"attributeSimilarity":0.524,"methodSimilarity":0.8,"relationSimilarity":0.765}
+Classi abbinate: [{"from":"Automobile","to":"Utente","similarity":0.6},{"from":"Bagaglio","to":"Bagaglio","similarity":1},{"from":"Gate","to":"Gate","similarity":1},{"from":"Persona","to":"Prenotazione","similarity":0.71},{"from":"Volo","to":"Volo","similarity":1}]
 
 🔍 Analizzando le differenze...
 
@@ -722,29 +746,32 @@ Classi abbinate: [{"from":"Utente generico","to":"Utente","similarity":0.89},{"f
 
 
 ==================== REPORT ERRORI ====================
-Similarità: 69.0% - Status: MEDIO
-Errori attendibili: 13
-Errori non attendibili: 19
+Similarità: 41.8% - Status: SCARSO
+Errori attendibili: 15
+Errori non attendibili: 21
 ========================================================
 
-🔴 ERRORI CRITICI (6):
+🔴 ERRORI CRITICI (7):
   1. Manca la classe "Utente generico"
      💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Utente generico che rappresenta..."
 
   2. Manca la classe "Amministratore"
      💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Amministratore che rappresenta..."
 
-  3. Manca la classe "Volo In Partenza"
+  3. Manca la classe "Utente"
+     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Utente che rappresenta..."
+
+  4. Manca la classe "Prenotazione"
+     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Prenotazione che rappresenta..."
+
+  5. Manca la classe "Volo In Partenza"
      💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Volo In Partenza che rappresenta..."
 
-  4. Manca la classe "Volo in Arrivo"
+  6. Manca la classe "Volo in Arrivo"
      💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Volo in Arrivo che rappresenta..."
 
-  5. Manca la classe "Persona"
-     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Persona che rappresenta..."
-
-  6. Manca la classe "Automobile"
-     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Automobile che rappresenta..."
+  7. Manca la classe "Passeggero"
+     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Passeggero che rappresenta..."
 
 🟠 ERRORI IMPORTANTI (4):
   1. Manca la relazione inheritance tra "Utente generico" e "Utente"
@@ -759,19 +786,22 @@ Errori non attendibili: 19
   4. Manca la relazione inheritance tra "Volo in Arrivo" e "Volo"
      💡 Suggerimento: Specifica nella traccia: "Volo in Arrivo eredita da Volo" o "Volo in Arrivo è un tipo di Volo"
 
-🟡 ERRORI MINORI (3):
-  1. Nella classe "Utente" mancano gli attributi: login
-     💡 Suggerimento: Specifica nella traccia: "La classe Utente deve avere i seguenti attributi: login"
+🟡 ERRORI MINORI (4):
+  1. Nella classe "Bagaglio" mancano gli attributi: codice, stato
+     💡 Suggerimento: Specifica nella traccia: "La classe Bagaglio deve avere i seguenti attributi: codice, stato"
 
-  2. Nella classe "Volo" mancano gli attributi: origine, destinazione
-     💡 Suggerimento: Specifica nella traccia: "La classe Volo deve avere i seguenti attributi: origine, destinazione"
+  2. Nella classe "Gate" mancano gli attributi: numero
+     💡 Suggerimento: Specifica nella traccia: "La classe Gate deve avere i seguenti attributi: numero"
 
-  3. Nella classe "Passeggero" mancano gli attributi: numeroDocumento
-     💡 Suggerimento: Specifica nella traccia: "La classe Passeggero deve avere i seguenti attributi: numeroDocumento"
+  3. Nella classe "Volo" mancano gli attributi: codice, origine, destinazione, data
+     💡 Suggerimento: Specifica nella traccia: "La classe Volo deve avere i seguenti attributi: codice, origine, destinazione, data"
 
-⚠️  ERRORI NON ATTENDIBILI (19):
+  4. Generata classe non richiesta: "SegnalazioneSmarrimento"
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+
+⚠️  ERRORI NON ATTENDIBILI (21):
     ℹ️  L'IA spesso genera contenuti extra o ha difficoltà con le associazioni
-    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente
+    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente la traccia
 
   1. Manca la relazione association tra "Volo" e "StatoDelVolo"
      💡 Suggerimento: Specifica nella traccia: "Volo è associato a StatoDelVolo"
@@ -789,63 +819,71 @@ Errori non attendibili: 19
      💡 Suggerimento: Specifica nella traccia: "Utente generico è associato a Prenotazione"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  5. Manca la relazione association tra "Gate" e "Volo In Partenza"
+  5. Manca la relazione association tra "Prenotazione" e "Passeggero"
+     💡 Suggerimento: Specifica nella traccia: "Prenotazione è associato a Passeggero"
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  6. Manca la relazione association tra "Gate" e "Volo In Partenza"
      💡 Suggerimento: Specifica nella traccia: "Gate è associato a Volo In Partenza"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  6. Manca la relazione association tra "Prenotazione" e "Bagaglio"
+  7. Manca la relazione association tra "Prenotazione" e "Bagaglio"
      💡 Suggerimento: Specifica nella traccia: "Prenotazione è associato a Bagaglio"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  7. Manca la relazione association tra "StatoDellaPrenotazione" e "Prenotazione"
+  8. Manca la relazione association tra "StatoDellaPrenotazione" e "Prenotazione"
      💡 Suggerimento: Specifica nella traccia: "StatoDellaPrenotazione è associato a Prenotazione"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  8. Manca la relazione association tra "Volo" e "StatoDelVolo"
+  9. Manca la relazione association tra "Volo" e "StatoDelVolo"
      💡 Suggerimento: Specifica nella traccia: "Volo è associato a StatoDelVolo"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  9. Manca la relazione association tra "StatoDelBagaglio" e "Bagaglio"
+  10. Manca la relazione association tra "StatoDelBagaglio" e "Bagaglio"
      💡 Suggerimento: Specifica nella traccia: "StatoDelBagaglio è associato a Bagaglio"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  10. Manca la relazione association tra "Automobile" e "Marca"
+  11. Manca la relazione association tra "Automobile" e "Marca"
      💡 Suggerimento: Specifica nella traccia: "Automobile è associato a Marca"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  11. Manca la relazione association tra "Amministratore" e "Volo"
+  12. Manca la relazione association tra "Amministratore" e "Volo"
      💡 Suggerimento: Specifica nella traccia: "Amministratore è associato a Volo"
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  12. Nella classe "Utente" sono stati generati attributi non richiesti: id, username, ruolo
+  13. Nella classe "Utente" sono stati generati attributi non richiesti: idUtente, username, password, ruolo
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  13. Nella classe "Volo" sono stati generati attributi non richiesti: aeroportoOrigine, aeroportoDestinazione, stato, gate
+  14. Nella classe "Bagaglio" sono stati generati attributi non richiesti: codiceBagaglio, statoBagaglio
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  14. Nella classe "Prenotazione" sono stati generati attributi non richiesti: stato
+  15. Nella classe "Gate" sono stati generati attributi non richiesti: numeroGate
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  15. Nella classe "Passeggero" sono stati generati attributi non richiesti: documento
+  16. Nella classe "Prenotazione" sono stati generati attributi non richiesti: numeroBiglietto, nomePasseggero, postoAssegnato, statoPrenotazione
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  16. Generata relazione non richiesta: association tra "Utente" e "Prenotazione"
+  17. Nella classe "Volo" sono stati generati attributi non richiesti: codiceVolo, aeroportoOrigine, aeroportoDestinazione, dataVolo, statoVolo
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  18. Generata relazione non richiesta: association tra "Utente" e "Prenotazione"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  17. Generata relazione non richiesta: association tra "Volo" e "Gate"
+  19. Generata relazione non richiesta: association tra "Volo" e "Gate"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  18. Generata relazione non richiesta: association tra "Passeggero" e "Bagaglio"
+  20. Generata relazione non richiesta: association tra "Volo" e "Bagaglio"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  19. Generata relazione non richiesta: association tra "Bagaglio" e "Volo"
+  21. Generata relazione non richiesta: association tra "Bagaglio" e "SegnalazioneSmarrimento"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
@@ -857,18 +895,34 @@ Errori non attendibili: 19
 Classi mancanti: [
   "Utente generico",
   "Amministratore",
+  "Utente",
+  "Prenotazione",
   "Volo In Partenza",
   "Volo in Arrivo",
-  "Persona",
-  "Automobile"
+  "Passeggero"
 ]
-Classi extra: []
+Classi extra: [
+  "SegnalazioneSmarrimento"
+]
 Attributi mancanti: [
   {
-    "className": "Utente",
+    "className": "Bagaglio",
     "attributes": [
       {
-        "name": "login",
+        "name": "codice",
+        "type": null
+      },
+      {
+        "name": "stato",
+        "type": null
+      }
+    ]
+  },
+  {
+    "className": "Gate",
+    "attributes": [
+      {
+        "name": "numero",
         "type": null
       }
     ]
@@ -877,20 +931,19 @@ Attributi mancanti: [
     "className": "Volo",
     "attributes": [
       {
+        "name": "codice",
+        "type": null
+      },
+      {
         "name": "origine",
         "type": null
       },
       {
         "name": "destinazione",
         "type": null
-      }
-    ]
-  },
-  {
-    "className": "Passeggero",
-    "attributes": [
+      },
       {
-        "name": "numeroDocumento",
+        "name": "data",
         "type": null
       }
     ]
@@ -901,7 +954,7 @@ Attributi extra: [
     "className": "Utente",
     "attributes": [
       {
-        "name": "id",
+        "name": "idUtente",
         "type": "int"
       },
       {
@@ -909,14 +962,65 @@ Attributi extra: [
         "type": "string"
       },
       {
+        "name": "password",
+        "type": "string"
+      },
+      {
         "name": "ruolo",
-        "type": "RuoloUtente"
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "className": "Bagaglio",
+    "attributes": [
+      {
+        "name": "codiceBagaglio",
+        "type": "string"
+      },
+      {
+        "name": "statoBagaglio",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "className": "Gate",
+    "attributes": [
+      {
+        "name": "numeroGate",
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "className": "Prenotazione",
+    "attributes": [
+      {
+        "name": "numeroBiglietto",
+        "type": "string"
+      },
+      {
+        "name": "nomePasseggero",
+        "type": "string"
+      },
+      {
+        "name": "postoAssegnato",
+        "type": "string"
+      },
+      {
+        "name": "statoPrenotazione",
+        "type": "StatoPrenotazione"
       }
     ]
   },
   {
     "className": "Volo",
     "attributes": [
+      {
+        "name": "codiceVolo",
+        "type": "string"
+      },
       {
         "name": "aeroportoOrigine",
         "type": "string"
@@ -926,30 +1030,12 @@ Attributi extra: [
         "type": "string"
       },
       {
-        "name": "stato",
-        "type": "StatoVolo"
+        "name": "dataVolo",
+        "type": "Date"
       },
       {
-        "name": "gate",
-        "type": "string"
-      }
-    ]
-  },
-  {
-    "className": "Prenotazione",
-    "attributes": [
-      {
-        "name": "stato",
-        "type": "StatoPrenotazione"
-      }
-    ]
-  },
-  {
-    "className": "Passeggero",
-    "attributes": [
-      {
-        "name": "documento",
-        "type": "string"
+        "name": "statoVolo",
+        "type": "StatoVolo"
       }
     ]
   }
@@ -1008,6 +1094,12 @@ Relazioni mancanti: [
     "multiplicity": "1 - *"
   },
   {
+    "from": "Prenotazione",
+    "to": "Passeggero",
+    "type": "association",
+    "multiplicity": "1 - 1"
+  },
+  {
     "from": "Gate",
     "to": "Volo In Partenza",
     "type": "association",
@@ -1061,37 +1153,228 @@ Relazioni extra: [
     "multiplicity": "1",
     "multiplicityTarget": "*",
     "direction": "unidirectional",
-    "role": "prenotazioni"
+    "role": null,
+    "attributes": []
   },
   {
     "from": "Volo",
     "to": "Gate",
     "type": "association",
-    "name": "assegnatoA",
+    "name": "assegna",
     "multiplicity": "1",
     "multiplicityTarget": "1",
     "direction": "unidirectional",
-    "role": "gate"
+    "role": null,
+    "attributes": []
   },
   {
-    "from": "Passeggero",
+    "from": "Volo",
     "to": "Bagaglio",
     "type": "association",
-    "name": "possiede",
+    "name": "associa",
     "multiplicity": "1",
     "multiplicityTarget": "*",
     "direction": "unidirectional",
-    "role": "bagagli"
+    "role": null,
+    "attributes": []
   },
   {
     "from": "Bagaglio",
-    "to": "Volo",
+    "to": "SegnalazioneSmarrimento",
     "type": "association",
-    "name": "associatoA",
-    "multiplicity": "1",
-    "multiplicityTarget": "1",
+    "name": "segnala",
+    "multiplicity": "0..1",
+    "multiplicityTarget": "0..1",
     "direction": "unidirectional",
-    "role": "volo"
+    "role": null,
+    "attributes": []
   }
 ]
 Tipi relazione sbagliati: []
+
+---------------------- GENERAZIONE PLANTUML ----------------------
+
+
+--- PLANTUML MODELLO ATTESO ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente generico {
+  nome
+  --
+  prenotaVolo()
+  cercaPrenotazione()
+  operation()
+  segnalaBagaglioSmarrito()
+}
+
+class Amministratore {
+  inserisceVolo()
+  modifcaVolo()
+  assegnaGate()
+  aggiornaBagaglio()
+  visualizzaSmarrimenti()
+}
+
+class Utente {
+  login
+  password
+  --
+  visualizzaVoli()
+}
+
+class Volo {
+  codice
+  compagniaAerea
+  origine
+  destinazione
+  orarioPrevisto
+  data
+  ritardo
+}
+
+class Prenotazione {
+  numeroBiglietto
+  postoAssegnato
+  --
+  checkIn()
+}
+
+class Volo In Partenza {
+  gateImbarco
+  origine
+}
+
+class Volo in Arrivo {
+  destinazione
+}
+
+class Passeggero {
+  nome
+  cognome
+  numeroDocumento
+}
+
+class Gate {
+  numero
+}
+
+class Bagaglio {
+  codice
+  stato
+}
+
+class Persona {
+}
+
+class Automobile {
+}
+
+enum StatoDelVolo {
+  programmato
+  inRitardo
+  atterrato
+  decollato
+  cancellato
+}
+
+enum StatoDellaPrenotazione {
+  confermata
+  inAttesa
+  cancellata
+}
+
+enum StatoDelBagaglio {
+  caricato
+  ritirabile
+}
+
+enum Marca {
+  FIAT
+  Toyota
+  Renault
+  Volkswagen
+}
+
+Utente generico --|> Utente
+Amministratore --|> Utente
+Volo In Partenza --|> Volo
+Volo in Arrivo --|> Volo
+Prenotazione "0..*" --  "1"Volo
+Utente generico "1" --  "0..*"Prenotazione : richiesta
+Prenotazione "1" --  "1"Passeggero
+Gate "1" --  "0..*"Volo In Partenza : imbarco
+Prenotazione "1" --  "0..*"Bagaglio
+Amministratore "1" --  "0..*"Volo : gestione
+
+
+@enduml
+
+--- PLANTUML MODELLO IA ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente {
+  idUtente : int
+  username : string
+  password : string
+  ruolo : string
+}
+
+class Volo {
+  codiceVolo : string
+  compagniaAerea : string
+  aeroportoOrigine : string
+  aeroportoDestinazione : string
+  dataVolo : Date
+  orarioPrevisto : string
+  ritardo : int
+  statoVolo : StatoVolo
+}
+
+class Prenotazione {
+  numeroBiglietto : string
+  nomePasseggero : string
+  postoAssegnato : string
+  statoPrenotazione : StatoPrenotazione
+  --
+  cercaPrenotazioni()
+}
+
+class Gate {
+  numeroGate : int
+}
+
+class Bagaglio {
+  codiceBagaglio : string
+  statoBagaglio : string
+}
+
+class SegnalazioneSmarrimento {
+  idSegnalazione : int
+}
+
+enum StatoVolo {
+  PROGRAMMATO
+  DECOLLATO
+  IN_RITARDO
+  ATTERRATO
+  CANCELLATO
+}
+
+enum StatoPrenotazione {
+  CONFERMATA
+  IN_ATTESA
+  CANCELLATA
+}
+
+Utente -- Prenotazione : effettua
+Volo -- Prenotazione : ha
+Volo -- Gate : assegna
+Volo -- Bagaglio : associa
+Bagaglio -- SegnalazioneSmarrimento : segnala
+
+
+@enduml

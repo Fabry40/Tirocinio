@@ -11,16 +11,16 @@ export const aiProvider = "deepSeek";
 
 // Nome del file PDF della traccia da analizzare.  
 // Inserisci qui il nome del file PDF che descrive la traccia da valutare (deve essere presente nella cartella corretta, es: Traccia/).
-export const pdfFile = "Fotografia.pdf";
+export const pdfFile = "ToDo.pdf";
 
 // Nome del file XMI atteso (solitamente la soluzione del docente).
 // Questo file rappresenta il modello UML di riferimento contro cui verranno confrontati i modelli degli studenti o generati dall’IA.
-export const xmiFile = "Fotografia.xmi";
+export const xmiFile = "ToDo.xmi";
 
 // Nome base del file di log dove saranno salvati i risultati (senza estensione).
 // Il file di log conterrà tutti i dettagli dei confronti e verrà creato nella cartella Back-end.
-export const logFile = "Fotografia_test";
+export const logFile = "ToDo";
 
 // Cartella dove si trovano i file XMI degli studenti o dei campioni da valutare.(serve solo se scegli Voto)
 // Tutti i file XMI presenti in questa cartella verranno valutati se experiment è "Voto".
-export const directoryCampioni = "../Fotografia";
+export const directoryCampioni = "../Aeroporto";

@@ -1,6 +1,8 @@
+IA UTILIZZATA: GEMINI
+esperimento : main
 
 ---------------------- Inizio del processo ----------------------
-Gemini
+
 
 ----------------------primo step stampo il Contenuto del PDF----------------------  
 Si sviluppi un sistema informativo, composto da una base di dati relazionale e da un applicativo  Java dotato di GUI (Swing) che consente di tenere traccia delle attività personali da svolgere ( nel  seguito chiamate semplicemente “ ToDo ” ), ispirato al softwar e Trello.   Il software deve consentire all'utente di organizzare e gestire le proprie attività personali in modo  efficiente, utilizzando un'interfaccia intuitiva e flessibile simile a  quella di  Trello   ( https://trello.com/ ) .     L’utente entra nel sistema speci ficando la propria login e password, che devono essere univoche.   I ToDo sono organizzati in  tre  bacheche (ogni bacheca ha un titolo e una descrizione), che  possono essere create, modificate ed eliminate.  I titoli delle   tre bacheche sono   Università, Lavoro   e   Tempo Libero.   I ToDo all’interno di una bacheca sono ordinat i, secondo un ordine modificabile dall’utente .  L’utente può creare, modificare ed eliminare  ToDo , così come può spostare un ToDo da una  bacheca   all’altra oppure cambiarne la posizione all’intern o della  bacheca .   Ogni ToD o   ha  un titolo e una data di scadenza , un link ad una URL  correlata all’attività,  una  descrizione dettagliata   e un’immagine.   Tutti questi elementi sono opzionali e possono essere  modificati in qualsiasi momento.     Ogni ToDo può cont enere  inoltre  una lista di altri utenti che condividono quel ToDo. In pratica quel  ToDo comparirà nella bacheca  corrispondente  di ognuno di tali utenti   . Ad esempio, se Pippo,  Pluto e Paperino condividono un ToDo,  ed   esso  si trova  nella bacheca  Tempo Liber o  di Pippo ,  allora esso comparirà anche nelle bacheche Tempo Libero di  Pluto e Paperino.   Ogni utente può  leggere chi sono gli altri utenti con i quali il ToDo è condiviso. L’autore del ToDo può aggiungere o  eliminare condivisioni.    Infine il ToDo ha un col ore di sfondo che viene mostrato  nell’interfaccia grafica . L’utente deve poter  scrivere e modificare ognuna di tali informazioni.   Un ToDo può essere settato come completato  oppure come non completato (di default è non completato).   Il sistema deve poter  for nire   su richiesta dell’utente, l’elenco di ToDo in scadenza nella giornata  odierna, oppure quelli in scadenza entro un certo giorno specificato dall’utente. Il sistema deve  consentire anche la ricerca per nome o per titolo dei ToDo.   Per i ToDo  scaduti , il sistema mostra  il nome del ToDo in rosso, per evidenziare il superamento  della scadenza prevista.     Requisito per gruppi da tre persone.   All’interno del ToDo è possibile mantenere anche una CheckList di attività da eseguire pe r  completare  il ToDo. Ogni attività della CheckList ha un nome e può essere segnalato come  completato oppure come non completato (di default è non completato). Quando tutte le sottoattività  della CheckList sono state completate, allora il ToDo viene automa ticamente settato come  completato.    
@@ -186,123 +188,10 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
     {
       "name": "Utente",
       "attributes": [
-        { "name": "login", "type": "string", "primaryKey": true },
-        { "name": "password", "type": "string" }
-      ],
-      "methods": []
-    },
-    {
-      "name": "Bacheca",
-      "attributes": [
-        { "name": "idBacheca", "type": "int", "primaryKey": true },
-        { "name": "titolo", "type": "string" },
-        { "name": "descrizione", "type": "string" }
-      ],
-      "methods": []
-    },
-    {
-      "name": "ToDo",
-      "attributes": [
-        { "name": "idToDo", "type": "int", "primaryKey": true },
-        { "name": "titolo", "type": "string" },
-        { "name": "dataScadenza", "type": "Date" },
-        { "name": "url", "type": "string" },
-        { "name": "descrizione", "type": "string" },
-        { "name": "immagine", "type": "string" },
-        { "name": "coloreSfondo", "type": "string" },
-        { "name": "completato", "type": "boolean" }
-      ],
-      "methods": []
-    },
-    {
-      "name": "Checklist",
-      "attributes": [
-        { "name": "idChecklist", "type": "int", "primaryKey": true }
-      ],
-      "methods": []
-    },
-    {
-      "name": "AttivitaChecklist",
-      "attributes": [
-        { "name": "idAttivita", "type": "int", "primaryKey": true },
-        { "name": "nome", "type": "string" },
-        { "name": "completato", "type": "boolean" }
-      ],
-      "methods": []
-    }
-  ],
-  "relations": [
-    {
-      "from": "Utente",
-      "to": "Bacheca",
-      "type": "association",
-      "name": "crea",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "unidirectional",
-      "role": null,
-      "attributes": []
-    },
-    {
-      "from": "Bacheca",
-      "to": "ToDo",
-      "type": "association",
-      "name": "contiene",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "unidirectional",
-      "role": null,
-      "attributes": []
-    },
-    {
-      "from": "ToDo",
-      "to": "Utente",
-      "type": "association",
-      "name": "condivideCon",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "bidirectional",
-      "role": null,
-      "attributes": []
-    },
-    {
-      "from": "ToDo",
-      "to": "Checklist",
-      "type": "composition",
-      "name": "ha",
-      "multiplicity": "1",
-      "multiplicityTarget": "1",
-      "direction": "unidirectional",
-      "role": null,
-      "attributes": []
-    },
-    {
-      "from": "Checklist",
-      "to": "AttivitaChecklist",
-      "type": "composition",
-      "name": "contiene",
-      "multiplicity": "1",
-      "multiplicityTarget": "*",
-      "direction": "unidirectional",
-      "role": null,
-      "attributes": []
-    }
-  ],
-  "enumerations": []
-}
-```
-🧠 Risultato IA ottenuto!
-
----------------------- quarto step stampo il Model JSON della IA---------------------- 
-{
-  "classes": [
-    {
-      "name": "Utente",
-      "attributes": [
         {
           "name": "login",
           "type": "string",
-          "primaryKey": true
+          "isPrimaryKey": true
         },
         {
           "name": "password",
@@ -317,7 +206,7 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
         {
           "name": "idBacheca",
           "type": "int",
-          "primaryKey": true
+          "isPrimaryKey": true
         },
         {
           "name": "titolo",
@@ -336,7 +225,7 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
         {
           "name": "idToDo",
           "type": "int",
-          "primaryKey": true
+          "isPrimaryKey": true
         },
         {
           "name": "titolo",
@@ -365,28 +254,32 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
         {
           "name": "completato",
           "type": "boolean"
+        },
+        {
+          "name": "posizione",
+          "type": "int"
         }
       ],
       "methods": []
     },
     {
-      "name": "Checklist",
+      "name": "CheckList",
       "attributes": [
         {
-          "name": "idChecklist",
+          "name": "idCheckList",
           "type": "int",
-          "primaryKey": true
+          "isPrimaryKey": true
         }
       ],
       "methods": []
     },
     {
-      "name": "AttivitaChecklist",
+      "name": "AttivitaCheckList",
       "attributes": [
         {
           "name": "idAttivita",
           "type": "int",
-          "primaryKey": true
+          "isPrimaryKey": true
         },
         {
           "name": "nome",
@@ -427,8 +320,8 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
       "from": "ToDo",
       "to": "Utente",
       "type": "association",
-      "name": "condivideCon",
-      "multiplicity": "1",
+      "name": "condivide",
+      "multiplicity": "*",
       "multiplicityTarget": "*",
       "direction": "bidirectional",
       "role": null,
@@ -436,7 +329,7 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
     },
     {
       "from": "ToDo",
-      "to": "Checklist",
+      "to": "CheckList",
       "type": "composition",
       "name": "ha",
       "multiplicity": "1",
@@ -446,10 +339,352 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
       "attributes": []
     },
     {
-      "from": "Checklist",
-      "to": "AttivitaChecklist",
-      "type": "composition",
+      "from": "CheckList",
+      "to": "AttivitaCheckList",
+      "type": "association",
+      "name": "include",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    }
+  ],
+  "enumerations": []
+}
+```
+🧠 Risultato IA ottenuto!
+JSON pulito da parsare: {
+  "classes": [
+    {
+      "name": "Utente",
+      "attributes": [
+        {
+          "name": "login",
+          "type": "string",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "password",
+          "type": "string"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Bacheca",
+      "attributes": [
+        {
+          "name": "idBacheca",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "titolo",
+          "type": "string"
+        },
+        {
+          "name": "descrizione",
+          "type": "string"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "ToDo",
+      "attributes": [
+        {
+          "name": "idToDo",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "titolo",
+          "type": "string"
+        },
+        {
+          "name": "dataScadenza",
+          "type": "Date"
+        },
+        {
+          "name": "url",
+          "type": "string"
+        },
+        {
+          "name": "descrizione",
+          "type": "string"
+        },
+        {
+          "name": "immagine",
+          "type": "string"
+        },
+        {
+          "name": "coloreSfondo",
+          "type": "string"
+        },
+        {
+          "name": "completato",
+          "type": "boolean"
+        },
+        {
+          "name": "posizione",
+          "type": "int"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "CheckList",
+      "attributes": [
+        {
+          "name": "idCheckList",
+          "type": "int",
+          "isPrimaryKey": true
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "AttivitaCheckList",
+      "attributes": [
+        {
+          "name": "idAttivita",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "nome",
+          "type": "string"
+        },
+        {
+          "name": "completato",
+          "type": "boolean"
+        }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Utente",
+      "to": "Bacheca",
+      "type": "association",
+      "name": "crea",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Bacheca",
+      "to": "ToDo",
+      "type": "association",
       "name": "contiene",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "ToDo",
+      "to": "Utente",
+      "type": "association",
+      "name": "condivide",
+      "multiplicity": "*",
+      "multiplicityTarget": "*",
+      "direction": "bidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "ToDo",
+      "to": "CheckList",
+      "type": "composition",
+      "name": "ha",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "CheckList",
+      "to": "AttivitaCheckList",
+      "type": "association",
+      "name": "include",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    }
+  ],
+  "enumerations": []
+}
+
+---------------------- quarto step stampo il Model JSON della IA---------------------- 
+{
+  "classes": [
+    {
+      "name": "Utente",
+      "attributes": [
+        {
+          "name": "login",
+          "type": "string",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "password",
+          "type": "string"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "Bacheca",
+      "attributes": [
+        {
+          "name": "idBacheca",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "titolo",
+          "type": "string"
+        },
+        {
+          "name": "descrizione",
+          "type": "string"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "ToDo",
+      "attributes": [
+        {
+          "name": "idToDo",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "titolo",
+          "type": "string"
+        },
+        {
+          "name": "dataScadenza",
+          "type": "Date"
+        },
+        {
+          "name": "url",
+          "type": "string"
+        },
+        {
+          "name": "descrizione",
+          "type": "string"
+        },
+        {
+          "name": "immagine",
+          "type": "string"
+        },
+        {
+          "name": "coloreSfondo",
+          "type": "string"
+        },
+        {
+          "name": "completato",
+          "type": "boolean"
+        },
+        {
+          "name": "posizione",
+          "type": "int"
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "CheckList",
+      "attributes": [
+        {
+          "name": "idCheckList",
+          "type": "int",
+          "isPrimaryKey": true
+        }
+      ],
+      "methods": []
+    },
+    {
+      "name": "AttivitaCheckList",
+      "attributes": [
+        {
+          "name": "idAttivita",
+          "type": "int",
+          "isPrimaryKey": true
+        },
+        {
+          "name": "nome",
+          "type": "string"
+        },
+        {
+          "name": "completato",
+          "type": "boolean"
+        }
+      ],
+      "methods": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "Utente",
+      "to": "Bacheca",
+      "type": "association",
+      "name": "crea",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "Bacheca",
+      "to": "ToDo",
+      "type": "association",
+      "name": "contiene",
+      "multiplicity": "1",
+      "multiplicityTarget": "*",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "ToDo",
+      "to": "Utente",
+      "type": "association",
+      "name": "condivide",
+      "multiplicity": "*",
+      "multiplicityTarget": "*",
+      "direction": "bidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "ToDo",
+      "to": "CheckList",
+      "type": "composition",
+      "name": "ha",
+      "multiplicity": "1",
+      "multiplicityTarget": "1",
+      "direction": "unidirectional",
+      "role": null,
+      "attributes": []
+    },
+    {
+      "from": "CheckList",
+      "to": "AttivitaCheckList",
+      "type": "association",
+      "name": "include",
       "multiplicity": "1",
       "multiplicityTarget": "*",
       "direction": "unidirectional",
@@ -462,9 +697,9 @@ Si sviluppi un sistema informativo, composto da una base di dati relazionale e d
 
 ---------------------- quinto step stampo il risultato del confronto tra i due modelli----------------------  
 
-Similarità totale: 0.909
-Dettagli: {"classSimilarity":0.979,"attributeSimilarity":0.586,"methodSimilarity":1,"relationSimilarity":1}
-Classi abbinate: [{"from":"Utente","to":"Utente","similarity":1},{"from":"Bacheca","to":"Bacheca","similarity":1},{"from":"ToDo","to":"ToDo","similarity":1},{"from":"Checklist","to":"Checklist","similarity":1},{"from":"Attivita","to":"AttivitaChecklist","similarity":0.89}]
+Similarità totale: 0.908
+Dettagli: {"classSimilarity":0.979,"attributeSimilarity":0.583,"methodSimilarity":1,"relationSimilarity":1}
+Classi abbinate: [{"from":"Attivita","to":"AttivitaCheckList","similarity":0.89},{"from":"Bacheca","to":"Bacheca","similarity":1},{"from":"Checklist","to":"CheckList","similarity":1},{"from":"ToDo","to":"ToDo","similarity":1},{"from":"Utente","to":"Utente","similarity":1}]
 
 🔍 Analizzando le differenze...
 
@@ -472,25 +707,21 @@ Classi abbinate: [{"from":"Utente","to":"Utente","similarity":1},{"from":"Bachec
 
 
 ==================== REPORT ERRORI ====================
-Similarità: 90.9% - Status: BUONO
-Errori attendibili: 3
-Errori non attendibili: 13
+Similarità: 90.8% - Status: BUONO
+Errori attendibili: 2
+Errori non attendibili: 14
 ========================================================
 
-🔴 ERRORI CRITICI (1):
-  1. Manca la classe "Attivita"
-     💡 Suggerimento: Aggiungi nella traccia: "Il sistema deve gestire una classe Attivita che rappresenta..."
-
 🟡 ERRORI MINORI (2):
-  1. Nella classe "ToDo" mancano gli attributi: colore, posizione
-     💡 Suggerimento: Specifica nella traccia: "La classe ToDo deve avere i seguenti attributi: colore, posizione"
+  1. Nella classe "Attivita" mancano gli attributi: stato
+     💡 Suggerimento: Specifica nella traccia: "La classe Attivita deve avere i seguenti attributi: stato"
 
-  2. Generata classe non richiesta: "AttivitaChecklist"
-     💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa classe
+  2. Nella classe "ToDo" mancano gli attributi: colore
+     💡 Suggerimento: Specifica nella traccia: "La classe ToDo deve avere i seguenti attributi: colore"
 
-⚠️  ERRORI NON ATTENDIBILI (13):
+⚠️  ERRORI NON ATTENDIBILI (14):
     ℹ️  L'IA spesso genera contenuti extra o ha difficoltà con le associazioni
-    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente
+    ℹ️  Questi errori potrebbero essere falsi positivi - verifica manualmente la traccia
 
   1. Manca la relazione association tra "Bacheca" e "TitoloBacheca"
      💡 Suggerimento: Specifica nella traccia: "Bacheca è associato a TitoloBacheca"
@@ -524,23 +755,27 @@ Errori non attendibili: 13
      💡 Suggerimento: Chiarisci nella traccia il tipo di relazione specifica
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  9. Nella classe "Bacheca" sono stati generati attributi non richiesti: idBacheca, titolo
+  9. Nella classe "AttivitaCheckList" sono stati generati attributi non richiesti: idAttivita, completato
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  10. Nella classe "ToDo" sono stati generati attributi non richiesti: idToDo, coloreSfondo, completato
+  10. Nella classe "Bacheca" sono stati generati attributi non richiesti: idBacheca, titolo
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  11. Nella classe "Checklist" sono stati generati attributi non richiesti: idChecklist
+  11. Nella classe "CheckList" sono stati generati attributi non richiesti: idCheckList
      💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  12. Generata relazione non richiesta: composition tra "ToDo" e "Checklist"
+  12. Nella classe "ToDo" sono stati generati attributi non richiesti: idToDo, coloreSfondo, completato
+     💡 Suggerimento: Rimuovi dalla traccia riferimenti a questi attributi se non necessari
+     ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
+
+  13. Generata relazione non richiesta: composition tra "ToDo" e "CheckList"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
-  13. Generata relazione non richiesta: composition tra "Checklist" e "AttivitaChecklist"
+  14. Generata relazione non richiesta: association tra "CheckList" e "AttivitaCheckList"
      💡 Suggerimento: Rimuovi dalla traccia riferimenti ambigui che potrebbero aver causato questa relazione
      ⚠️  Nota: Verifica manualmente se questo elemento è realmente problematico
 
@@ -549,22 +784,23 @@ Errori non attendibili: 13
 
 ---------------------- DIFFERENZE DETTAGLIATE ----------------------
 
-Classi mancanti: [
-  "Attivita"
-]
-Classi extra: [
-  "AttivitaChecklist"
-]
+Classi mancanti: []
+Classi extra: []
 Attributi mancanti: [
+  {
+    "className": "Attivita",
+    "attributes": [
+      {
+        "name": "stato",
+        "type": null
+      }
+    ]
+  },
   {
     "className": "ToDo",
     "attributes": [
       {
         "name": "colore",
-        "type": null
-      },
-      {
-        "name": "posizione",
         "type": null
       }
     ]
@@ -572,16 +808,40 @@ Attributi mancanti: [
 ]
 Attributi extra: [
   {
+    "className": "AttivitaCheckList",
+    "attributes": [
+      {
+        "name": "idAttivita",
+        "type": "int",
+        "isPrimaryKey": true
+      },
+      {
+        "name": "completato",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
     "className": "Bacheca",
     "attributes": [
       {
         "name": "idBacheca",
         "type": "int",
-        "primaryKey": true
+        "isPrimaryKey": true
       },
       {
         "name": "titolo",
         "type": "string"
+      }
+    ]
+  },
+  {
+    "className": "CheckList",
+    "attributes": [
+      {
+        "name": "idCheckList",
+        "type": "int",
+        "isPrimaryKey": true
       }
     ]
   },
@@ -591,7 +851,7 @@ Attributi extra: [
       {
         "name": "idToDo",
         "type": "int",
-        "primaryKey": true
+        "isPrimaryKey": true
       },
       {
         "name": "coloreSfondo",
@@ -600,16 +860,6 @@ Attributi extra: [
       {
         "name": "completato",
         "type": "boolean"
-      }
-    ]
-  },
-  {
-    "className": "Checklist",
-    "attributes": [
-      {
-        "name": "idChecklist",
-        "type": "int",
-        "primaryKey": true
       }
     ]
   }
@@ -663,7 +913,7 @@ Relazioni mancanti: [
 Relazioni extra: [
   {
     "from": "ToDo",
-    "to": "Checklist",
+    "to": "CheckList",
     "type": "composition",
     "name": "ha",
     "multiplicity": "1",
@@ -673,10 +923,10 @@ Relazioni extra: [
     "attributes": []
   },
   {
-    "from": "Checklist",
-    "to": "AttivitaChecklist",
-    "type": "composition",
-    "name": "contiene",
+    "from": "CheckList",
+    "to": "AttivitaCheckList",
+    "type": "association",
+    "name": "include",
     "multiplicity": "1",
     "multiplicityTarget": "*",
     "direction": "unidirectional",
@@ -694,7 +944,7 @@ Tipi relazione sbagliati: [
     },
     "actual": {
       "from": "ToDo",
-      "to": "Checklist",
+      "to": "CheckList",
       "type": "composition",
       "name": "ha",
       "multiplicity": "1",
@@ -705,3 +955,110 @@ Tipi relazione sbagliati: [
     }
   }
 ]
+
+---------------------- GENERAZIONE PLANTUML ----------------------
+
+
+--- PLANTUML MODELLO ATTESO ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente {
+  login
+  password
+}
+
+class Bacheca {
+  descrizione
+}
+
+class ToDo {
+  titolo
+  dataScadenza
+  colore
+  posizione
+  URL
+  descrizione
+  immagine
+}
+
+class Checklist {
+}
+
+class Attivita {
+  nome
+  stato
+}
+
+enum TitoloBacheca {
+  Universita
+  Lavoro
+  Tempo Libero
+}
+
+enum StatoToDo {
+  Completato
+  Non Completato
+}
+
+enum StatoAttivita {
+  Completato
+  Non Completato
+}
+
+Utente "1" --  "3"Bacheca
+ToDo "0..*" --  "0..*"Utente : condivisione
+Bacheca --  "0..*"ToDo
+ToDo "1" --  "0..1"Checklist
+Checklist --  "0..*"Attivita
+
+
+@enduml
+
+--- PLANTUML MODELLO IA ---
+
+@startuml
+!define RECTANGLE class
+
+class Utente {
+  login : string
+  password : string
+}
+
+class Bacheca {
+  idBacheca : int
+  titolo : string
+  descrizione : string
+}
+
+class ToDo {
+  idToDo : int
+  titolo : string
+  dataScadenza : Date
+  url : string
+  descrizione : string
+  immagine : string
+  coloreSfondo : string
+  completato : boolean
+  posizione : int
+}
+
+class CheckList {
+  idCheckList : int
+}
+
+class AttivitaCheckList {
+  idAttivita : int
+  nome : string
+  completato : boolean
+}
+
+Utente -- Bacheca : crea
+Bacheca -- ToDo : contiene
+ToDo -- Utente : condivide
+ToDo *-- CheckList : ha
+CheckList -- AttivitaCheckList : include
+
+
+@enduml

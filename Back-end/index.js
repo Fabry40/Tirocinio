@@ -38,6 +38,7 @@ async function main() {
   console.log("Inizio del processo di confronto UML...");
   Logger.setLogFileName(`${NAME_FILE}.txt`);
   Logger.logToFile(`IA UTILIZZATA: ${aiProvider.toUpperCase()}`);
+  Logger.logToFile(`esperimento : ${experiment}`);
   Logger.logToFile("\n---------------------- Inizio del processo ----------------------\n");
 
   const contenuto = await Traccia.PrintTxtPdf(PDF_FILE);
@@ -51,7 +52,15 @@ async function main() {
   Logger.logToFile("🧠 Risultato IA ottenuto!");
 
   let modelB = null;
-  // Fai il parsing del JSON se modelB è una stringa
+  
+  // Controllo se la risposta della IA è valida
+  if (!risultato) {
+    Logger.logToFile("ERRORE: La IA ha restituito una risposta vuota o null");
+    console.error("❌ Errore: La IA ha restituito una risposta vuota o null");
+    return;
+  }
+  
+  // Fai il parsing del JSON se risultato è una stringa
   if (typeof risultato === "string") {
     try {
       // Rimuovi eventuali delimitatori di code block
@@ -65,12 +74,99 @@ async function main() {
       if (clean.endsWith("```")) {
         clean = clean.slice(0, -3);
       }
+      clean = clean.trim();
+      
+      if (!clean) {
+        Logger.logToFile("ERRORE: Il contenuto JSON della IA è vuoto dopo la pulizia");
+        console.error("❌ Errore: Il contenuto JSON della IA è vuoto");
+        return;
+      }
+      
+      // Log della risposta pulita per debug
+      Logger.logToFile("JSON pulito da parsare: " + clean);
+      
       modelB = JSON.parse(clean);
     } catch (e) {
       Logger.logToFile("ERRORE nel parsing del JSON della IA: " + e.message);
-      return;
+      Logger.logToFile("Contenuto che ha causato l'errore: " + risultato);
+      console.error("❌ Errore nel parsing del JSON della IA:", e.message);
+      
+      // Prova a riparare JSON comuni
+      try {
+        let clean = risultato.trim();
+        if (clean.startsWith("```json")) {
+          clean = clean.slice(7);
+        }
+        if (clean.startsWith("```")) {
+          clean = clean.slice(3);
+        }
+        if (clean.endsWith("```")) {
+          clean = clean.slice(0, -3);
+        }
+        clean = clean.trim();
+        
+        // Prova a riparare virgolette singole con doppie
+        clean = clean.replace(/'/g, '"');
+        
+        // Prova a rimuovere trailing commas
+        clean = clean.replace(/,(\s*[}\]])/g, '$1');
+        
+        // Prova a estrarre solo la parte JSON (dal primo { all'ultimo })
+        const firstBrace = clean.indexOf('{');
+        const lastBrace = clean.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+          clean = clean.substring(firstBrace, lastBrace + 1);
+        }
+        
+        Logger.logToFile("Tentativo di riparazione JSON: " + clean);
+        modelB = JSON.parse(clean);
+        Logger.logToFile("✅ JSON riparato con successo!");
+        console.log("✅ JSON riparato con successo!");
+        
+      } catch (e2) {
+        Logger.logToFile("ERRORE anche nel tentativo di riparazione: " + e2.message);
+        console.error("❌ Errore anche nel tentativo di riparazione:", e2.message);
+        
+        // Ultimo tentativo: cerca il JSON con regex
+        try {
+          const jsonMatch = risultato.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            let extractedJson = jsonMatch[0];
+            extractedJson = extractedJson.replace(/'/g, '"');
+            extractedJson = extractedJson.replace(/,(\s*[}\]])/g, '$1');
+            Logger.logToFile("Tentativo di estrazione JSON con regex: " + extractedJson);
+            modelB = JSON.parse(extractedJson);
+            Logger.logToFile("✅ JSON estratto e parsato con successo!");
+            console.log("✅ JSON estratto e parsato con successo!");
+          } else {
+            Logger.logToFile("❌ Impossibile trovare JSON valido nella risposta");
+            console.error("❌ Impossibile trovare JSON valido nella risposta");
+            return;
+          }
+        } catch (e3) {
+          Logger.logToFile("ERRORE finale nel parsing: " + e3.message);
+          console.error("❌ Errore finale nel parsing:", e3.message);
+          return;
+        }
+      }
     }
+  } else if (typeof risultato === "object") {
+    // Se è già un oggetto, usalo direttamente
+    modelB = risultato;
+  } else {
+    Logger.logToFile("ERRORE: Tipo di risposta IA non supportato: " + typeof risultato);
+    console.error("❌ Errore: Tipo di risposta IA non supportato:", typeof risultato);
+    return;
   }
+  
+  // Controllo che modelB sia valido e abbia le proprietà necessarie
+  if (!modelB || !modelB.classes) {
+    Logger.logToFile("ERRORE: Il modello della IA non contiene la proprietà 'classes' o è null");
+    Logger.logToFile("ModelB ricevuto: " + JSON.stringify(modelB, null, 2));
+    console.error("❌ Errore: Il modello della IA non contiene la proprietà 'classes' o è null");
+    return;
+  }
+  
   Logger.logToFile("\n---------------------- quarto step stampo il Model JSON della IA---------------------- \n" + JSON.stringify(modelB, null, 2));
 
   // Confronto tra i modelli
@@ -120,6 +216,7 @@ async function main() {
 async function Voto() {
   Logger.setLogFileName(`${NAME_FILE}_voto.txt`);
   Logger.logToFile(`IA UTILIZZATA: ${aiProvider.toUpperCase()}`);
+    Logger.logToFile(`esperimento : ${experiment}`);
   Logger.logToFile("\n---------------------- INIZIO ANALISI VOTO ----------------------\n");
 
   const modelProf = UmlAtteso.estraiModelCompatto(UmlAtteso.parseXmiFile(`${DIRECTORY_ATTESO}/${XMI_FILE}`));
@@ -187,21 +284,118 @@ async function Voto() {
     return;
   }
   let modelIA = null;
+  
+  // Controllo se la risposta della IA è valida
+  if (!rispostaIA) {
+    Logger.logToFile("ERRORE: La IA ha restituito una risposta vuota o null");
+    console.error("❌ Errore: La IA ha restituito una risposta vuota o null");
+    return;
+  }
+  
+  // Parsing JSON robusto (stesso del main)
   if (typeof rispostaIA === "string") {
     try {
+      // Rimuovi eventuali delimitatori di code block
       let clean = rispostaIA.trim();
-      if (clean.startsWith("```json")) clean = clean.slice(7);
-      if (clean.startsWith("```")) clean = clean.slice(3);
-      if (clean.endsWith("```")) clean = clean.slice(0, -3);
+      if (clean.startsWith("```json")) {
+        clean = clean.slice(7);
+      }
+      if (clean.startsWith("```")) {
+        clean = clean.slice(3);
+      }
+      if (clean.endsWith("```")) {
+        clean = clean.slice(0, -3);
+      }
+      clean = clean.trim();
+      
+      if (!clean) {
+        Logger.logToFile("ERRORE: Il contenuto JSON della IA è vuoto dopo la pulizia");
+        console.error("❌ Errore: Il contenuto JSON della IA è vuoto");
+        return;
+      }
+      
+      // Log della risposta pulita per debug
+      Logger.logToFile("JSON pulito da parsare (IA): " + clean);
+      
       modelIA = JSON.parse(clean);
     } catch (e) {
       Logger.logToFile("ERRORE nel parsing del JSON della IA: " + e.message);
-      return;
+      Logger.logToFile("Contenuto che ha causato l'errore: " + rispostaIA);
+      console.error("❌ Errore nel parsing del JSON della IA:", e.message);
+      
+      // Prova a riparare JSON comuni
+      try {
+        let clean = rispostaIA.trim();
+        if (clean.startsWith("```json")) {
+          clean = clean.slice(7);
+        }
+        if (clean.startsWith("```")) {
+          clean = clean.slice(3);
+        }
+        if (clean.endsWith("```")) {
+          clean = clean.slice(0, -3);
+        }
+        clean = clean.trim();
+        
+        // Prova a riparare virgolette singole con doppie
+        clean = clean.replace(/'/g, '"');
+        
+        // Prova a rimuovere trailing commas
+        clean = clean.replace(/,(\s*[}\]])/g, '$1');
+        
+        // Prova a estrarre solo la parte JSON (dal primo { all'ultimo })
+        const firstBrace = clean.indexOf('{');
+        const lastBrace = clean.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+          clean = clean.substring(firstBrace, lastBrace + 1);
+        }
+        
+        Logger.logToFile("Tentativo di riparazione JSON (IA): " + clean);
+        modelIA = JSON.parse(clean);
+        Logger.logToFile("✅ JSON IA riparato con successo!");
+        console.log("✅ JSON IA riparato con successo!");
+        
+      } catch (e2) {
+        Logger.logToFile("ERRORE anche nel tentativo di riparazione IA: " + e2.message);
+        console.error("❌ Errore anche nel tentativo di riparazione IA:", e2.message);
+        
+        // Ultimo tentativo: cerca il JSON con regex
+        try {
+          const jsonMatch = rispostaIA.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            let extractedJson = jsonMatch[0];
+            extractedJson = extractedJson.replace(/'/g, '"');
+            extractedJson = extractedJson.replace(/,(\s*[}\]])/g, '$1');
+            Logger.logToFile("Tentativo di estrazione JSON con regex (IA): " + extractedJson);
+            modelIA = JSON.parse(extractedJson);
+            Logger.logToFile("✅ JSON IA estratto e parsato con successo!");
+            console.log("✅ JSON IA estratto e parsato con successo!");
+          } else {
+            Logger.logToFile("❌ Impossibile trovare JSON valido nella risposta IA");
+            console.error("❌ Impossibile trovare JSON valido nella risposta IA");
+            return;
+          }
+        } catch (e3) {
+          Logger.logToFile("ERRORE finale nel parsing IA: " + e3.message);
+          console.error("❌ Errore finale nel parsing IA:", e3.message);
+          return;
+        }
+      }
     }
+  } else if (typeof rispostaIA === "object") {
+    // Se è già un oggetto, usalo direttamente
+    modelIA = rispostaIA;
+  } else {
+    Logger.logToFile("ERRORE: Tipo di risposta IA non supportato: " + typeof rispostaIA);
+    console.error("❌ Errore: Tipo di risposta IA non supportato:", typeof rispostaIA);
+    return;
   }
 
-  if (!modelIA || !Array.isArray(modelIA.classes)) {
-    Logger.logToFile("Modello IA non valido o mancante proprietà 'classes'");
+  // Controllo che modelIA sia valido e abbia le proprietà necessarie
+  if (!modelIA || !modelIA.classes) {
+    Logger.logToFile("ERRORE: Il modello della IA non contiene la proprietà 'classes' o è null");
+    Logger.logToFile("ModelIA ricevuto: " + JSON.stringify(modelIA, null, 2));
+    console.error("❌ Errore: Il modello della IA non contiene la proprietà 'classes' o è null");
     return;
   }
 
