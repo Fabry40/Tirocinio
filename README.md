@@ -58,7 +58,7 @@ npm start
 
 | Parametro | Valori | Descrizione |
 |-----------|--------|-------------|
-| `experiment` | `"main"`, `"Voto"` | Modalità: singolo confronto vs batch studenti |
+| `experiment` | `"main"`, `"Voto"` | Modalità: singolo confronto, batch studenti |
 | `aiProvider` | `"deepSeek"`, `"gemini"`, `"meta"` | Modello LLM da utilizzare |
 | `pdfFile` | `"Fotografia.pdf"` | Nome traccia in `Traccia/` |
 | `xmiFile` | `"Fotografia.xmi"` | Nome modello atteso in `UmlAtteso/` |
@@ -90,13 +90,14 @@ export const aiProvider = "deepSeek";
 export const pdfFile = "Fotografia.pdf";
 export const logFile = "RQ1_Fotografia_DeepSeek";
 
-// Test con Gemini (cambia solo aiProvider e logFile)
+// Test con Gemini (cambia solo aiProvider)
 export const aiProvider = "gemini";
+export const pdfFile = "Fotografia.pdf";
 export const logFile = "RQ1_Fotografia_Gemini";
 ```
 
 ### RQ2: Ottimizzazione Prompt
-**Obiettivo**: Migliorare i risultati modificando le istruzioni  
+**Obiettivo**: Migliorare i risultati modificando solo il prompt  
 **Cosa cambia**: contenuto di `Back-end/prompt.js`  
 **Cosa rimane fisso**: traccia, LLM, UML atteso
 
@@ -118,8 +119,8 @@ export const pdfFile = "Fotografia.pdf";
 export const logFile = "RQ3_TracciaOriginale";
 
 // Traccia chiarificata
-export const pdfFile = "Fotografia_clarified.pdf";
-export const logFile = "RQ3_TracciaChiarificata";
+export const pdfFile = "Fotografia_Modificata.pdf";
+export const logFile = "RQ3_TracciaModificata";
 ```
 
 ### RQ4: Validazione Metriche
@@ -134,9 +135,9 @@ export const logFile = "RQ4_StudentiVsAI";
 
 ---
 
-## 8. Come leggere e interpretare gli output
+##  Come leggere e interpretare gli output
 
-### 8.1 Posizione dei file di output
+###  Posizione dei file di output
 Tutti i risultati vengono salvati nella cartella `risultati/` con nomi che includono timestamp:
 ```
 risultati/
@@ -145,7 +146,7 @@ risultati/
 └── RQ1_Fotografia_DeepSeek.txt_2025-08-26T18-00-15-456+02-00.txt
 ```
 
-### 8.2 Anatomia di un file di output (modalità "main")
+### Anatomia di un file di output (modalità "main")
 
 #### **Sezione 1: Configurazione dell'esperimento**
 ```
@@ -284,7 +285,7 @@ class Hackathon {
 
 **Come usarlo**: Copia questi codici su [PlantUML Online](https://www.plantuml.com/plantuml/uml/) per visualizzare i diagrammi.
 
-### 8.3 Anatomia di un file di output (modalità "Voto")
+###  Anatomia di un file di output (modalità "Voto")
 
 La modalità Voto produce output più lunghi perché analizza tutti i file degli studenti:
 
@@ -334,13 +335,6 @@ Similarità voto IA (UMLComparator): 0.83
 
 ### File di Output (`risultati/`)
 I log vengono salvati con timestamp, esempio: `Fotografia.txt_2025-08-26T16-49-28-396+02-00.txt`
-
-### Metriche Principali
-- **Similarità totale**: Punteggio UMLComparator (0.0-1.0)
-  - `0.0-0.3`: Modello molto diverso
-  - `0.3-0.6`: Parzialmente corretto  
-  - `0.6-0.8`: Buono con lacune
-  - `0.8-1.0`: Molto simile
 
 - **Errori attendibili vs non attendibili**: Distinzione tra errori reali e possibili falsi positivi
 
