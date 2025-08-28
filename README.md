@@ -290,6 +290,12 @@ class Hackathon {
 La modalità Voto produce output più lunghi perché analizza tutti i file degli studenti:
 
 ```
+========== INIZIO ANALISI VOTO ==========
+{modello studente in formato JSON}
+Similarità voto (SimilaritaNumeroErrori): 3
+Similarità voto (UMLComparator): 0.79
+
+
 ========== FILE ANALIZZATO: 5311.xmi ==========
 {modello studente in formato JSON}
 Similarità voto (SimilaritaNumeroErrori): 3
@@ -310,6 +316,8 @@ Media Similarità voto (UMLComparator): 0.67
 Similarità voto IA (SimilaritaNumeroErrori): 2
 Similarità voto IA (UMLComparator): 0.83
 ```
+
+il primo modello è sempre l'UML atteso
 
 ### 8.4 Metriche: cosa significano i numeri
 
