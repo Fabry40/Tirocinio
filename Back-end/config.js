@@ -7,7 +7,7 @@ export const experiment = "main";
 // "deepSeek" → usa OpenRouter con DeepSeek
 // "meta" → usa OpenRouter con Meta, attualmente non disponibile
 // "gemini" → usa Google Gemini
-export const aiProvider = "deepSeek";
+export const aiProvider = "gemini";
 
 // Nome del file PDF della traccia da analizzare.  
 // Inserisci qui il nome del file PDF che descrive la traccia da valutare (deve essere presente nella cartella corretta, es: Traccia/).
@@ -23,4 +23,4 @@ export const logFile = "ToDo";
 
 // Cartella dove si trovano i file XMI degli studenti o dei campioni da valutare.(serve solo se scegli Voto)
 // Tutti i file XMI presenti in questa cartella verranno valutati se experiment è "Voto".
-export const directoryCampioni = "../Aeroporto";
+export const directoryCampioni = "../Sperimentazioni/Autobus";

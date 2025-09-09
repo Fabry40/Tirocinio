@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'dotenv/config';
-import { getUMLPrompt } from './prompt.js';
+import { getUMLPrompt } from '../prompt.js';
 
 const API_KEY = process.env.GEMINI_API_KEY;
 
@@ -15,7 +15,7 @@ export class GeminiAPI {
     }
 
     try {
-      console.log('🤖 Chiamando Google Gemini...');
+      console.log('Chiamando Google Gemini...');
       const response = await axios.post(
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
         {

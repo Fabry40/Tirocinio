@@ -1,10 +1,7 @@
-# UML Comparator - Sistema di Valutazione UML
+# Comparatori UML
 
 Sistema per confrontare modelli UML generati da LLM con modelli di riferimento. Utilizzato per le sperimentazioni della tesi sui diagrammi delle classi UML.
 
-## Metriche di Valutazione
-- **UMLComparator**: similarità strutturale (0.0-1.0) - 40% classi + 20% attributi + 20% metodi + 20% relazioni
-- **SimilaritaNumeroErrori**: conteggio categorie di errore (0-7) - Classi, Attributi, Associazioni, Molteplicità, Enumerazioni, Generalizzazioni, Attributi ID
 
 ---
 
@@ -12,17 +9,34 @@ Sistema per confrontare modelli UML generati da LLM con modelli di riferimento. 
 
 ```
 Applicazione/
-├── Back-end/                    # Codice sorgente principale
+├── Back-end/                   # Codice sorgente principale
 │   ├── config.js               # ⚙️ Configurazione esperimenti
-│   ├── prompt.js               # 💬 Prompt per LLM (modificabile per RQ2)
-│   ├── index.js                # 🚀 Entry point
-│   ├── Gemini.js               # 🤖 Integrazione Google Gemini
-│   ├── OpenRouterIA.js         # 🤖 Integrazione OpenRouter (DeepSeek, Meta)
+│   ├── prompt.js               # 📝 Prompt per LLM (modificabile per RQ2)
+│   ├── index.js                # 🚀 Entry point principale
+│   ├── Logger.js               # 📊 Sistema di logging
+│   ├── plantUML.js             # 📊 Generatore PlantUML
+│   ├── LLM/                    # 🤖 Provider di intelligenza artificiale
+│   │   ├── Gemini.js           #   → Integrazione Google Gemini
+│   │   └── OpenRouterIA.js     #   → Integrazione OpenRouter (DeepSeek, Meta)
+│   ├── RQ1/                    # 🔬 Componenti core per Research Question 1
+│   │   ├── Traccia.js          #   → Elaborazione PDF delle tracce
+│   │   ├── UmlAtteso.js        #   → Parser file XMI di riferimento
+│   │   └── umlComparator.js    #   → Algoritmi di confronto UML
+│   ├── RQ3/                    # 📋 Research Question 3 - Error Reporting
+│   │   └── ErrorReporter.js    #   → Sistema di report errori
+│   ├── RQ4/                    # 📊 Research Question 4 - Validation
+│   │   └── Voto.js             #   → Sistema di valutazione e metriche
 │   └── .env                    # 🔑 API Keys (da creare)
 ├── Traccia/                    # 📄 PDF delle tracce
 ├── UmlAtteso/                  # ✅ XMI di riferimento (docente)
-├── Sperimentazioni/            # 👥 XMI degli studenti
-└── risultati/                  # 📊 Log di output con timestamp
+├── Sperimentazioni/            # 👥 XMI degli studenti organizzati per traccia
+│   ├── Autobus/               #   → Diagrammi studenti per traccia Autobus
+│   ├── Fotografia/            #   → Diagrammi studenti per traccia Fotografia
+│   └── ...                    #   → Altre tracce
+├── risultati/                  # 📈 Log di output con timestamp
+└── Prompt/                     # 📝 Versioni storiche dei prompt
+    ├── PromptFinale.txt        #   → Prompt ottimizzato finale
+    └── promptIntermedio.txt    #   → Versioni intermedie
 ```
 
 ---
@@ -47,8 +61,53 @@ openrouter_API_KEY="la_tua_chiave_openrouter"
 
 4. **Esegui**:
 ```bash
+cd Back-end
 npm start
+# oppure
+node index.js
 ```
+
+---
+
+## File di Configurazione Chiave
+
+### 📄 Back-end/config.js - Controllo Esperimenti
+```javascript
+export const experiment = "main";      // "main" o "Voto"
+export const aiProvider = "gemini";    // "deepSeek", "gemini", "meta"  
+export const pdfFile = "ToDo.pdf";     // File in Traccia/
+export const xmiFile = "ToDo.xmi";     // File in UmlAtteso/
+export const logFile = "ToDo";         // Prefisso per risultati/
+export const directoryCampioni = "../Sperimentazioni/Autobus"; // Solo per "Voto"
+```
+
+### 📄 Back-end/.env - API Keys
+```env
+GEMINI_API_KEY="la_tua_chiave_google_gemini"
+openrouter_API_KEY="la_tua_chiave_openrouter"
+```
+
+### 📄 Back-end/prompt.js - Template LLM
+Contiene il prompt ottimizzato che viene inviato agli LLM. Modificabile per RQ2.
+
+---
+
+## Flussi di Lavoro
+
+### 🔄 Modalità "main" - Singolo Confronto
+1. **Traccia** → `RQ1/Traccia.js` → estrae testo da `Traccia/{pdfFile}`
+2. **LLM** → `LLM/{provider}.js` → genera modello UML dalla traccia  
+3. **Riferimento** → `RQ1/UmlAtteso.js` → carica modello da `UmlAtteso/{xmiFile}`
+4. **Confronto** → `RQ1/umlComparator.js` → calcola similarità strutturale
+5. **Report** → `RQ3/ErrorReporter.js` → classifica errori
+6. **Output** → `Logger.js` → salva tutto in `risultati/`
+
+### 📊 Modalità "Voto" - Batch Analysis  
+1. **Batch Studenti** → elabora tutti gli XMI in `directoryCampioni`
+2. **Valutazione** → `RQ4/Voto.js` → calcola metriche per ogni studente
+3. **Modello LLM** → genera modello AI dalla stessa traccia
+4. **Confronto** → confronta performance studenti vs AI
+5. **Statistiche** → media, migliore, peggiore performance
 
 ---
 
@@ -64,23 +123,13 @@ npm start
 | `xmiFile` | `"Fotografia.xmi"` | Nome modello atteso in `UmlAtteso/` |
 | `logFile` | `"Fotografia"` | Prefisso file di output |
 | `directoryCampioni` | `"../Sperimentazioni/Fotografia"` | Cartella XMI studenti (solo per "Voto") |
-
-### Esempio Configurazione Base
-```javascript
-export const experiment = "main";
-export const aiProvider = "deepSeek";
-export const pdfFile = "Fotografia.pdf";
-export const xmiFile = "Fotografia.xmi";
-export const logFile = "Fotografia";
-export const directoryCampioni = ""; // Vuoto per esperimento "main"
-```
-
 ---
 
 ## Research Questions - Configurazioni Sperimentali
 
 ### RQ1: Confronto tra LLM
 **Obiettivo**: Valutare come diversi modelli si comportano sulla stessa traccia  
+**File coinvolti**: `Back-end/LLM/` (Gemini.js, OpenRouterIA.js), `Back-end/RQ1/`  
 **Cosa cambia**: `aiProvider` (deepSeek → gemini → meta)  
 **Cosa rimane fisso**: traccia, prompt, UML atteso
 
@@ -98,20 +147,23 @@ export const logFile = "RQ1_Fotografia_Gemini";
 
 ### RQ2: Ottimizzazione Prompt
 **Obiettivo**: Migliorare i risultati modificando solo il prompt  
+**File coinvolti**: `Back-end/prompt.js`, `Prompt/` (versioni storiche)  
 **Cosa cambia**: contenuto di `Back-end/prompt.js`  
-**Cosa rimane fisso**: traccia, LLM, UML atteso
+**Cosa rimane fisso**: traccia, LLM, UML atteso (config.js deve rimanere invariato)
 
 ```javascript
 export const aiProvider = "deepSeek";  // FISSO
 export const pdfFile = "Fotografia.pdf";  // FISSO  
 export const logFile = "RQ2_PromptV1";
 // Modifica prompt.js tra un test e l'altro
+// Salva versioni in Prompt/ per tracciare le modifiche
 ```
 
 ### RQ3: Riscrittura Traccia
 **Obiettivo**: Migliorare chiarezza della traccia mantenendo la semantica  
+**File coinvolti**: `Back-end/RQ3/ErrorReporter.js`, `Traccia/`  
 **Cosa cambia**: file PDF della traccia  
-**Cosa rimane fisso**: prompt ottimizzato (da RQ2), LLM, UML atteso
+**Cosa rimane fisso**: prompt ottimizzato (da `Prompt/PromptFinale.txt`), LLM, UML atteso
 
 ```javascript
 // Traccia originale
@@ -125,6 +177,7 @@ export const logFile = "RQ3_TracciaModificata";
 
 ### RQ4: Validazione Metriche
 **Obiettivo**: Confrontare metriche automatiche con valutazione tradizionale  
+**File coinvolti**: `Back-end/RQ4/Voto.js`, `Sperimentazioni/`  
 **Modalità batch**: analizza tutti gli XMI degli studenti + genera modello LLM
 
 ```javascript
@@ -132,6 +185,29 @@ export const experiment = "Voto";  // Modalità batch
 export const directoryCampioni = "../Sperimentazioni/Fotografia";
 export const logFile = "RQ4_StudentiVsAI";
 ```
+
+---
+
+## Descrizione dei Componenti per Cartella
+
+### 📁 Back-end/LLM/ - Provider di Intelligenza Artificiale
+- **Gemini.js**: Integrazione con Google Gemini API
+- **OpenRouterIA.js**: Integrazione con OpenRouter per DeepSeek e Meta
+
+### 📁 Back-end/RQ1/ - Core Components (Research Question 1)
+- **Traccia.js**: Estrazione testo da file PDF delle tracce
+- **UmlAtteso.js**: Parser e normalizzazione file XMI di riferimento
+- **umlComparator.js**: Algoritmi di confronto strutturale tra modelli UML
+
+### 📁 Back-end/RQ3/ - Error Analysis (Research Question 3)
+- **ErrorReporter.js**: Sistema avanzato di classificazione e report errori
+
+### 📁 Back-end/RQ4/ - Validation (Research Question 4)
+- **Voto.js**: Metriche di valutazione e confronto batch studenti vs AI
+
+### 📁 Prompt/ - Gestione Versioni Prompt
+- **PromptFinale.txt**: Versione ottimizzata finale del prompt
+- **promptIntermedio.txt**: Versioni di sviluppo e test
 
 ---
 
@@ -385,18 +461,35 @@ Il sistema include 5 tracce di complessità crescente:
 3. (Opzionale) Crea `Sperimentazioni/NuovaTraccia/` con XMI degli studenti
 
 ---
+## Metriche di Valutazione SPOSTARE
+- **UMLComparator**: similarità strutturale (0.0-1.0) - 40% classi + 20% attributi + 20% metodi + 20% relazioni
+- **SimilaritaNumeroErrori**: conteggio categorie di errore (0-7) - Classi, Attributi, Associazioni, Molteplicità, Enumerazioni, Generalizzazioni, Attributi ID
+
 
 ## Troubleshooting & FAQ
 
 ### Problemi Comuni
 
-| Problema | Causa | Soluzione |
-|----------|-------|-----------|
-| **Similarità = 0** | Nessuna classe matchata | Verifica percorsi PDF/XMI, controlla nomi classi |
-| **Errore API** | Chiave mancante/invalida | Controlla `.env`, verifica quota API |
-| **Log vuoto (modalità Voto)** | Cartella studenti vuota | Verifica `directoryCampioni` e presenza file .xmi |
-| **JSON malformato** | Risposta AI corrotta | Riprova, il sistema ha fallback automatici |
-| **Timeout** | Rate limiting API | Aspetta qualche minuto e riprova |
+| Problema | Causa | File Coinvolto | Soluzione |
+|----------|-------|----------------|-----------|
+| **Similarità = 0** | Nessuna classe matchata | `RQ1/umlComparator.js` | Verifica percorsi PDF/XMI, controlla nomi classi |
+| **Errore API** | Chiave mancante/invalida | `LLM/*.js`, `.env` | Controlla `.env`, verifica quota API |
+| **Log vuoto (modalità Voto)** | Cartella studenti vuota | `RQ4/Voto.js` | Verifica `directoryCampioni` e presenza file .xmi |
+| **JSON malformato** | Risposta AI corrotta | `LLM/*.js` | Riprova, il sistema ha fallback automatici |
+| **Timeout** | Rate limiting API | `LLM/*.js` | Aspetta qualche minuto e riprova |
+| **Percorso non trovato** | Struttura cartelle errata | `config.js` | Verifica percorsi relativi corretti |
+
+### Struttura Cartelle per Debug
+```bash
+# Verifica struttura corretta
+ls -la Back-end/LLM/          # Deve contenere Gemini.js, OpenRouterIA.js
+ls -la Back-end/RQ1/          # Deve contenere Traccia.js, UmlAtteso.js, umlComparator.js  
+ls -la Back-end/RQ3/          # Deve contenere ErrorReporter.js
+ls -la Back-end/RQ4/          # Deve contenere Voto.js
+ls -la Traccia/               # Deve contenere i PDF
+ls -la UmlAtteso/             # Deve contenere gli XMI di riferimento
+ls -la Sperimentazioni/       # Deve contenere cartelle per traccia con XMI studenti
+```
 
 ### FAQ
 
@@ -412,18 +505,37 @@ A: Sì, nei file `umlComparator.js` e `Voto.js`
 **Q: Come visualizzo i diagrammi?**  
 A: Copia il codice PlantUML dai log su [plantuml.com](https://www.plantuml.com/plantuml/uml/)
 
+**Q: Dove trovo il codice per una specifica Research Question?**  
+A: RQ1→`Back-end/RQ1/`, RQ2→`Back-end/prompt.js`, RQ3→`Back-end/RQ3/`, RQ4→`Back-end/RQ4/`
+
+**Q: Come aggiungo un nuovo provider LLM?**  
+A: Crea un nuovo file in `Back-end/LLM/` seguendo il pattern di `Gemini.js`
+
+**Q: Dove modifico i criteri di valutazione?**  
+A: Metriche in `RQ1/umlComparator.js` e `RQ4/Voto.js`, classificazione errori in `RQ3/ErrorReporter.js`
+
 ---
 
-## Struttura Files
+## Sviluppo e Manutenzione
 
-```
-Applicazione/
-├── Back-end/           # Codice sorgente
-├── Traccia/           # PDF tracce
-├── UmlAtteso/         # XMI di riferimento
-├── Sperimentazioni/   # XMI studenti
-└── risultati/         # Output log
-```
+### 🏗️ Aggiungere una nuova Research Question
+1. Crea cartella `Back-end/RQ{N}/`
+2. Implementa la logica specifica
+3. Integra in `index.js` 
+4. Aggiorna `config.js` se necessario
+
+### 🤖 Aggiungere un nuovo LLM Provider
+1. Crea `Back-end/LLM/NuovoProvider.js`
+2. Implementa metodi standard (`runModel`, gestione errori)
+3. Aggiungi switch case in `index.js`
+4. Aggiorna `config.js` con nuovo provider
+
+### 📊 Modificare le Metriche
+- **Similarità strutturale**: modifica `RQ1/umlComparator.js`
+- **Conteggio errori**: modifica `RQ4/Voto.js`  
+- **Classificazione errori**: modifica `RQ3/ErrorReporter.js`
+
+---
 
 ---
 

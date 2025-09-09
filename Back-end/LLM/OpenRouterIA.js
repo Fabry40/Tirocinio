@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'dotenv/config';
-import { getUMLPrompt } from './prompt.js';
+import { getUMLPrompt } from '../prompt.js';
 
 const API_KEY = process.env.openrouter_API_KEY;
 const endpoint = 'https://openrouter.ai/api/v1/chat/completions';
@@ -16,7 +16,7 @@ export class OpenRouterIA {
     }
 
     try {
-      console.log(`🤖 Chiamando ${modelName}...`);
+      console.log(`Chiamando ${modelName}...`);
       const response = await axios.post(
         endpoint,
         {

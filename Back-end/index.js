@@ -1,12 +1,12 @@
 import { readdir } from 'fs/promises';
-import { UmlAtteso } from './UmlAtteso.js';
-import { GeminiAPI } from './Gemini.js';
-import { OpenRouterIA } from './OpenRouterIA.js';
-import { UMLComparator } from './UMLComparator.js';
-import { Traccia } from './Traccia.js';
+import { UmlAtteso } from './RQ1/UmlAtteso.js';
+import { GeminiAPI } from './LLM/Gemini.js';
+import { OpenRouterIA } from './LLM/OpenRouterIA.js';
+import { UMLComparator } from './RQ1/UMLComparator.js';
+import { Traccia } from './RQ1/Traccia.js';
 import { Logger } from './Logger.js';
-import { ErrorReporter } from './ErrorReporter.js';
-import { SimilaritaNumeroErrori } from './Voto.js'; 
+import { ErrorReporter } from './RQ3/ErrorReporter.js';
+import { SimilaritaNumeroErrori } from './RQ4/Voto.js'; 
 import { PlantUMLGenerator } from './plantUML.js';
 // Importa la configurazione
 import { experiment, pdfFile, xmiFile, logFile, directoryCampioni, aiProvider } from './config.js';

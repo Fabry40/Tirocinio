@@ -201,7 +201,7 @@ export class PlantUMLGenerator {
 
   static async convertXmiToPlantUML(xmiFilePath, outputPath) {
     try {
-      const { UmlAtteso } = await import('./UmlAtteso.js');
+      const { UmlAtteso } = await import('./RQ1/UmlAtteso.js');
       
       const jsonObj = UmlAtteso.parseXmiFile(xmiFilePath);
       const model = UmlAtteso.estraiModelCompatto(jsonObj);
